@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.sunshineinterview">
+    package="com.example.myapplication">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.android.sunshineinterview.ChooseSideActivity"></activity>
+        <activity android:name="com.example.android.sunshineinterview.EndingActivity"/>
+        <activity android:name="com.example.android.sunshineinterview.InterviewActivity" />
+        <activity android:name="com.example.android.sunshineinterview.WaitForActionActivity" />
+        <activity android:name="com.example.android.sunshineinterview.SigninActivity" />
+        <activity android:name="com.example.android.sunshineinterview.WaitForSelectionActivity" />
+        <activity android:name="com.example.android.sunshineinterview.ReadyActivity" />
+        <activity android:name="com.example.android.sunshineinterview.EndingActivity1" />
+        <activity android:name="com.example.android.sunshineinterview.InterviewActivity1" />
+        <activity android:name="com.example.android.sunshineinterview.ConfirmActivity" />
+        <activity android:name="com.example.android.sunshineinterview.SigninActivity1" />
+        <activity android:name="com.example.android.sunshineinterview.SelectActivity" />
+
+        <activity android:name="com.example.android.sunshineinterview.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

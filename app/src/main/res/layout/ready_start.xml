@@ -9,6 +9,7 @@
 
 
     <!--最右栏-->
+
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="341dp"
@@ -264,12 +265,13 @@
             tools:layout_editor_absoluteY="313dp">
 
             <!--请输入-->
+
             <LinearLayout
                 android:id="@+id/guide_text"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="3"
+                android:paddingBottom="50dp"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical">
 
@@ -279,8 +281,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:paddingTop="15dp"
-                    android:text="@string/guide_step0"
+                    android:paddingTop="10dp"
+                    android:text="@string/guide_step3"
                     android:textColor="@color/colorWhite"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toTopOf="@+id/enter_blocks"
@@ -290,135 +292,168 @@
 
             </LinearLayout>
 
-            <!--考场号-->
+            <!--照片-->
             <LinearLayout
-                android:id="@+id/room_id"
+                android:id="@+id/lesphotos"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center|center_horizontal|center_vertical"
-                android:layout_weight="4"
-                android:paddingTop="50dp"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="7"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/roomid_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center|center_horizontal|center_vertical"
-                        android:text="@string/roomid_text"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/editText4"
+                    <ImageView
+                        android:id="@+id/photo0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/edittext_shape"
-                        android:ems="8"
-                        android:gravity="center"
-                        android:hint="请输入4位考场号"
-                        android:maxLength="4"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!--验证码-->
-            <LinearLayout
-                android:id="@+id/verification_code"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center|center_horizontal|center_vertical"
-                android:layout_weight="4"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:paddingBottom="50dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center|center_horizontal|center_vertical"
-                    android:layout_weight="7"
-                    android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:src="@drawable/interwee"
+                        tools:srcCompat="@tools:sample/avatars" />
 
                     <TextView
-                        android:id="@+id/verification_text"
+                        android:id="@+id/name0"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center|center_horizontal"
-                        android:text="@string/verification_text"
-                        android:textSize="20sp" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/editText5"
+                    <ImageView
+                        android:id="@+id/photo1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/edittext_shape"
-                        android:ems="8"
+                        android:layout_weight="1"
+                        android:src="@drawable/interwee"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/name1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="请输入4位验证码"
-                        android:maxLength="4"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:inputType="number"
-                        android:textSize="20sp" />
+                        android:text="TextView" />
+
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/photo2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/interwee"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/name2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/photo3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/interwee"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/name3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/photo4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/interwee"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/name4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView" />
+
+                </LinearLayout>
             </LinearLayout>
 
-            <!--确认键-->
             <LinearLayout
+                android:id="@+id/bottons"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="566dp">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="30dp">
 
-                <Button
-                    android:id="@+id/confirm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="25dp"
-                    android:gravity="center"
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="20sp"
-                    android:text="@string/confirm_button"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView2"
-                    app:layout_constraintStart_toStartOf="@+id/cardView2" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <Button
+                        android:id="@+id/button_ready_start"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="25dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:text="@string/ready_start"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+                        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+                        app:layout_constraintStart_toStartOf="@+id/cardView2" />
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -427,13 +462,15 @@
     </android.support.v7.widget.CardView>
 
     <LinearLayout
-        android:layout_width="683dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/bg_pic"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

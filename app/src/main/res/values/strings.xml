@@ -1,3 +1,74 @@
-<resources>
-    <string name="app_name">SunshineInterview</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
+
+    <!--设置考场页-->
+    <string name="sunshine_interview">阳光面试</string>
+    <string name="website">www.sunshine-interview.com.cn</string>
+    <string name="wechat">欢迎关注阳光面试公众号</string>
+
+    <string name="app_name">阳光考试系统</string>
+    <string name="guide_step0">请输入考场号及验证码</string>
+    <string name="school_name_text">学校：------</string>
+    <string name="classroom_id_text">考场号：------</string>
+    <string name="classroom_location_text">考试地点：------</string>
+    <string name="interview_id_text">场次号：------</string>
+    <string name="interview_time_text">考试时间：------</string>
+    <string name="processing_time_text">进行时间：------</string>
+    <string name="interview_status_text">状态：未开始</string>
+
+    <string name="roomid_text">考场号</string>
+    <string name="verification_text">验证码</string>
+
+    <string name="confirm_button">确认</string>
+
+    <!--选择端-->
+    <string name="guide_step00">请选择考官／考生端</string>
+    <string name="text_button_interviewer">考官</string>
+    <string name="text_button_interviewee">考生</string>
+
+    <!--选择场次页-->
+    <string name="guide_step1">请选择考次</string>
+
+    <!--考官签到页-->
+    <string name="guide_step2">请考官签到</string>
+
+    <!--考生签到页-->
+    <string name="Guide_step2">请考生签到</string>
+
+    <string name="reset_button">重置</string>
+    <string name="shoot_button">拍照</string>
+
+    <!--确认开始页面-->
+    <string name="guide_step3">等待学生就绪</string>
+    <string name="guide_step3_1">学生已就绪</string>
+    <string name="special_start">手动开始</string>
+    <string name="ready_start">开始</string>
+
+    <!--等待选考场页面-->
+    <string name="Guide_step3">等待考官开始面试</string>
+    <string name="be_patient">请耐心等待...</string>
+
+    <!--面试进行页面-->
+    <string name="the_end">结束面试</string>
+    <string name="guide_step4">面试进行中</string>
+
+
+    <!--结束页面-->
+    <string name="guide_step5">本场面试已结束</string>
+    <string name="words">本场面试已结束，\n
+    面试相关信息已存入北大数链\n
+    BlockID 888888\n
+    感谢您的支持！</string>
+
+    <!--结束页面-->
+    <string name="Guide_step5">本场面试已结束</string>
+    <string name="Words">本场面试已结束，\n
+    面试相关信息已存入北大数链\n
+    BlockID 888888\n\n
+    关注微信公众号\n
+    "阳光面试"\n
+    获取本次面试数字证书\n\n
+
+    感谢你参与本次考试！</string>
+
+
 </resources>
