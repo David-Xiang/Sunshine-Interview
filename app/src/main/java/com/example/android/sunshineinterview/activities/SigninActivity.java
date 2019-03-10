@@ -1,25 +1,33 @@
-package com.example.android.sunshineinterview;
+package com.example.android.sunshineinterview.activities;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 
-public class SigninActivity1 extends AppCompatActivity {
+import java.io.File;
+import java.io.IOException;
+
+
+public class SigninActivity extends AppCompatActivity
+{
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_in_1);
+        setContentView(R.layout.sign_in);
         Intent intent = getIntent();
         final int interview_id = intent.getIntExtra("interview_id", 0);
 
@@ -61,15 +69,14 @@ public class SigninActivity1 extends AppCompatActivity {
 
                 String time = sp.getSelectedItem().toString();
 
-                Intent next_step = new Intent(SigninActivity1.this, WaitForActionActivity.class);
+                Intent next_step = new Intent(SigninActivity.this, ConfirmActivity.class);
                 next_step.putExtra("interview_id", interview_id);
                 startActivity(next_step);
             }
         });
 
         Button b_reset = findViewById(R.id.button_reset);
-}
-
+    }
 
     private void initSpinner()
     {
@@ -85,7 +92,7 @@ public class SigninActivity1 extends AppCompatActivity {
     // need code here
     private String[] getInterviewerArray()
     {
-        return new String[]{"学生1", "学生2", "学生3", "学生4", "学生5"};
+        return new String[]{"考官1", "考官2", "考官3", "考官4", "考官5"};
     }
 
     private String[] interviewerArray = getInterviewerArray();
@@ -96,7 +103,7 @@ public class SigninActivity1 extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
         {
-            Toast.makeText(SigninActivity1.this, "您选择的是" + interviewerArray[i], Toast.LENGTH_LONG).show();
+            Toast.makeText(SigninActivity.this, "您选择的是" + interviewerArray[i], Toast.LENGTH_LONG).show();
         }
 
         @Override

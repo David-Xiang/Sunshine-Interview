@@ -1,4 +1,4 @@
-package com.example.android.sunshineinterview;
+package com.example.android.sunshineinterview.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,20 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 
-public class InterviewActivity1 extends AppCompatActivity
-{
+public class WaitForSelectionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.interviewed);
+        setContentView(R.layout.wait_for_selection);
 
         // need code here
         Synchronise();
 
-        Intent next_step = new Intent(InterviewActivity1.this, EndingActivity1.class);
+        Intent next_step = new Intent(WaitForSelectionActivity.this, SigninActivity1.class);
         startActivity(next_step);
     }
 

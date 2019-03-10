@@ -1,4 +1,4 @@
-package com.example.android.sunshineinterview;
+package com.example.android.sunshineinterview.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,24 +9,24 @@ import android.widget.Spinner;
 
 import com.example.myapplication.R;
 
-public class ReadyActivity extends AppCompatActivity {
+public class ConfirmActivity extends AppCompatActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.confirm_action);
 
-        Button b_confirm = findViewById(R.id.button_ready_start);
+        Button b_confirm = findViewById(R.id.manual_start);
         b_confirm.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
-                Spinner sp = findViewById(R.id.spinner);
-
-                String time = sp.getSelectedItem().toString();
-
-                Intent next_step = new Intent(ReadyActivity.this, InterviewActivity.class);
+                Intent next_step = new Intent(ConfirmActivity.this, InterviewActivity.class);
                 startActivity(next_step);
             }
-        });
+        }
+        );
     }
 }

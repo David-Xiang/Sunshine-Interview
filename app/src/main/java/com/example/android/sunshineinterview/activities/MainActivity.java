@@ -1,4 +1,4 @@
-package com.example.android.sunshineinterview;
+package com.example.android.sunshineinterview.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,48 +10,32 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.android.sunshineinterview.model.Interview;
 
-public class MainActivity extends AppCompatActivity
-{
-
+public class MainActivity extends AppCompatActivity {
+    private Interview mInterview;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mInterview = Interview.getInstance();
+
         Button b_confirm = (Button) findViewById(R.id.confirm);
-        b_confirm.setOnClickListener(new View.OnClickListener()
-        {
+        b_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String room_id = ((EditText) findViewById(R.id.editText4)).getText().toString();
                 String veri_code = ((EditText) findViewById(R.id.editText5)).getText().toString();
-                int classroom_id = validClassroom(room_id, veri_code);
-                if (classroom_id >= 0)
-                {
+                if (mInterview.validateCode(room_id, veri_code) && mInterview.setStatus(Interview.InterviewStatus.CHOOSESIDE)) {
                     Intent next_step = new Intent(MainActivity.this, ChooseSideActivity.class);
-                    next_step.putExtra("classroom_id", classroom_id);
                     startActivity(next_step);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(MainActivity.this, "考场号／验证码有误", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    //    need code here
-    protected int validClassroom(String room_id, String verifi_code)
-    {
-        if(room_id.equals("0000") && verifi_code.equals("0000"))
-        {
-            return 0;
-        }
-        else
-        {
-            return -1;
-        }
     }
 }
 
