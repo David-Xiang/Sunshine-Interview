@@ -1,4 +1,4 @@
-package com.example.android.sunshineinterview.activities;
+package com.example.android.sunshineinterview.commonactivities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
+import com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity;
 import com.example.myapplication.R;
 
 import com.example.android.sunshineinterview.model.Interview;
@@ -22,36 +24,36 @@ public class ChooseSideActivity extends AppCompatActivity {
         mInterview = Interview.getInstance();
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mSchoolName);
-        String siteCode = String.format("%04d", mInterview.mSiteCode);
-        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, siteCode);
+        String siteId = String.format("%04d", mInterview.mSiteId);
+        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, siteId);
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mSiteName);
 
 
-        Button b_interviewer = findViewById(R.id.button_interviewer);
-        b_interviewer.setOnClickListener(new View.OnClickListener() {
+        Button bTeacher = findViewById(R.id.button_interviewer);
+        bTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO: maybe to show a progress bar is better?
-                if (!mInterview.selectedSide(Interview.InterviewFunction.INTERVIEWER)){
+                if (!mInterview.chooseSide(Interview.InterviewSide.TEACHER)){
                     // TODO: hint bad network connectivity
                 }
                 mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
-                Intent next_step = new Intent(ChooseSideActivity.this, SelectActivity.class);
-                startActivity(next_step);
+                Intent nextStep = new Intent(ChooseSideActivity.this, ChooseOrderActivity.class);
+                startActivity(nextStep);
             }
         });
 
-        Button b_interviewee = findViewById(R.id.button_interviewee);
-        b_interviewee.setOnClickListener(new View.OnClickListener() {
+        Button bStudent = findViewById(R.id.button_interviewee);
+        bStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO: maybe to show a progress bar is better?
-                if (!mInterview.selectedSide(Interview.InterviewFunction.INTERVIEWEE)){
+                if (!mInterview.chooseSide(Interview.InterviewSide.STUDENT)){
                     // TODO: hint bad network connectivity
                 }
                 mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
-                Intent next_step = new Intent(ChooseSideActivity.this, WaitForSelectionActivity.class);
-                startActivity(next_step);
+                Intent nextStep = new Intent(ChooseSideActivity.this, WaitForChooseOrderActivity.class);
+                startActivity(nextStep);
             }
         });
 

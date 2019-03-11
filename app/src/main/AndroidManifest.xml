@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.example.android.sunshineinterview.activities.MainActivity">
+        <activity android:name="com.example.android.sunshineinterview.commonactivities.ValidateActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,18 +24,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.android.sunshineinterview.activities.ChooseSideActivity" />
-        <activity android:name="com.example.android.sunshineinterview.activities.EndingActivity" />
-        <activity android:name="com.example.android.sunshineinterview.activities.InterviewActivity" />
-        <activity android:name="com.example.android.sunshineinterview.activities.WaitForActionActivity" />
-        <activity android:name="com.example.android.sunshineinterview.activities.SigninActivity" />
-        <activity android:name="com.example.android.sunshineinterview.activities.WaitForSelectionActivity" />
-        <activity android:name="com.example.android.sunshineinterview.activities.ReadyActivity" />
-        <activity android:name="com.example.android.sunshineinterview.activities.EndingActivity1" />
-        <activity android:name="com.example.android.sunshineinterview.activities.InterviewActivity1" />
-        <activity android:name="com.example.android.sunshineinterview.activities.ConfirmActivity" />
-        <activity android:name="com.example.android.sunshineinterview.activities.SigninActivity1" />
-        <activity android:name="com.example.android.sunshineinterview.activities.SelectActivity" />
+        <activity android:name="com.example.android.sunshineinterview.commonactivities.ChooseSideActivity" />
+
+        <activity android:name="com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity" />
+        <activity android:name="com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity" />
+        <activity android:name="com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity" />
+        <activity android:name="com.example.android.sunshineinterview.teacheractivities.TeacherInProgressActivity" />
+        <activity android:name="com.example.android.sunshineinterview.teacheractivities.TeacherEndActivity" />
+
+        <activity android:name="com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity" />
+        <activity android:name="com.example.android.sunshineinterview.studentactivities.StudentSigninActivity" />
+        <activity android:name="com.example.android.sunshineinterview.studentactivities.WaitForTeacherConfirmActivity" />
+        <activity android:name="com.example.android.sunshineinterview.studentactivities.StudentInProgressActivity" />
+        <activity android:name="com.example.android.sunshineinterview.studentactivities.StudentEndActivity" />
     </application>
 
 </manifest>

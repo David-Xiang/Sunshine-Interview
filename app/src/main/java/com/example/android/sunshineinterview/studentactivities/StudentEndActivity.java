@@ -1,4 +1,4 @@
-package com.example.android.sunshineinterview.activities;
+package com.example.android.sunshineinterview.studentactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,18 +8,18 @@ import android.widget.Button;
 
 import com.example.myapplication.R;
 
-public class EndingActivity1 extends AppCompatActivity {
+public class StudentEndActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thank_you_1);
 
-        Button b_confirm = findViewById(R.id.button_ending);
-        b_confirm.setOnClickListener(new View.OnClickListener() {
+        Button bConfirm = findViewById(R.id.button_ending);
+        bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent next_step = new Intent(EndingActivity1.this, WaitForSelectionActivity.class);
-                startActivity(next_step);
+                Intent nextStep = new Intent(StudentEndActivity.this, WaitForChooseOrderActivity.class);
+                startActivity(nextStep);
             }
         });
     }

@@ -4,20 +4,20 @@ import android.app.PendingIntent;
 import android.util.Log;
 
 public class Interview {
-    public enum InterviewFunction{
-        INTERVIEWER,    // 考官端
-        INTERVIEWEE,    // 考生端
+    public enum InterviewSide{
+        TEACHER,    // 考官端
+        STUDENT,    // 考生端
         UNKNOWN
     }
 
     public enum InterviewStatus {
-        VALIDATE,       // MainActivity
-        CHOOSESIDE,     // ChooseSideAcitivity
-        SCHEDULE,       // SelectActivity/WaitForSelectionActivity
-        SIGNIN,         // SigninActivity/SigninActivity1
-        READY,          // WaitForActionActivity/ConfirmActivity/ReadyActivity
-        INPROGRESS,     // InterviewActivity/InterviewActivity1
-        FINISHED        // EndingActivity/EndingActivity1
+        VALIDATE,
+        CHOOSESIDE,
+        CHOOSEORDER,
+        SIGNIN,
+        READY,
+        INPROGRESS,
+        END
     }
 
     private static final String TAG = "Interview";
@@ -41,23 +41,24 @@ public class Interview {
     private InterviewStatus mStatus;
 
     private boolean isValidated;    // next 2 items are trustworthy ONLY when isValidated == true
-    public int mSiteCode;
+    public int mSiteId;
     public String mSchoolName;
     public String mSiteName;
 
     private boolean sideSelected;
-    private InterviewFunction mFunction;
+    private InterviewSide mSide;
     private String [] mPeriods;
 
-    private boolean periodSelected;
-    private Person [] mInterviewers;
-    private Person [] mInterviewees;
+    private boolean orderSelected;
+    private int orderIndex;
+    private Person [] mTeachers;
+    private Person [] mStudents;
 
 
     private Interview(){
         isValidated = false;
         sideSelected = false;
-        periodSelected = false;
+        orderSelected = false;
     }
 
     public static Interview getInstance(){
@@ -78,8 +79,13 @@ public class Interview {
                     return false;
                 mStatus = status;
                 return true;
-            case SIGNIN:
+            case CHOOSEORDER:
                 if (!sideSelected)
+                    return false;
+                mStatus = status;
+                return true;
+            case SIGNIN:
+                if (!orderSelected)
                     return false;
                 mStatus = status;
                 return true;
@@ -92,9 +98,9 @@ public class Interview {
         return mStatus;
     }
 
-    public boolean validateCode(String room_id, String veri_code) {
+    public boolean validateSite(String siteId, String validateCode) {
         // TODO: validate these string be numbers in (0, 10000), and if so, send a request to server
-        if(room_id.equals("0000") && veri_code.equals("0000")) {
+        if(siteId.equals("0000") && validateCode.equals("0000")) {
             isValidated = true;
             mSchoolName = "北京大学";
             mSiteName = "文史楼110";
@@ -104,19 +110,30 @@ public class Interview {
         }
     }
 
-    public boolean selectedSide(InterviewFunction interviewFunction){
+    public boolean chooseSide(InterviewSide interviewFunction){
         if (!isValidated){
             Log.e(TAG, "Code not validated when selecting side!");
         }
 
         // TODO: send interviewFunction to server and then receive a list of periods
         sideSelected = true;
-        mFunction = interviewFunction;
+        mSide = interviewFunction;
 
         // TODO: parse available periods from json
         mPeriods = new String []
                 {"9:00 - 9:20", "9:20 - 9:40", "9:40 - 10:00", "10:00 - 10:20", "10:20 - 10:40"};
 
+        return true;
+    }
+
+    public String[] getPeriods(){
+        // TODO: getPeriods from server
+        return mPeriods;
+    }
+
+    public boolean setOrder(int index){
+        orderSelected = true;
+        orderIndex = index;
         return true;
     }
 }
