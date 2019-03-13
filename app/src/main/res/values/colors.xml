@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
-    <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#2196F3</color>
+    <color name="colorPrimary">#9e0000</color>
+    <color name="colorPrimaryDark">#7c0000</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorSky">#03A9F4</color>
+    <color name="colorSky">#9e0000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGrey">#817B7B</color>
 

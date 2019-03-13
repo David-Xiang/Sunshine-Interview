@@ -7,21 +7,25 @@
 
     tools:context="com.example.android.sunshineinterview.MainActivity">
 
-
     <!--最右栏-->
+
+    <!--填空部分-->
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="341dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_weight="340"
         app:cardCornerRadius="4dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.3">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/border"
             android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
             tools:layout_editor_absoluteY="8dp">
@@ -32,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/colorSky"
+                android:background="@color/colorPrimary"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -48,7 +52,8 @@
                         android:paddingTop="20dp"
                         android:text="@string/sunshine_interview"
                         android:textColor="@color/colorWhite"
-                        android:textSize="60sp" />
+                        android:textSize="60sp"
+                        android:typeface="serif" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -63,7 +68,9 @@
                         android:gravity="center"
                         android:text="@string/website"
                         android:textColor="@color/colorWhite"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+
+                        android:typeface="serif" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -78,7 +85,8 @@
                         android:gravity="center"
                         android:text="@string/wechat"
                         android:textColor="@color/colorWhite"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:typeface="serif" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -89,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
+                android:background="@drawable/border"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -98,13 +107,16 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp">
 
                     <TextClock
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:format12Hour="北京时间 MM/dd/yy h:mmaa"
-                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:typeface="serif"
                         android:visibility="visible" />
                 </LinearLayout>
 
@@ -114,14 +126,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp">
 
                     <TextView
                         android:id="@+id/school_name_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/school_name_text" />
+                        android:text="@string/school_name_text"
+                        android:textSize="18sp"
+                        android:typeface="serif" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -130,14 +144,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:textSize="18sp"
+                    android:typeface="serif">
 
                     <TextView
                         android:id="@+id/classroom_id_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/classroom_id_text" />
+                        android:text="@string/classroom_id_text"
+                        android:textSize="18sp"
+                        android:typeface="serif" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -146,14 +164,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp">
 
                     <TextView
                         android:id="@+id/classroom_location_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/classroom_location_text" />
+                        android:text="@string/classroom_location_text"
+                        android:textSize="18sp"
+                        android:typeface="serif" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -162,14 +182,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp">
 
                     <TextView
                         android:id="@+id/interview_id_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/interview_id_text" />
+                        android:text="@string/interview_id_text"
+                        android:textSize="18sp"
+                        android:typeface="serif" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -178,14 +200,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp">
 
                     <TextView
                         android:id="@+id/interview_time_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/interview_time_text" />
+                        android:text="@string/interview_time_text"
+                        android:textSize="18sp"
+                        android:typeface="serif" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -194,14 +218,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp">
 
                     <TextView
                         android:id="@+id/processing_time_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/processing_time_text" />
+                        android:text="@string/processing_time_text"
+                        android:textSize="18sp"
+                        android:typeface="serif" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -210,14 +236,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingBottom="10dp">
 
                     <TextView
                         android:id="@+id/interview_status_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/interview_status_text" />
+                        android:text="@string/interview_status_text"
+                        android:textSize="18sp"
+                        android:typeface="serif" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -227,6 +256,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:background="@drawable/border"
                 android:orientation="vertical">
 
                 <VideoView
@@ -239,31 +269,107 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
-    <!--填空部分-->
     <android.support.v7.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="420dp"
-        android:layout_height="415dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="135dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="218dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintWidth_percent="0.4">
 
-        <LinearLayout
-            android:id="@+id/enter_blocks"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="58dp"
-            tools:layout_editor_absoluteY="313dp">
+            android:layout_height="match_parent">
 
-            <!--请输入-->
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints="请选择考官"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guide_text"
+                app:layout_constraintVertical_bias="0.120000005" />
+
+            <ImageView
+                android:id="@+id/interviewer_photo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/bigbrother"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner"
+                app:layout_constraintVertical_bias="0.13999999"
+                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintHeight_percent="0.3"
+                tools:src="@tools:sample/avatars"
+                tools:srcCompat="@tools:sample/avatars"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/button_reset"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:background="@color/colorGrey"
+                android:gravity="center"
+                android:text="@string/reset_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/button_shoot"
+                app:layout_constraintEnd_toStartOf="@+id/button_shoot"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintTop_toTopOf="@+id/button_shoot"
+                app:layout_constraintWidth_percent="0.2" />
+
+            <Button
+                android:id="@+id/button_confirm"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/confirm_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/button_shoot"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintStart_toEndOf="@+id/button_shoot"
+                app:layout_constraintTop_toTopOf="@+id/button_shoot"
+                app:layout_constraintWidth_percent="0.2" />
+
+            <Button
+                android:id="@+id/button_shoot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:text="@string/shoot_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/interviewer_photo"
+                app:layout_constraintVertical_bias="0.42000002"
+                app:layout_constraintWidth_percent="0.2" />
+
             <LinearLayout
                 android:id="@+id/guide_text"
                 android:layout_width="match_parent"
@@ -271,7 +377,11 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="3"
                 android:background="@color/colorPrimary"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/textView3"
@@ -283,150 +393,15 @@
                     android:text="@string/guide_step2"
                     android:textColor="@color/colorWhite"
                     android:textSize="30sp"
+                    android:typeface="serif"
                     app:layout_constraintBottom_toTopOf="@+id/enter_blocks"
                     app:layout_constraintStart_toStartOf="@+id/enter_blocks"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.26999998" />
 
             </LinearLayout>
-
-            <!--下拉选择框-->
-            <LinearLayout
-                android:id="@+id/selection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|center_horizontal|center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="50dp"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp"
-                android:paddingRight="50dp">
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints="请选择考官" />
-            </LinearLayout>
-
-            <!--照片-->
-            <LinearLayout
-                android:id="@+id/photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/interviewer_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/bigbrother"
-                    tools:srcCompat="@tools:sample/avatars"
-                    tools:src="@tools:sample/avatars"
-                    tools:visibility="visible"
-                    />
-
-            </LinearLayout>
-
-
-            <!--三个按钮-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="30dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/button_reset"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="25dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorGrey"
-                        android:gravity="center"
-                        android:text="@string/reset_button"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-                        app:layout_constraintEnd_toEndOf="@+id/cardView2"
-                        app:layout_constraintStart_toStartOf="@+id/cardView2" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/button_shoot"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="25dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorAccent"
-                        android:gravity="center"
-                        android:text="@string/shoot_button"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-                        app:layout_constraintEnd_toEndOf="@+id/cardView2"
-                        app:layout_constraintStart_toStartOf="@+id/cardView2" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/button_confirm"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="25dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center"
-                        android:text="@string/confirm_button"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-                        app:layout_constraintEnd_toEndOf="@+id/cardView2"
-                        app:layout_constraintStart_toStartOf="@+id/cardView2" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_pic"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

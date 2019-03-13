@@ -7,252 +7,300 @@
 
     tools:context="com.example.android.sunshineinterview.MainActivity">
 
-
     <!--最右栏-->
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="341dp"
-        android:layout_height="0dp"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="5dp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_weight="680"
+            android:background="@drawable/bg_pic"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
-            tools:layout_editor_absoluteY="8dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <!--logo栏-->
-            <LinearLayout
-                android:id="@+id/information_column_row0"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/colorSky"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:paddingTop="20dp"
-                        android:text="@string/sunshine_interview"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="60sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/website"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/wechat"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!--相关信息-->
-            <LinearLayout
-                android:id="@+id/information_column_row1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/time"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextClock
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:format12Hour="北京时间 MM/dd/yy h:mmaa"
-                        android:gravity="center"
-                        android:visibility="visible" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/school_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/school_name_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/school_name_text" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/classroom_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/classroom_id_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/classroom_id_text" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/classroom_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/classroom_location_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/classroom_location_text" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/interview_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/interview_id_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/interview_id_text" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/interview_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/interview_time_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/interview_time_text" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/processing_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/processing_time_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/processing_time_text" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/interview_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/interview_status_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/interview_status_text" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!--视频-->
-            <LinearLayout
-                android:id="@+id/information_column_row2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <VideoView
-                    android:id="@+id/videoView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-
-            </LinearLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="340"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/cardView"
+                tools:layout_editor_absoluteY="8dp">
+
+                <!--logo栏-->
+                <LinearLayout
+                    android:id="@+id/information_column_row0"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingTop="20dp"
+                            android:text="@string/sunshine_interview"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="60sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/website"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp"
+
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/wechat"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="20sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--相关信息-->
+                <LinearLayout
+                    android:id="@+id/information_column_row1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp">
+
+                        <TextClock
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:format12Hour="北京时间 MM/dd/yy h:mmaa"
+                            android:textSize="18sp"
+                            android:typeface="serif"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/school_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp">
+
+                        <TextView
+                            android:id="@+id/school_name_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/school_name_text"
+                            android:textSize="18sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/classroom_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp"
+                        android:textSize="18sp"
+                        android:typeface="serif">
+
+                        <TextView
+                            android:id="@+id/classroom_id_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/classroom_id_text"
+                            android:textSize="18sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/classroom_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp">
+
+                        <TextView
+                            android:id="@+id/classroom_location_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/classroom_location_text"
+                            android:textSize="18sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/interview_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp">
+
+                        <TextView
+                            android:id="@+id/interview_id_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/interview_id_text"
+                            android:textSize="18sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/interview_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp">
+
+                        <TextView
+                            android:id="@+id/interview_time_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/interview_time_text"
+                            android:textSize="18sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/processing_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp">
+
+                        <TextView
+                            android:id="@+id/processing_time_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/processing_time_text"
+                            android:textSize="18sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/interview_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/interview_status_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/interview_status_text"
+                            android:textSize="18sp"
+                            android:typeface="serif" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--视频-->
+                <LinearLayout
+                    android:id="@+id/information_column_row2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <VideoView
+                        android:id="@+id/videoView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
 
     <!--填空部分-->
     <android.support.v7.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="420dp"
         android:layout_height="255dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="135dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="218dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintHorizontal_bias="0.22"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -295,9 +343,9 @@
                 android:id="@+id/wait"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:gravity="center_vertical|center_horizontal|center"
                 android:layout_weight="4"
                 android:background="@color/colorWhite"
+                android:gravity="center_vertical|center_horizontal|center"
                 android:orientation="vertical">
 
                 <TextView
@@ -328,15 +376,5 @@
 
     </android.support.v7.widget.CardView>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_pic"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

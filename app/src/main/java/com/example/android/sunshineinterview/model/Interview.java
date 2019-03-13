@@ -160,7 +160,8 @@ public class Interview {
     }
 
     public String[] getPeriods() {
-        // TODO: getPeriods from server
+        // TODO: getPeriods from server (remove this temp string)
+        mPeriods = new String[]{"9:00 - 9:20", "9:20 - 9:40", "9:40 - 10:00", "10:00 - 10:20", "10:20 - 10:40"};
         return mPeriods;
     }
 
