@@ -20,6 +20,7 @@ public class ValidateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mInterview = Interview.getInstance();
+        mInterview.setStatus(Interview.InterviewStatus.VALIDATE);
 
         Button bConfirm = (Button) findViewById(R.id.confirm);
         bConfirm.setOnClickListener(new View.OnClickListener() {
@@ -27,14 +28,13 @@ public class ValidateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String siteId = ((EditText) findViewById(R.id.editText4)).getText().toString();
                 String validateCode = ((EditText) findViewById(R.id.editText5)).getText().toString();
-                mInterview.setStatus(Interview.InterviewStatus.CHOOSESIDE);
                 mInterview.validate(ValidateActivity.this, siteId, validateCode);
                 // TODO: show a progress bar
             }
         });
     }
 
-    protected void onHttpResponse(boolean isValidated){
+    public void onHttpResponse(boolean isValidated){
         if (isValidated){
             Intent nextStep = new Intent(ValidateActivity.this, ChooseSideActivity.class);
             startActivity(nextStep);

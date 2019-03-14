@@ -1,8 +1,9 @@
 package com.example.android.sunshineinterview.model;
 
-import android.app.PendingIntent;
 import android.util.Log;
 
+import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
+import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 
 import java.net.URL;
@@ -32,12 +33,10 @@ public class Interview {
 
     private InterviewStatus mStatus;
     private InterviewSide mSide;
-
     private boolean isValidated;    // next 2 items are trustworthy ONLY when isValidated == true
     private boolean sideSelected;
     private boolean orderSelected;
     private int orderIndex;
-
     private boolean inProgress;
 
     private Interview() {
@@ -45,6 +44,13 @@ public class Interview {
         sideSelected = false;
         orderSelected = false;
         inProgress = false;
+
+        orderIndex = -1;
+
+        mStatus = InterviewStatus.END;
+        mSide = InterviewSide.UNKNOWN;
+        mInterview = null;
+        mInterviewInfo = null;
     }
 
     public static Interview getInstance() {
@@ -52,6 +58,16 @@ public class Interview {
             mInterview = new Interview();
         }
         return mInterview;
+    }
+
+    public InterviewStatus getStatus() {
+        // TODO
+        return mStatus;
+    }
+
+    public boolean setInterviewInfo(InterviewInfo i){
+        mInterviewInfo = i;
+        return true;
     }
 
     // status 暂时不管
@@ -84,23 +100,10 @@ public class Interview {
         return false;
     }
 
-    public InterviewStatus getStatus() {
-        // TODO
-        return mStatus;
-    }
-
-    public boolean validate(String siteId, String validateCode) {
+    public boolean validate(ValidateActivity validateActivity, String siteId, String validateCode) {
         String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
         URL url = new NetworkUtils().buildUrl(parameters);
-        new ValidateTask().execute(url);/*
-        if (siteId.equals("0000") && validateCode.equals("0000")) {
-            isValidated = true;
-            mSchoolName = "北京大学";
-            mSiteName = "文史楼110";
-            return true;
-        } else {
-            return false;
-        }*/
+        new ValidateTask().execute(url, validateActivity);
         return true;
     }
 
@@ -114,7 +117,7 @@ public class Interview {
         return true;
     }
 
-    public boolean setSelected() {
+    public boolean setSideSelected() {
         sideSelected = true;
         return true;
     }
@@ -136,24 +139,24 @@ public class Interview {
         return mPeriods;
     }
 
-    public boolean chooseSide(InterviewSide interviewFunction) {
+    public boolean chooseSide(ChooseSideActivity chooseSideActivity, InterviewSide interviewFunction) {
         if (!isValidated) {
             Log.e(TAG, "Code not validated when selecting side!");
             return false;
         }
+
         String parameters;
         if (interviewFunction == InterviewSide.TEACHER) {
             parameters = "/side?siteid=" + mInterviewInfo.siteId + "&side=teacher";
-
+            mSide = InterviewSide.TEACHER;
         } else if (interviewFunction == InterviewSide.STUDENT) {
             parameters = "/side?siteid=" + mInterviewInfo.siteId + "&side=student";
+            mSide = InterviewSide.STUDENT;
         } else {
             return false;
         }
         URL url = new NetworkUtils().buildUrl(parameters);
-        new ChooseSideTask().execute(url);
-        // sideSelected = true;
-        mSide = interviewFunction;
+        new ChooseSideTask().execute(chooseSideActivity, url);
         return true;
     }
 
