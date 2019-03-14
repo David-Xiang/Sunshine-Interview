@@ -3,7 +3,12 @@ package com.example.android.sunshineinterview.studentactivities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
+import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.myapplication.R;
 
 public class StudentInProgressActivity extends AppCompatActivity
@@ -15,19 +20,11 @@ public class StudentInProgressActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interviewed);
 
-        // need code here
-        Synchronise();
-
-        Intent nextStep = new Intent(StudentInProgressActivity.this, StudentEndActivity.class);
-        startActivity(nextStep);
     }
 
-    // need code here
-    private void Synchronise() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    protected void onHttpResponse()
+    {
+        Intent nextStep = new Intent(StudentInProgressActivity.this, StudentEndActivity.class);
+        startActivity(nextStep);
     }
 }

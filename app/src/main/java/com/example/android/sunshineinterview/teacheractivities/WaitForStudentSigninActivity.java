@@ -24,4 +24,6 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
             }
         });
     }
+
+    //TODO: 实时更新照片，如果人齐了变换按钮
 }

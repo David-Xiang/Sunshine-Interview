@@ -8,12 +8,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
+
+import java.util.ArrayList;
 
 
 public class TeacherSigninActivity extends AppCompatActivity {
+    Interview mInterview;
+    ArrayList<String> mTeachers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -21,6 +27,10 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
+        mInterview = Interview.getInstance();
+
+        //TODO: 更新右栏信息，获得老师列表，拍照上传...
+        // mTeachers = mInterview.getPeriods().get(mInterview.)
         Intent intent = getIntent();
 
         initSpinner();
@@ -95,4 +105,5 @@ public class TeacherSigninActivity extends AppCompatActivity {
         @Override
         public void onNothingSelected(AdapterView<?> adapterView){}
     }
+
 }

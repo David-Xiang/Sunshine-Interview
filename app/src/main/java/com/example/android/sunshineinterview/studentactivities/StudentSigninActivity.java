@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -20,6 +21,8 @@ public class StudentSigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_1);
         Intent intent = getIntent();
+
+        //TODO: 更新右栏信息，获得老师列表，拍照上传...
 
         initSpinner();
 
@@ -38,7 +41,6 @@ public class StudentSigninActivity extends AppCompatActivity {
 
         Button bReset = findViewById(R.id.button_reset);
     }
-
 
     private void initSpinner() {
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, studentName);
@@ -66,4 +68,5 @@ public class StudentSigninActivity extends AppCompatActivity {
         @Override
         public void onNothingSelected(AdapterView<?> adapterView){}
     }
+
 }

@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
+import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
@@ -28,10 +30,10 @@ public class ChooseOrderActivity extends AppCompatActivity {
         mInterview = Interview.getInstance();
         mPeriods = mInterview.getPeriods();
 
-        updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mSchoolName);
-        String siteId = String.format("%04d", mInterview.mSiteId);
+        updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
+        String siteId = String.format("%04d", mInterview.mInterviewInfo.siteId);
         updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, siteId);
-        updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mSiteName);
+        updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
 
         initSpinner(mPeriods);
 
@@ -43,11 +45,18 @@ public class ChooseOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
-
                 String time = sp.getSelectedItem().toString();
-                mInterview.setOrder(sp.getSelectedItemPosition());
-                Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
-                startActivity(nextStep);
+                if (mInterview.chooseOrder(sp.getSelectedItemPosition()))
+                {
+                    mInterview.setOrder(sp.getSelectedItemPosition());
+                    Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
+                    startActivity(nextStep);
+                }
+                else
+                {
+                    Toast.makeText(ChooseOrderActivity.this, "选择考次错误", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
     }
@@ -65,7 +74,7 @@ public class ChooseOrderActivity extends AppCompatActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(ChooseOrderActivity.this, "您选择的是" + mPeriods.get(i), Toast.LENGTH_LONG).show();
+            Toast.makeText(ChooseOrderActivity.this, "您选择的是" + mPeriods.get(i), Toast.LENGTH_SHORT).show();
             Spinner sp = findViewById(R.id.spinner);
             sp.setSelection(i);
         }

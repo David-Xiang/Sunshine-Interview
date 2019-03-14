@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +41,13 @@ public class ChooseSideActivity extends AppCompatActivity {
         bTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mInterview.chooseSide(Interview.InterviewSide.TEACHER);
-                // TODO: show a progress bar
+                ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_chooseside);
+                pb_validate.setVisibility(View.VISIBLE);
+                if (!mInterview.chooseSide(ChooseSideActivity.this, Interview.InterviewSide.TEACHER)){
+                    pb_validate.setVisibility(View.GONE);
+                    Toast.makeText(ChooseSideActivity.this, "参数错误", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
         });
 
@@ -49,8 +55,13 @@ public class ChooseSideActivity extends AppCompatActivity {
         bStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mInterview.chooseSide(Interview.InterviewSide.STUDENT);
-                // TODO: show a progress bar
+                ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_chooseside);
+                pb_validate.setVisibility(View.VISIBLE);
+                if (!mInterview.chooseSide(ChooseSideActivity.this, Interview.InterviewSide.STUDENT)){
+                    pb_validate.setVisibility(View.GONE);
+                    Toast.makeText(ChooseSideActivity.this, "参数错误", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
         });
     }
@@ -63,13 +74,17 @@ public class ChooseSideActivity extends AppCompatActivity {
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
-        // TODO
+        ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_chooseside);
+        pb_validate.setVisibility(View.GONE);
+
         if (serverInfo == ServerInfo.PERMISSION){
-
+            mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
+            Intent nextStep = new Intent(ChooseSideActivity.this, WaitForChooseOrderActivity.class);
+            startActivity(nextStep);
         } else if(serverInfo == ServerInfo.REJECTION) {
-
+            Toast.makeText(ChooseSideActivity.this, "客户端冲突，请重新选择", Toast.LENGTH_LONG).show();
         } else {
-
+            Toast.makeText(ChooseSideActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
         }
     }
 }

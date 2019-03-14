@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -29,13 +30,18 @@ public class ValidateActivity extends AppCompatActivity {
                 String siteId = ((EditText) findViewById(R.id.editText4)).getText().toString();
                 String validateCode = ((EditText) findViewById(R.id.editText5)).getText().toString();
                 mInterview.validate(ValidateActivity.this, siteId, validateCode);
-                // TODO: show a progress bar
+                ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_vaildate);
+                pb_validate.setVisibility(View.VISIBLE);
+
             }
         });
     }
 
-    public void onHttpResponse(boolean isValidated){
+    protected void onHttpResponse(boolean isValidated){
+        ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_vaildate);
+        pb_validate.setVisibility(View.GONE);
         if (isValidated){
+            Toast.makeText(ValidateActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
             Intent nextStep = new Intent(ValidateActivity.this, ChooseSideActivity.class);
             startActivity(nextStep);
         } else {

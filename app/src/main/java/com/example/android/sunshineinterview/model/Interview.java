@@ -184,7 +184,6 @@ public class Interview {
         }
         URL url = new NetworkUtils().buildUrl(parameters);
         new ChooseOrderTask().execute(url);
-        // setOrder(order);
         return true;
     }
 

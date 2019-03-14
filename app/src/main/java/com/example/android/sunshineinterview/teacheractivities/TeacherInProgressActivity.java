@@ -15,6 +15,8 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_ing);
 
+        //TODO:接视频
+
         Button bConfirm = findViewById(R.id.end_interview);
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
