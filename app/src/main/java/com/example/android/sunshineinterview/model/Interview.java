@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Interview {
     public enum InterviewSide {
@@ -13,6 +14,7 @@ public class Interview {
         STUDENT,    // 考生端
         UNKNOWN
     }
+    public InterviewInfo mInterviewInfo;
 
     public enum InterviewStatus {
         VALIDATE,
@@ -26,45 +28,17 @@ public class Interview {
 
     private static final String TAG = "Interview";
 
-    private class Person {
-        int id;
-        String name;
-        boolean isAbsent;
-
-        Person(int id, String name) {
-            this.id = id;
-            this.name = name;
-            this.isAbsent = false;
-        }
-
-        void setAbsent() {
-            this.isAbsent = true;
-        }
-    }
-
     private static Interview mInterview;
 
     private InterviewStatus mStatus;
+    private InterviewSide mSide;
 
     private boolean isValidated;    // next 2 items are trustworthy ONLY when isValidated == true
-    public int mSiteId;
-    public String mSchoolName;
-    public String mSiteName;
-
     private boolean sideSelected;
-    private InterviewSide mSide;
-    private String[] mPeriods;
-
     private boolean orderSelected;
     private int orderIndex;
-    private Person[] mTeachers;
-    private Person[] mStudents;
 
     private boolean inProgress;
-
-    private int siteId; // 考场id
-    private int maxOrder; // 该考场最多有多少场面试
-
 
     private Interview() {
         isValidated = false;
@@ -82,23 +56,19 @@ public class Interview {
 
     // status 暂时不管
     public boolean setStatus(InterviewStatus status) {
-        // TODO:准备面试和面试进行中
         switch (status) {
             case VALIDATE: // 验证考场
                 mStatus = status;
-                //TODO: when to set isvalidated = true?
                 return true;
             case CHOOSESIDE: // 选择考场
                 if (!isValidated)
                     return false;
                 mStatus = status;
-                //TODO: when to set sideselected = true?
                 return true;
             case CHOOSEORDER: // 选择场次
                 if (!sideSelected) // TODO: 只能是考官端？？
                     return false;
                 mStatus = status;
-                //TODO: when to set orderselected = true?
                 return true;
             case SIGNIN: // TODO：只能是学生端？
                 if (!orderSelected)
@@ -109,7 +79,6 @@ public class Interview {
                 if (!inProgress)
                     return false;
                 mStatus = status;
-                //TODO: when to set inprogress = false?
                 return true;
         }
         return false;
@@ -120,13 +89,10 @@ public class Interview {
         return mStatus;
     }
 
-    public boolean validateSite(String siteId, String validateCode) {
-
-        // TODO: 调用getResponseFromHttpUrl发送请求给服务器
-        // TODO: networkUtils.buildUrl("/?siteId=XXXX&code=XXXX) /validate?siteid=0001&validatecode=0001
+    public boolean validate(String siteId, String validateCode) {
         String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new ValidateTask().execute(url);/*
         if (siteId.equals("0000") && validateCode.equals("0000")) {
             isValidated = true;
             mSchoolName = "北京大学";
@@ -134,38 +100,64 @@ public class Interview {
             return true;
         } else {
             return false;
+        }*/
+        return true;
+    }
+
+    public boolean setValidated() {
+        isValidated = true;
+        return true;
+    }
+
+    public boolean setInProgress() {
+        inProgress = true;
+        return true;
+    }
+
+    public boolean setSelected() {
+        sideSelected = true;
+        return true;
+    }
+
+    public boolean newInterview() {
+        isValidated = false;
+        sideSelected = false;
+        orderSelected = false;
+        inProgress = false;
+        return true;
+    }
+
+    public ArrayList<String> getPeriods() {
+        ArrayList<String> mPeriods = new ArrayList<String>();
+        for (Period period : mInterviewInfo.periods) {
+            String periodString = period.startTime + " - " + period.endTime;
+            mPeriods.add(periodString);
         }
+        return mPeriods;
     }
 
     public boolean chooseSide(InterviewSide interviewFunction) {
         if (!isValidated) {
             Log.e(TAG, "Code not validated when selecting side!");
-            // /side?siteid=0001&side=teacher
             return false;
         }
+        String parameters;
         if (interviewFunction == InterviewSide.TEACHER) {
-            String parameters = "/side?siteid=" + siteId + "&side=teacher";
-            URL url = new NetworkUtils().buildUrl(parameters);
-            //TODO: new Task().execute(url);
+            parameters = "/side?siteid=" + mInterviewInfo.siteId + "&side=teacher";
+
         } else if (interviewFunction == InterviewSide.STUDENT) {
-            String parameters = "/side?siteid=" + siteId + "&side=student";
-            URL url = new NetworkUtils().buildUrl(parameters);
-            //TODO: new Task().execute(url);
+            parameters = "/side?siteid=" + mInterviewInfo.siteId + "&side=student";
         } else {
             return false;
         }
-        sideSelected = true;
+        URL url = new NetworkUtils().buildUrl(parameters);
+        new ChooseSideTask().execute(url);
+        // sideSelected = true;
         mSide = interviewFunction;
         return true;
     }
 
-    public String[] getPeriods() {
-        // TODO: getPeriods from server (remove this temp string)
-        mPeriods = new String[]{"9:00 - 9:20", "9:20 - 9:40", "9:40 - 10:00", "10:00 - 10:20", "10:20 - 10:40"};
-        return mPeriods;
-    }
-
-    // 设置场次
+    // 设置场次只能是考官端
     public boolean setOrder(int index) {
         orderSelected = true;
         orderIndex = index;
@@ -174,81 +166,118 @@ public class Interview {
 
     // 考官选择场次
     public boolean chooseOrder(int order) {
-        // /order?siteid=0001&order=01
-        if (order > maxOrder) {
+        if (!sideSelected) {
+            return false;
+        } else if (order >= mInterviewInfo.periods.size()) {
+            return false;
+        } else if (mSide != InterviewSide.TEACHER) {
             return false;
         }
-        String parameters = "/order?siteid=" + siteId + "&order=" + String.valueOf(order);
+        String parameters;
+        if (order < 10) {
+            parameters = "/order?siteid=" + mInterviewInfo.siteId + "&order=0" + String.valueOf(order);
+        } else {
+            parameters = "/order?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(order);
+        }
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
-        setOrder(order);
+        new ChooseOrderTask().execute(url);
+        // setOrder(order);
         return true;
     }
 
     // 考官签到
-    public boolean teacherSignIn(String id) {
-        // TODO: 验证老师的身份？
-        String parameters = "/teacher?siteid=" + siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
+    public boolean teacher(String id) {
+        if (!orderSelected) {
+            return false;
+        } else if (mSide != InterviewSide.TEACHER)
+            return false;
+        String parameters = "/teacher?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new TeacherTask().execute(url);
         return true;
     }
 
     // 考官动态查看考生签到情况
-    // teacher和student应该在选择考试之后设置好
     public boolean queryStudent() {
-        String parameters = "/querystudent?siteid=" + siteId + "&order=" + String.valueOf(orderIndex);
+        if (!orderSelected) {
+            return false;
+        } else if (mSide != InterviewSide.TEACHER)
+            return false;
+        String parameters = "/querystudent?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new QueryStudentTask().execute(url);
         return true;
     }
 
     // 考官点击开始考试
     public boolean start() {
-        String parameters = "/start?siteid=" + siteId + "&order=" + String.valueOf(orderIndex);
+        if (!orderSelected) {
+            return false;
+        } else if (mSide != InterviewSide.TEACHER)
+            return false;
+        String parameters = "/start?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new StartTask().execute(url);
         return true;
     }
 
     // 考官点击结束考试
     public boolean end() {
-        String parameters = "/end?siteid=" + siteId + "&order=" + String.valueOf(orderIndex);
+        if (mSide != InterviewSide.TEACHER)
+            return false;
+        if (!inProgress)
+            return false;
+        String parameters = "/end?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new EndTask().execute(url);
         return true;
     }
 
     // 学生端查询场次（与考官pad同步）
-    public boolean queryOrder() {
-        String parameters = "/query?siteid=" + siteId;
+    public boolean query() {
+        if (!orderSelected) {
+            return false;
+        } else if (mSide != InterviewSide.STUDENT)
+            return false;
+        String parameters = "/query?siteid=" + mInterviewInfo.siteId;
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new QueryTask().execute(url);
         return true;
     }
 
     // 考生签到
-    public boolean studentCheckIn(String id) {
-        // TODO: 验证老师的身份？
-        String parameters = "/student?siteid=" + siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
+    public boolean student(String id) {
+        if (!orderSelected) {
+            return false;
+        } else if (mSide != InterviewSide.STUDENT)
+            return false;
+        String parameters = "/student?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new StudentTask().execute(url);
         return true;
     }
 
     // 学生端查询是否可以开始考试
     public boolean queryStart() {
-        String parameters = "/querystart?siteid=" + siteId + "&order=" + String.valueOf(orderIndex);
+        if (!orderSelected) {
+            return false;
+        } else if (mSide != InterviewSide.STUDENT)
+            return false;
+        String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new QueryStartTask().execute(url);
         return true;
     }
 
-    // 学生端查询是否可以开始考试
+    // 学生端查询是否已经结束考试考试
     public boolean queryEnd() {
-        String parameters = "/queryend?siteid=" + siteId + "&order=" + String.valueOf(orderIndex);
+        if (!inProgress) {
+            return false;
+        } else if (mSide != InterviewSide.STUDENT)
+            return false;
+        String parameters = "/queryend?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = new NetworkUtils().buildUrl(parameters);
-        //TODO: new Task().execute(url);
+        new QueryEndTask().execute(url);
         return true;
     }
 }
