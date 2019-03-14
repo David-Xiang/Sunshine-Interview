@@ -28,7 +28,7 @@ public class ValidateActivity extends AppCompatActivity {
                 String siteId = ((EditText) findViewById(R.id.editText4)).getText().toString();
                 String validateCode = ((EditText) findViewById(R.id.editText5)).getText().toString();
                 mInterview.setStatus(Interview.InterviewStatus.CHOOSESIDE);
-                mInterview.validate(siteId, validateCode);
+                mInterview.validate(ValidateActivity.this, siteId, validateCode);
                 // TODO: show a progress bar
             }
         });
