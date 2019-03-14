@@ -20,23 +20,16 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mSchoolName);
         String siteId = String.format("%04d", mInterview.mSiteId);
-        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, siteId);
+        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.siteId);
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mSiteName);
 
-        // need code here
-        Synchronise();
 
-        Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentSigninActivity.class);
-        startActivity(nextStep);
     }
 
-    // need code here
-    private void Synchronise() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void OrderChosen()
+    {
+        Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentSigninActivity.class);
+        startActivity(nextStep);
     }
 
     private void updateInfo(int textViewId, int originalStringId, String newString){

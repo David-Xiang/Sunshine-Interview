@@ -15,9 +15,11 @@ import android.widget.Toast;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
+
 public class ChooseOrderActivity extends AppCompatActivity {
     Interview mInterview;
-    String [] mPeriods;
+    ArrayList<String> mPeriods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +45,14 @@ public class ChooseOrderActivity extends AppCompatActivity {
                 Spinner sp = findViewById(R.id.spinner);
 
                 String time = sp.getSelectedItem().toString();
-
+                mInterview.setOrder(sp.getSelectedItemPosition());
                 Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
                 startActivity(nextStep);
             }
         });
     }
 
-    private void initSpinner(String [] timeArray) {
+    private void initSpinner(ArrayList<String> timeArray) {
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, timeArray);
         periodAdapter.setDropDownViewResource(R.layout.item_dropdown);
         Spinner sp = findViewById(R.id.spinner);
@@ -63,7 +65,7 @@ public class ChooseOrderActivity extends AppCompatActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(ChooseOrderActivity.this, "您选择的是" + mPeriods[i], Toast.LENGTH_LONG).show();
+            Toast.makeText(ChooseOrderActivity.this, "您选择的是" + mPeriods.get(i), Toast.LENGTH_LONG).show();
             Spinner sp = findViewById(R.id.spinner);
             sp.setSelection(i);
         }

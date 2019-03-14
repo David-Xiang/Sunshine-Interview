@@ -12,10 +12,12 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Interview;
 
-public class ValidateActivity extends AppCompatActivity {
+public class ValidateActivity extends AppCompatActivity
+{
     private Interview mInterview;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -27,7 +29,9 @@ public class ValidateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String siteId = ((EditText) findViewById(R.id.editText4)).getText().toString();
                 String validateCode = ((EditText) findViewById(R.id.editText5)).getText().toString();
-                if (mInterview.validateSite(siteId, validateCode) && mInterview.setStatus(Interview.InterviewStatus.CHOOSESIDE)) {
+                if (mInterview.validate(siteId, validateCode) && mInterview.setStatus(Interview.InterviewStatus.CHOOSESIDE)) {
+                    mInterview.setValidated();
+
                     Intent nextStep = new Intent(ValidateActivity.this, ChooseSideActivity.class);
                     startActivity(nextStep);
                 } else {
