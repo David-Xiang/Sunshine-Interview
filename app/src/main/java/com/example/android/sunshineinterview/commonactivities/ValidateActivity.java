@@ -23,22 +23,22 @@ public class ValidateActivity extends AppCompatActivity {
         mInterview = Interview.getInstance();
         mInterview.setStatus(Interview.InterviewStatus.VALIDATE);
 
-        Button bConfirm = (Button) findViewById(R.id.confirm);
+        Button bConfirm = findViewById(R.id.confirm);
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String siteId = ((EditText) findViewById(R.id.editText4)).getText().toString();
                 String validateCode = ((EditText) findViewById(R.id.editText5)).getText().toString();
                 mInterview.validate(ValidateActivity.this, siteId, validateCode);
-                ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_vaildate);
+                ProgressBar pb_validate = findViewById(R.id.pb_vaildate);
                 pb_validate.setVisibility(View.VISIBLE);
 
             }
         });
     }
 
-    protected void onHttpResponse(boolean isValidated){
-        ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_vaildate);
+    public void onHttpResponse(boolean isValidated){
+        ProgressBar pb_validate = findViewById(R.id.pb_vaildate);
         pb_validate.setVisibility(View.GONE);
         if (isValidated){
             Toast.makeText(ValidateActivity.this, "验证成功", Toast.LENGTH_SHORT).show();

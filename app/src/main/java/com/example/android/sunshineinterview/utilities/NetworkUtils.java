@@ -52,8 +52,8 @@ public class NetworkUtils {
         }
     }
 
-    public static JsonElement getJsonReponse(URL url) throws IOException {
-        String jsonString = null;
+    public static JsonElement getJsonReponse(URL url) {
+        String jsonString;
         try {
             jsonString = getResponseFromHttpUrl(url);
         } catch (IOException e){

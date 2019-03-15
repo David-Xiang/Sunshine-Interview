@@ -1,7 +1,10 @@
 package com.example.android.sunshineinterview.studentactivities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,18 +14,38 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.model.TimeTask;
+import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
 import com.example.myapplication.R;
 
-public class StudentSigninActivity extends AppCompatActivity {
+import java.util.TimerTask;
 
+public class StudentSigninActivity extends AppCompatActivity {
+    public enum ServerInfo{
+        PERMISSION,
+        REJECTION,  // the side is already chosen
+        NOACCESS    // bad network connectivity
+    }
+    private Interview mInterview;
+    private String[] studentsNames;
+    private int mSigninNumber;
+    private static final int TIMER = 999;
+    private TimeTask mTask;
+    private Handler mHandler;
+
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_1);
-        Intent intent = getIntent();
+        mInterview = Interview.getInstance();
+        studentsNames = mInterview.getStudentNames();
+        mSigninNumber = 0;
 
         //TODO: 更新右栏信息，获得老师列表，拍照上传...
+        //TODO: to continue
 
         initSpinner();
 
@@ -33,17 +56,50 @@ public class StudentSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
-
-                Intent nextStep = new Intent(StudentSigninActivity.this, WaitForTeacherConfirmActivity.class);
-                startActivity(nextStep);
+                mInterview.studentSignin(StudentSigninActivity.this, sp.getSelectedItemPosition());
+                // TODO: show a progress bar
             }
         });
 
         Button bReset = findViewById(R.id.button_reset);
+
+        mTask = new TimeTask(1000, new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(TIMER);
+                //或者发广播，启动服务都是可以的
+            }
+        });
+        mTask.start();
+
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case TIMER:
+                        //在此执行定时操作
+                        mInterview.queryStart(StudentSigninActivity.this);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+    }
+
+    private void stopTimer(){
+        mTask.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopTimer();
     }
 
     private void initSpinner() {
-        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, studentName);
+        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, studentsNames);
         periodAdapter.setDropDownViewResource(R.layout.item_dropdown);
         Spinner sp = findViewById(R.id.spinner);
         sp.setPrompt("请选择考次");
@@ -52,21 +108,43 @@ public class StudentSigninActivity extends AppCompatActivity {
         sp.setOnItemSelectedListener(new MySelectedListener());
     }
 
-    // need code here
-    private String[] getStudentName() {
-        return new String[]{"学生1", "学生2", "学生3", "学生4", "学生5"};
-    }
-
-    private String[] studentName = getStudentName();
-
     class MySelectedListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(StudentSigninActivity.this, "您选择的是" + studentName[i], Toast.LENGTH_LONG).show();
+            Toast.makeText(StudentSigninActivity.this, "您选择的是" + studentsNames[i], Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView){}
     }
 
+    public void onStudentsUpdate(ServerInfo serverInfo){
+        if (serverInfo == ServerInfo.PERMISSION){
+            mSigninNumber++;
+            // TODO: then let another student take photo
+            if(mSigninNumber == studentsNames.length){
+                // students all signed in
+                mInterview.setStatus(Interview.InterviewStatus.READY);
+                Intent nextStep = new Intent(StudentSigninActivity.this, WaitForTeacherConfirmActivity.class);
+                startActivity(nextStep);
+            }
+        } else if(serverInfo == ServerInfo.REJECTION) {
+            Toast.makeText(StudentSigninActivity.this, "签到错误", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(StudentSigninActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onHttpResponse(ServerInfo serverInfo){
+        if (serverInfo == ServerInfo.PERMISSION){
+            mInterview.setStatus(Interview.InterviewStatus.READY);
+            Intent nextStep = new Intent(StudentSigninActivity.this, StudentInProgressActivity.class);
+            startActivity(nextStep);
+        } else if(serverInfo == ServerInfo.REJECTION) {
+            // do nothing?
+            //Toast.makeText(StudentSigninActivity.this, "签到错误", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(StudentSigninActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
+        }
+    }
 }

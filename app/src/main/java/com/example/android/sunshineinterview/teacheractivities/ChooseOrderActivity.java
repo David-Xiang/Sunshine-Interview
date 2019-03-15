@@ -8,20 +8,27 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
-import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
 public class ChooseOrderActivity extends AppCompatActivity {
+    public enum ServerInfo{
+        PERMISSION,
+        REJECTION,  // the side is already chosen
+        NOACCESS    // bad network connectivity
+    }
+
     Interview mInterview;
     ArrayList<String> mPeriods;
+    Spinner sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,34 +38,39 @@ public class ChooseOrderActivity extends AppCompatActivity {
         mPeriods = mInterview.getPeriods();
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
-        String siteId = String.format("%04d", mInterview.mInterviewInfo.siteId);
-        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, siteId);
+        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
 
         initSpinner(mPeriods);
 
         Intent thisStep = getIntent();
 
-        Button bConfirm = (Button) findViewById(R.id.confirm);
+        Button bConfirm = findViewById(R.id.confirm);
 
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Spinner sp = findViewById(R.id.spinner);
+                sp = findViewById(R.id.spinner);
                 String time = sp.getSelectedItem().toString();
-                if (mInterview.chooseOrder(sp.getSelectedItemPosition()))
-                {
-                    mInterview.setOrder(sp.getSelectedItemPosition());
-                    Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
-                    startActivity(nextStep);
-                }
-                else
-                {
-                    Toast.makeText(ChooseOrderActivity.this, "选择考次错误", Toast.LENGTH_LONG).show();
-
-                }
+                mInterview.chooseOrder(ChooseOrderActivity.this, sp.getSelectedItemPosition());
             }
         });
+    }
+
+    public void onHttpResponse(ChooseOrderActivity.ServerInfo serverInfo){
+        ProgressBar pb_validate = findViewById(R.id.pb_chooseside);
+        pb_validate.setVisibility(View.GONE);
+
+        if (serverInfo == ChooseOrderActivity.ServerInfo.PERMISSION){
+            mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
+            mInterview.setOrder(sp.getSelectedItemPosition());
+            Intent nextStep = new Intent(ChooseOrderActivity.this, WaitForChooseOrderActivity.class);
+            startActivity(nextStep);
+        } else if(serverInfo == ChooseOrderActivity.ServerInfo.REJECTION) {
+            Toast.makeText(ChooseOrderActivity.this, "选择考次错误", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(ChooseOrderActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void initSpinner(ArrayList<String> timeArray) {
@@ -84,7 +96,7 @@ public class ChooseOrderActivity extends AppCompatActivity {
     }
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
-        TextView textview = (TextView) findViewById(textViewId);
+        TextView textview = findViewById(textViewId);
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
         textview.setText(originalString.replace("------", newString));

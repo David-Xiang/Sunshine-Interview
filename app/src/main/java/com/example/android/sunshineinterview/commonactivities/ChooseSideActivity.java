@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
-import com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity;
 import com.example.myapplication.R;
 
 import com.example.android.sunshineinterview.model.Interview;
@@ -32,8 +31,7 @@ public class ChooseSideActivity extends AppCompatActivity {
         mInterview.setStatus(Interview.InterviewStatus.VALIDATE);
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
-        String siteId = String.format("%04d", mInterview.mInterviewInfo.siteId);
-        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, siteId);
+        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
 
 
@@ -41,12 +39,11 @@ public class ChooseSideActivity extends AppCompatActivity {
         bTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_chooseside);
+                ProgressBar pb_validate = findViewById(R.id.pb_chooseside);
                 pb_validate.setVisibility(View.VISIBLE);
                 if (!mInterview.chooseSide(ChooseSideActivity.this, Interview.InterviewSide.TEACHER)){
                     pb_validate.setVisibility(View.GONE);
                     Toast.makeText(ChooseSideActivity.this, "参数错误", Toast.LENGTH_LONG).show();
-                    return;
                 }
             }
         });
@@ -55,26 +52,25 @@ public class ChooseSideActivity extends AppCompatActivity {
         bStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_chooseside);
+                ProgressBar pb_validate = findViewById(R.id.pb_chooseside);
                 pb_validate.setVisibility(View.VISIBLE);
                 if (!mInterview.chooseSide(ChooseSideActivity.this, Interview.InterviewSide.STUDENT)){
                     pb_validate.setVisibility(View.GONE);
                     Toast.makeText(ChooseSideActivity.this, "参数错误", Toast.LENGTH_LONG).show();
-                    return;
                 }
             }
         });
     }
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
-        TextView textview = (TextView) findViewById(textViewId);
+        TextView textview = findViewById(textViewId);
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
         textview.setText(originalString.replace("------", newString));
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
-        ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_chooseside);
+        ProgressBar pb_validate = findViewById(R.id.pb_chooseside);
         pb_validate.setVisibility(View.GONE);
 
         if (serverInfo == ServerInfo.PERMISSION){

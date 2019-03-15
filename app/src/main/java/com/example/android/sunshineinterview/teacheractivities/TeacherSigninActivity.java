@@ -18,49 +18,30 @@ import java.util.ArrayList;
 
 
 public class TeacherSigninActivity extends AppCompatActivity {
+    public enum ServerInfo{
+        PERMISSION,
+        REJECTION,  // the side is already chosen
+        NOACCESS    // bad network connectivity
+    }
     Interview mInterview;
-    ArrayList<String> mTeachers;
+    private String[] teacherNames;
+    int mSigninNumber;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
         mInterview = Interview.getInstance();
+        teacherNames = mInterview.getTeacherNames();
+        mSigninNumber = 0;
 
         //TODO: 更新右栏信息，获得老师列表，拍照上传...
-        // mTeachers = mInterview.getPeriods().get(mInterview.)
-        Intent intent = getIntent();
 
         initSpinner();
 
         Button bShoot = findViewById(R.id.button_shoot);
 
-//        need code here
-//        b_shoot.setOnClickListener(new View.OnClickListener()
-//        {
-//
-//            @Override
-//            public void onClick(View view) {
-//                File outputImage = new File(getExternalCashDir(), getName() + ".jpg");
-//                try
-//                {
-//                    if (outputImage.exists())
-//                    {
-//                        outputImage.delete();
-//                    }
-//                } catch (IOException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//
-//
-//                Intent shoot = new Intent("android.media.action.IMAGE_CAPTURE");
-//                shoot.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getName() + ".jpg"));
-//                startActivityForResult(shoot, TAKE_PHOTO);
-//            }
-//        });
 
         Button bConfirm = findViewById(R.id.button_confirm);
         bConfirm.setOnClickListener(new View.OnClickListener() {
@@ -70,12 +51,26 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
                 String time = sp.getSelectedItem().toString();
 
-                Intent nextStep = new Intent(TeacherSigninActivity.this, WaitForStudentSigninActivity.class);
-                startActivity(nextStep);
+                mInterview.teacherSignin(TeacherSigninActivity.this, sp.getSelectedItemPosition());
             }
         });
 
         Button bReset = findViewById(R.id.button_reset);
+    }
+
+    public void onHttpResponse(ServerInfo serverInfo){
+        if (serverInfo == ServerInfo.PERMISSION){
+            mSigninNumber++;
+            if (mSigninNumber == teacherNames.length){
+                mInterview.setStatus(Interview.InterviewStatus.READY);
+                Intent nextStep = new Intent(TeacherSigninActivity.this, WaitForStudentSigninActivity.class);
+                startActivity(nextStep);
+            }
+        } else if(serverInfo == ServerInfo.REJECTION) {
+            Toast.makeText(TeacherSigninActivity.this, "签到错误", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(TeacherSigninActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void initSpinner() {
@@ -87,13 +82,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
         sp.setSelection(0);
         sp.setOnItemSelectedListener(new MySelectedListener());
     }
-
-    // need code here
-    private String[] getTeacherNames() {
-        return new String[]{"考官1", "考官2", "考官3", "考官4", "考官5"};
-    }
-
-    private String[] teacherNames = getTeacherNames();
 
     class MySelectedListener implements AdapterView.OnItemSelectedListener {
 

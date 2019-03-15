@@ -16,6 +16,7 @@ public class InterviewInfo{
     public String siteId;
     public String siteName;
     public ArrayList<Period> periods;
+
     InterviewInfo(JsonObject j){
         collegeId = j.get("college_id").getAsString();
         collegeName = j.get("college_name").getAsString();

@@ -4,6 +4,13 @@ import android.util.Log;
 
 import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
 import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
+import com.example.android.sunshineinterview.studentactivities.StudentInProgressActivity;
+import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
+import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
+import com.example.android.sunshineinterview.studentactivities.WaitForTeacherConfirmActivity;
+import com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity;
+import com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity;
+import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 
 import java.net.URL;
@@ -39,6 +46,9 @@ public class Interview {
     private int orderIndex;
     private boolean inProgress;
 
+    private ArrayList<Person> mTeachers;
+    private ArrayList<Person> mStudents;
+
     private Interview() {
         isValidated = false;
         sideSelected = false;
@@ -51,6 +61,8 @@ public class Interview {
         mSide = InterviewSide.UNKNOWN;
         mInterview = null;
         mInterviewInfo = null;
+        mTeachers = null;
+        mStudents = null;
     }
 
     public static Interview getInstance() {
@@ -102,7 +114,8 @@ public class Interview {
 
     public boolean validate(ValidateActivity validateActivity, String siteId, String validateCode) {
         String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
-        URL url = new NetworkUtils().buildUrl(parameters);
+        Log.v(TAG, "validate() sending url = " + parameters);
+        URL url = NetworkUtils.buildUrl(parameters);
         new ValidateTask().execute(url, validateActivity);
         return true;
     }
@@ -155,7 +168,8 @@ public class Interview {
         } else {
             return false;
         }
-        URL url = new NetworkUtils().buildUrl(parameters);
+        Log.v(TAG, "chooseSide() sending url = " + parameters);
+        URL url = NetworkUtils.buildUrl(parameters);
         new ChooseSideTask().execute(chooseSideActivity, url);
         return true;
     }
@@ -168,7 +182,7 @@ public class Interview {
     }
 
     // 考官选择场次
-    public boolean chooseOrder(int order) {
+    public boolean chooseOrder(ChooseOrderActivity chooseOrderActivity, int order) {
         if (!sideSelected) {
             return false;
         } else if (order >= mInterviewInfo.periods.size()) {
@@ -182,104 +196,158 @@ public class Interview {
         } else {
             parameters = "/order?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(order);
         }
-        URL url = new NetworkUtils().buildUrl(parameters);
-        new ChooseOrderTask().execute(url);
+        Log.v(TAG, "chooseOrder() sending url = " + parameters);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new ChooseOrderTask().execute(chooseOrderActivity, url);
         return true;
     }
 
+    public boolean updatePersonInfo(){
+        // update mPersonInfo cache from Interview
+        // foreground can directly get teachers&students' names
+        if (!orderSelected){
+            Log.v(TAG, "updatePersonInfo(): haven't chosen order yet!");
+            return false;
+        }
+        mTeachers = new ArrayList<>();
+        mStudents = new ArrayList<>();
+        Period p = mInterviewInfo.periods.get(orderIndex);
+        for (int i = 0; i < p.teachers.size(); i++){
+            String id  = p.teachers.get(i).id;
+            String name = p.teachers.get(i).name;
+            mTeachers.add(new Person(id, name));
+        }
+        for (int i = 0; i < p.students.size(); i++){
+            String id = p.students.get(i).id;
+            String name = p.students.get(i).name;
+            mStudents.add(new Person(id, name));
+        }
+        return true;
+    }
+    public String [] getTeacherNames(){
+        int size = mTeachers.size();
+        String [] teacherNames = new String[size];
+        for (int i = 0; i < size; i++){
+            teacherNames[i] = mTeachers.get(i).name;
+        }
+        return teacherNames;
+    }
+    public String [] getStudentNames(){
+        int size = mStudents.size();
+        String [] studentNames = new String[size];
+        for (int i = 0; i < size; i++){
+            studentNames[i] = mStudents.get(i).name;
+        }
+        return studentNames;
+    }
+
     // 考官签到
-    public boolean teacher(String id) {
+    public boolean teacherSignin(TeacherSigninActivity teacherSigninActivity, int teacherIndex) {
         if (!orderSelected) {
             return false;
         } else if (mSide != InterviewSide.TEACHER)
             return false;
+        String id = mInterviewInfo.periods.get(orderIndex).teachers.get(teacherIndex).id;
         String parameters = "/teacher?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
-        URL url = new NetworkUtils().buildUrl(parameters);
-        new TeacherTask().execute(url);
+        Log.v(TAG, "teacherSignin() sending url = " + parameters);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new TeacherSigninTask().execute(teacherSigninActivity, url);
         return true;
     }
 
     // 考官动态查看考生签到情况
-    public boolean queryStudent() {
+    public boolean queryStudent(WaitForStudentSigninActivity waitForStudentSigninActivity) {
         if (!orderSelected) {
             return false;
         } else if (mSide != InterviewSide.TEACHER)
             return false;
         String parameters = "/querystudent?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
-        URL url = new NetworkUtils().buildUrl(parameters);
-        new QueryStudentTask().execute(url);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new QueryStudentTask().execute(waitForStudentSigninActivity, url);
         return true;
     }
 
     // 考官点击开始考试
-    public boolean start() {
+    public boolean start(WaitForStudentSigninActivity waitForStudentSigninActivity) {
         if (!orderSelected) {
             return false;
         } else if (mSide != InterviewSide.TEACHER)
             return false;
         String parameters = "/start?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
-        URL url = new NetworkUtils().buildUrl(parameters);
-        new StartTask().execute(url);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new StartTask().execute(waitForStudentSigninActivity, url);
         return true;
     }
 
     // 考官点击结束考试
     public boolean end() {
-        if (mSide != InterviewSide.TEACHER)
+        if (mSide != InterviewSide.TEACHER && !inProgress){
+            Log.e(TAG, "end(): something is wrong.");
             return false;
-        if (!inProgress)
-            return false;
+        }
         String parameters = "/end?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
-        URL url = new NetworkUtils().buildUrl(parameters);
+        URL url = NetworkUtils.buildUrl(parameters);
         new EndTask().execute(url);
         return true;
     }
 
     // 学生端查询场次（与考官pad同步）
-    public boolean query() {
+    public boolean query(WaitForChooseOrderActivity waitForChooseOrderActivity) {
         if (!orderSelected) {
             return false;
         } else if (mSide != InterviewSide.STUDENT)
             return false;
         String parameters = "/query?siteid=" + mInterviewInfo.siteId;
-        URL url = new NetworkUtils().buildUrl(parameters);
-        new QueryTask().execute(url);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new QueryTask().execute(waitForChooseOrderActivity, url);
         return true;
     }
 
     // 考生签到
-    public boolean student(String id) {
+    public boolean studentSignin(StudentSigninActivity studentSigninActivity, int studentIndex) {
         if (!orderSelected) {
             return false;
         } else if (mSide != InterviewSide.STUDENT)
             return false;
+        String id = mInterviewInfo.periods.get(orderIndex).teachers.get(studentIndex).id;
         String parameters = "/student?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
-        URL url = new NetworkUtils().buildUrl(parameters);
-        new StudentTask().execute(url);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new StudentSigninTask().execute(studentSigninActivity, url);
         return true;
     }
 
     // 学生端查询是否可以开始考试
-    public boolean queryStart() {
+    public boolean queryStart(StudentSigninActivity studentSigninActivity) {
         if (!orderSelected) {
             return false;
         } else if (mSide != InterviewSide.STUDENT)
             return false;
         String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
-        URL url = new NetworkUtils().buildUrl(parameters);
-        new QueryStartTask().execute(url);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new QueryStartTask().execute(studentSigninActivity, url);
+        return true;
+    }
+
+    public boolean queryStart(WaitForTeacherConfirmActivity waitForTeacherConfirmActivity) {
+        if (!orderSelected) {
+            return false;
+        } else if (mSide != InterviewSide.STUDENT)
+            return false;
+        String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new QueryStartTask().execute(waitForTeacherConfirmActivity, url);
         return true;
     }
 
     // 学生端查询是否已经结束考试考试
-    public boolean queryEnd() {
+    public boolean queryEnd(StudentInProgressActivity studentInProgressActivity) {
         if (!inProgress) {
             return false;
         } else if (mSide != InterviewSide.STUDENT)
             return false;
         String parameters = "/queryend?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
-        URL url = new NetworkUtils().buildUrl(parameters);
-        new QueryEndTask().execute(url);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new QueryEndTask().execute(studentInProgressActivity, url);
         return true;
     }
 }
