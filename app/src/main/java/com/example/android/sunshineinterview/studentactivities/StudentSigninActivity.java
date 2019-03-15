@@ -11,58 +11,68 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.model.Person;
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
+
 public class StudentSigninActivity extends AppCompatActivity {
+    Interview mInterview;
+    ArrayList<Person> mStudents;
+    ArrayList<String> studentNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_1);
-        Intent intent = getIntent();
+        mInterview = Interview.getInstance();
 
-        //TODO: 更新右栏信息，获得老师列表，拍照上传...
+        //TODO: get考生列表，或许是一个Person类型的？
+        mStudents = mInterview.getStudents();
+        for(Person t:mStudents)
+        {
+            studentNames.add(t.name);
+        }
 
         initSpinner();
 
+        //TODO: 拍照
         Button bShoot = findViewById(R.id.button_shoot);
+        Button bReset = findViewById(R.id.button_reset);
 
         Button bConfirm = findViewById(R.id.button_confirm);
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
-
-                Intent nextStep = new Intent(StudentSigninActivity.this, WaitForTeacherConfirmActivity.class);
-                startActivity(nextStep);
+                String name = sp.getSelectedItem().toString();
+                //TODO: 老师sigin，可能要传图片，这里传的代表老师的参数是id
+                if (mInterview.student(mStudents.get(sp.getSelectedItemPosition()).id))
+                {
+                    studentNames.remove(sp.getSelectedItemPosition());
+                }
             }
         });
 
-        Button bReset = findViewById(R.id.button_reset);
     }
 
     private void initSpinner() {
-        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, studentName);
-        periodAdapter.setDropDownViewResource(R.layout.item_dropdown);
+        ArrayAdapter<String> studentAdapter = new ArrayAdapter<String>(this, R.layout.item_select, studentNames);
+        studentAdapter.setDropDownViewResource(R.layout.item_dropdown);
         Spinner sp = findViewById(R.id.spinner);
         sp.setPrompt("请选择考次");
-        sp.setAdapter(periodAdapter);
+        sp.setAdapter(studentAdapter);
         sp.setSelection(0);
         sp.setOnItemSelectedListener(new MySelectedListener());
     }
 
-    // need code here
-    private String[] getStudentName() {
-        return new String[]{"学生1", "学生2", "学生3", "学生4", "学生5"};
-    }
-
-    private String[] studentName = getStudentName();
 
     class MySelectedListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(StudentSigninActivity.this, "您选择的是" + studentName[i], Toast.LENGTH_LONG).show();
+            Toast.makeText(StudentSigninActivity.this, "您选择的是" + studentNames.get(i), Toast.LENGTH_LONG).show();
         }
 
         @Override

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.JsonObject;
 
-class Person{
+public class Person{
     private static final String TAG = "Person";
     public String id;
     public String name;
