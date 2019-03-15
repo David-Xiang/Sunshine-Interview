@@ -6,15 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.model.TimeTask;
-import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
 import com.example.myapplication.R;
 
 import java.util.TimerTask;

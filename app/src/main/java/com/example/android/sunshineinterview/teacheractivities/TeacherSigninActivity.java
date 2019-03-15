@@ -38,7 +38,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
         mSigninNumber = 0;
 
         //TODO: get老师列表，或许是一个Person类型的？
-        initSpinner(mTeachers);
+        initSpinner();
 
         //TODO: 拍照
         Button bShoot = findViewById(R.id.button_shoot);
@@ -48,7 +48,8 @@ public class TeacherSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
-                String time = sp.getSelectedItem().toString();
+                // TODO: time
+                //String time = sp.getSelectedItem().toString();
                 mInterview.teacherSignin(TeacherSigninActivity.this, sp.getSelectedItemPosition());
                 // TODO: merge
                 // String name = sp.getSelectedItem().toString();
@@ -77,8 +78,8 @@ public class TeacherSigninActivity extends AppCompatActivity {
     }
 
     private void initSpinner() {
-        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, teacherNames);
-        periodAdapter.setDropDownViewResource(R.layout.item_dropdown);
+        ArrayAdapter<String> teacherAdapter = new ArrayAdapter<>(this, R.layout.item_select, teacherNames);
+        teacherAdapter.setDropDownViewResource(R.layout.item_dropdown);
         Spinner sp = findViewById(R.id.spinner);
         sp.setPrompt("请选择考官");
         sp.setAdapter(teacherAdapter);
@@ -90,7 +91,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(TeacherSigninActivity.this, "您选择的是" + teacherNames.get[i], Toast.LENGTH_SHORT).show();
+            Toast.makeText(TeacherSigninActivity.this, "您选择的是" + teacherNames[i], Toast.LENGTH_SHORT).show();
         }
 
         @Override

@@ -54,7 +54,7 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
         String [] imgUrl = new String [size];
         for (int i = 0; i < size; i++){
             names[i] = s.students.get(i).name;
-            if (s.students.get(i).isAbsent == false){
+            if (!s.students.get(i).isAbsent){
                 imgUrl[i] = s.students.get(i).imgUrl;
             } else {
                 imgUrl[i] = null;

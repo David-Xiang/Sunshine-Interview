@@ -39,12 +39,12 @@ public class StudentSigninTask extends AsyncTask<Object, Void, JsonObject> {
         if (j == null
                 || j.get("type").isJsonNull()
                 || !j.get("type").getAsString().equals("permission")){
-            mStudentSigninActivity.onHttpResponse(StudentSigninActivity.ServerInfo.NOACCESS);
+            mStudentSigninActivity.onStudentsUpdate(StudentSigninActivity.ServerInfo.NOACCESS);
         } else if (j.get("permission").getAsString().equals("true")) {
             Interview.getInstance().updatePersonInfo();
-            mStudentSigninActivity.onHttpResponse(StudentSigninActivity.ServerInfo.PERMISSION);
+            mStudentSigninActivity.onStudentsUpdate(StudentSigninActivity.ServerInfo.PERMISSION);
         } else if (j.get("permission").getAsString().equals("false")) {
-            mStudentSigninActivity.onHttpResponse(StudentSigninActivity.ServerInfo.REJECTION);
+            mStudentSigninActivity.onStudentsUpdate(StudentSigninActivity.ServerInfo.REJECTION);
         } else {
             Log.e(TAG, "Something is wrong in PoseExecute");
         }

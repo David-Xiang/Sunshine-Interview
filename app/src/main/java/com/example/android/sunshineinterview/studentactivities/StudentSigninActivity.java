@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.model.TimeTask;
-import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
 import com.example.myapplication.R;
 
 import java.util.TimerTask;
@@ -63,8 +62,6 @@ public class StudentSigninActivity extends AppCompatActivity {
             }
         });
 
-        Button bReset = findViewById(R.id.button_reset);
-
         mTask = new TimeTask(1000, new TimerTask() {
             @Override
             public void run() {
@@ -101,8 +98,8 @@ public class StudentSigninActivity extends AppCompatActivity {
     }
 
     private void initSpinner() {
-        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, studentsNames);
-        periodAdapter.setDropDownViewResource(R.layout.item_dropdown);
+        ArrayAdapter<String> studentAdapter = new ArrayAdapter<>(this, R.layout.item_select, studentsNames);
+        studentAdapter.setDropDownViewResource(R.layout.item_dropdown);
         //TODO: 老师sigin，可能要传图片，这里传的代表老师的参数是id
         // if (mInterview.student(mStudents.get(sp.getSelectedItemPosition()).id))
         // {

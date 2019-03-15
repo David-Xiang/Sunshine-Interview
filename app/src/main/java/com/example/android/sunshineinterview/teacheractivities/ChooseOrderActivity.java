@@ -43,14 +43,13 @@ public class ChooseOrderActivity extends AppCompatActivity {
 
         initSpinner(mPeriods);
 
-        Intent thisStep = getIntent();
-
         Button bConfirm = findViewById(R.id.confirm);
 
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sp = findViewById(R.id.spinner);
+                // TODO: time?
                 String time = sp.getSelectedItem().toString();
                 mInterview.chooseOrder(ChooseOrderActivity.this, sp.getSelectedItemPosition());
             }
@@ -74,7 +73,7 @@ public class ChooseOrderActivity extends AppCompatActivity {
     }
 
     private void initSpinner(ArrayList<String> timeArray) {
-        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, timeArray);
+        ArrayAdapter<String> periodAdapter = new ArrayAdapter<>(this, R.layout.item_select, timeArray);
         periodAdapter.setDropDownViewResource(R.layout.item_dropdown);
         Spinner sp = findViewById(R.id.spinner);
         sp.setPrompt("请选择考次");

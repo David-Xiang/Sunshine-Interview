@@ -14,9 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.model.Person;
 import com.example.android.sunshineinterview.model.TimeTask;
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,11 +32,10 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     private TimeTask mTask;
     private Handler mHandler;
     private Interview mInterview;
-    
-    // TODO: merge
-    // ArrayList<Person> mStudents;
-    // int[] textViewIDs = {R.id.name0, R.id.name1, R.id.name2, R.id.name3, R.id.name4};
-    // int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
+    private ArrayList<Person> mStudents;
+
+    int[] textViewIDs = {R.id.name0, R.id.name1, R.id.name2, R.id.name3, R.id.name4};
+    int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
     // int cnt_ready = 0;
 
     @SuppressLint("HandlerLeak")
@@ -71,8 +72,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         mStudents = mInterview.getStudents();
 
         int i = 0;
-        for(Person s:mStudents)
-        {
+        for(Person s:mStudents) {
             updateInfo(i, s.name);
             i += 1;
         }
@@ -99,7 +99,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
     private void updateInfo(int index, String studentName){
         int textViewId = textViewIDs[index];
-        TextView textview = (TextView) findViewById(textViewId);
+        TextView textview = findViewById(textViewId);
         textview.setText(studentName);
     }
 

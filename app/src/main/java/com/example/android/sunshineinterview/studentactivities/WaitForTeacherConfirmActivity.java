@@ -1,5 +1,6 @@
 package com.example.android.sunshineinterview.studentactivities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,8 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
-import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.model.TimeTask;
 import com.example.myapplication.R;
@@ -29,6 +28,7 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
     private static final int TIMER = 999;
     private Handler mHandler;
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -94,7 +94,7 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
     }
 
     protected void onHttpResponse(boolean isValidated){
-        ProgressBar pb_wait = (ProgressBar) findViewById(R.id.pb_waitforaction);
+        ProgressBar pb_wait = findViewById(R.id.pb_waitforaction);
         if (isValidated){
             pb_wait.setVisibility(View.GONE);
             Toast.makeText(WaitForTeacherConfirmActivity.this, "即将开始面试", Toast.LENGTH_LONG).show();
