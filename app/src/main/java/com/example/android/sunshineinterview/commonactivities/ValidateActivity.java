@@ -37,7 +37,7 @@ public class ValidateActivity extends AppCompatActivity {
         });
     }
 
-    protected void onHttpResponse(boolean isValidated){
+    public void onHttpResponse(boolean isValidated){
         ProgressBar pb_validate = (ProgressBar) findViewById(R.id.pb_vaildate);
         pb_validate.setVisibility(View.GONE);
         if (isValidated){
