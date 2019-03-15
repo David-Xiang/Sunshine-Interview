@@ -152,6 +152,20 @@ public class Interview {
         return mPeriods;
     }
 
+    // TODO: 返回本场次老师名单
+    public ArrayList<Person> getTeachers() {
+        ArrayList<Person> tmp = new ArrayList<Person>();
+        tmp.add(new Person("1", "NameTeacher"));
+        return tmp;
+    }
+
+    // TODO: 返回本场次考生名单
+    public ArrayList<Person> getStudents() {
+        ArrayList<Person> tmp = new ArrayList<Person>();
+        tmp.add(new Person("2", "NameStudent"));
+        return tmp;
+    }
+
     public boolean chooseSide(ChooseSideActivity chooseSideActivity, InterviewSide interviewFunction) {
         if (!isValidated) {
             Log.e(TAG, "Code not validated when selecting side!");

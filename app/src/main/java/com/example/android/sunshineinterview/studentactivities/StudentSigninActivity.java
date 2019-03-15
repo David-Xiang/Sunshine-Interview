@@ -49,7 +49,9 @@ public class StudentSigninActivity extends AppCompatActivity {
 
         initSpinner();
 
+        //TODO: 拍照
         Button bShoot = findViewById(R.id.button_shoot);
+        Button bReset = findViewById(R.id.button_reset);
 
         Button bConfirm = findViewById(R.id.button_confirm);
         bConfirm.setOnClickListener(new View.OnClickListener() {
@@ -101,9 +103,14 @@ public class StudentSigninActivity extends AppCompatActivity {
     private void initSpinner() {
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, R.layout.item_select, studentsNames);
         periodAdapter.setDropDownViewResource(R.layout.item_dropdown);
+        //TODO: 老师sigin，可能要传图片，这里传的代表老师的参数是id
+        // if (mInterview.student(mStudents.get(sp.getSelectedItemPosition()).id))
+        // {
+        //     studentNames.remove(sp.getSelectedItemPosition());
+        // }
         Spinner sp = findViewById(R.id.spinner);
         sp.setPrompt("请选择考次");
-        sp.setAdapter(periodAdapter);
+        sp.setAdapter(studentAdapter);
         sp.setSelection(0);
         sp.setOnItemSelectedListener(new MySelectedListener());
     }
