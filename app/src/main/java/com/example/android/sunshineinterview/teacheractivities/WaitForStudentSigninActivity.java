@@ -8,11 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.model.Person;
 import com.example.android.sunshineinterview.task.TimeTask;
@@ -34,6 +37,9 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     private Interview mInterview;
     private ArrayList<Person> mStudents;
 
+    private MyCamera mCamera;
+    private CameraPreview mPreview;
+
     int[] textViewIDs = {R.id.name0, R.id.name1, R.id.name2, R.id.name3, R.id.name4};
     int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
     // int cnt_ready = 0;
@@ -43,6 +49,12 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirm_action);
+
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
+
         mInterview = Interview.getInstance();
 
         mTask = new TimeTask(1000, new TimerTask() {
@@ -149,4 +161,19 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 //            bReady.setVisibility(View.VISIBLE);
 //        }
 //    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // TODO
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        // TODO
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // TODO
+    }
 }

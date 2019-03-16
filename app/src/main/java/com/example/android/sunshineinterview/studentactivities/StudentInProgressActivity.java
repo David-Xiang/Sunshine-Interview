@@ -7,10 +7,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
+import com.example.android.sunshineinterview.Camera.MyMediaRecorder;
 import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
 import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.android.sunshineinterview.model.Interview;
@@ -30,12 +34,23 @@ public class StudentInProgressActivity extends AppCompatActivity {
     private static final int TIMER = 999;
     private Handler mHandler;
 
+    private MyCamera mCamera;
+    private CameraPreview mPreview;
+    private MyMediaRecorder mMediaRecorder;
+
     @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interviewed);
+
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
+        mMediaRecorder = new MyMediaRecorder(this, mCamera.camera, mPreview.getHolder());
+
         mInterview = Interview.getInstance();
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
@@ -70,12 +85,6 @@ public class StudentInProgressActivity extends AppCompatActivity {
         mTask.stop();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopTimer();
-    }
-
     public void onHttpResponse(ServerInfo serverInfo){
         if (serverInfo == ServerInfo.PERMISSION){
             Intent nextStep = new Intent(StudentInProgressActivity.this, StudentEndActivity.class);
@@ -91,5 +100,26 @@ public class StudentInProgressActivity extends AppCompatActivity {
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
         textview.setText(originalString.replace("------", newString));
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // TODO
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        // TODO
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // TODO
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopTimer();
     }
 }

@@ -2,6 +2,7 @@ package com.example.android.sunshineinterview.commonactivities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Camera;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -14,9 +15,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Interview;
 
@@ -25,6 +29,9 @@ import java.util.List;
 
 public class ValidateActivity extends AppCompatActivity {
     private Interview mInterview;
+
+    private MyCamera mCamera;
+    private CameraPreview mPreview;
 
     private static String[] permissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -42,10 +49,16 @@ public class ValidateActivity extends AppCompatActivity {
 
         mPermissionList = new ArrayList<>();
 
-
         if (Build.VERSION.SDK_INT >= 23) { // android 6.0才用动态权限
             initPermission();
         }
+
+        // TODO 有一个小bug，第一次申请权限时，右下角预览会不成功。
+
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
 
         mInterview = Interview.getInstance();
         mInterview.setStatus(Interview.InterviewStatus.VALIDATE);
@@ -105,8 +118,22 @@ public class ValidateActivity extends AppCompatActivity {
                 Log.d("mydebug", "You have denied some permission request!");
             }
         }
-
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // TODO
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        // TODO
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // TODO
+    }
 }
 

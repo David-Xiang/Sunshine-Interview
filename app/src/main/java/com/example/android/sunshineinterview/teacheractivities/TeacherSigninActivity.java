@@ -16,6 +16,7 @@ import android.widget.Toast;
 import android.hardware.Camera;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Person;
@@ -37,9 +38,8 @@ public class TeacherSigninActivity extends AppCompatActivity {
     Interview mInterview;
     private String[] teacherNames;
     int mSigninNumber;
-    private Camera mCamera;
+    private MyCamera mCamera;
     private CameraPreview mPreview;
-    private int cameraID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +51,8 @@ public class TeacherSigninActivity extends AppCompatActivity {
         teacherNames = mInterview.getTeacherNames();
         mSigninNumber = 0;
 
-        mCamera = getCamera();
-        mPreview = new CameraPreview(this, mCamera);
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
 
@@ -69,7 +69,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
             public void onClick(View v){
                 // TODO 判断有没有选择考官（通过禁用按钮）
                 Log.d("mydebug", "start taking picture");
-                mCamera.takePicture(null, null, mPictureCallback);
+                mCamera.takePhoto();
             }
         });
         bReset.setOnClickListener(new View.OnClickListener(){
@@ -133,53 +133,20 @@ public class TeacherSigninActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> adapterView){}
     }
 
-    private Camera getCamera(){
-        Camera newCamera;
-        try{
-            newCamera = Camera.open(cameraID);
-        }
-        catch (Exception e)
-        {
-            newCamera = null;
-            e.printStackTrace();
-        }
-        return newCamera;
-    }
 
-    private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            Log.d("mPictureCallback", "called!");
-
-            File mediaFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            if (mediaFile == null){                                                     ////////////
-                Log.d("mydebug", "failed to open the IMG file");
-            }
-            try{
-                FileOutputStream fos = new FileOutputStream(mediaFile);
-                fos.write(data);
-                fos.close();
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-            // TODO 调用下一个intent，展示拍照结果。这里只能拍照一次
-            mCamera.release();
-        }
-    };
-
+    // 监听Activity状态
     @Override
-    public void onResume(){
+    protected void onResume(){
         super.onResume();
         // TODO
     }
     @Override
-    public void onPause(){
+    protected void onPause(){
         super.onPause();
         // TODO
     }
     @Override
-    public void onStop(){
+    protected void onStop(){
         super.onStop();
         // TODO
     }

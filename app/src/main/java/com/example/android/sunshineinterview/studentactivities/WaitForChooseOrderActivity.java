@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.task.TimeTask;
 import com.example.myapplication.R;
@@ -21,16 +24,25 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         REJECTION,  // the side is already chosen
         NOACCESS    // bad network connectivity
     }
+
     private static final int TIMER = 999;
     private TimeTask mTask;
     private Handler mHandler;
     private Interview mInterview;
+
+    private MyCamera mCamera;
+    private CameraPreview mPreview;
 
     @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wait_for_selection);
+
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
 
         mInterview = Interview.getInstance();
 
@@ -86,5 +98,21 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
         Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentSigninActivity.class);
         startActivity(nextStep);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // TODO
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        // TODO
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // TODO
     }
 }

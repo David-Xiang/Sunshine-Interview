@@ -279,7 +279,7 @@
                     android:background="@drawable/border"
                     android:orientation="vertical">
 
-                    <VideoView
+                    <FrameLayout
                         android:id="@+id/videoView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

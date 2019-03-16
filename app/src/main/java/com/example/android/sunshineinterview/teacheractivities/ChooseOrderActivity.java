@@ -8,11 +8,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
@@ -25,6 +28,9 @@ public class ChooseOrderActivity extends AppCompatActivity {
         NOACCESS    // bad network connectivity
     }
 
+    private MyCamera mCamera;
+    private CameraPreview mPreview;
+
     Interview mInterview;
     ArrayList<String> mPeriods;
     Spinner sp;
@@ -35,6 +41,11 @@ public class ChooseOrderActivity extends AppCompatActivity {
         setContentView(R.layout.select_interview);
         mInterview = Interview.getInstance();
         mPeriods = mInterview.getPeriods();
+
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
@@ -98,5 +109,21 @@ public class ChooseOrderActivity extends AppCompatActivity {
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
         textview.setText(originalString.replace("------", newString));
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // TODO
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        // TODO
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // TODO
     }
 }

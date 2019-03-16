@@ -7,8 +7,8 @@
 
     tools:context="com.example.android.sunshineinterview.studentactivities.StudentInProgressActivity">
 
-    <VideoView
-        android:id="@+id/videoView3"
+    <FrameLayout
+        android:id="@+id/videoView"
         android:layout_width="1940dp"
         android:layout_height="1383dp"
         app:layout_constraintBottom_toBottomOf="parent"

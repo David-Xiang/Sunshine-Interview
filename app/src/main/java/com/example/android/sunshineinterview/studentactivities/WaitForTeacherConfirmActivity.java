@@ -7,10 +7,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.task.TimeTask;
 import com.example.myapplication.R;
@@ -27,6 +30,8 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
     private TimeTask mTask;
     private static final int TIMER = 999;
     private Handler mHandler;
+    private MyCamera mCamera;
+    private CameraPreview mPreview;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -34,6 +39,12 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wait_for_action);
+
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
+
         mInterview = Interview.getInstance();
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
@@ -103,5 +114,21 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
         } else {
             Toast.makeText(WaitForTeacherConfirmActivity.this, "面试开始失败", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        // TODO
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        // TODO
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // TODO
     }
 }

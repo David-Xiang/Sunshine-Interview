@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.task.TimeTask;
 import com.example.myapplication.R;
@@ -42,9 +43,8 @@ public class StudentSigninActivity extends AppCompatActivity {
     private TimeTask mTask;
     private Handler mHandler;
 
-    private Camera mCamera;
+    private MyCamera mCamera;
     private CameraPreview mPreview;
-    private int cameraID = 0;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -56,8 +56,8 @@ public class StudentSigninActivity extends AppCompatActivity {
         studentsNames = mInterview.getStudentNames();
         mSigninNumber = 0;
 
-        mCamera = getCamera();
-        mPreview = new CameraPreview(this, mCamera);
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
 
@@ -77,7 +77,7 @@ public class StudentSigninActivity extends AppCompatActivity {
             public void onClick(View v){
                 // TODO 判断有没有选择考官（通过禁用按钮）
                 Log.d("mydebug", "start taking picture");
-                mCamera.takePicture(null, null, mPictureCallback);
+                mCamera.takePhoto();
             }
         });
         bReset.setOnClickListener(new View.OnClickListener(){
@@ -123,12 +123,6 @@ public class StudentSigninActivity extends AppCompatActivity {
 
     private void stopTimer(){
         mTask.stop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopTimer();
     }
 
     private void initSpinner() {
@@ -186,54 +180,25 @@ public class StudentSigninActivity extends AppCompatActivity {
         }
     }
 
-    private Camera getCamera(){
-        Camera newCamera;
-        try{
-            newCamera = Camera.open(cameraID);
-        }
-        catch (Exception e)
-        {
-            newCamera = null;
-            e.printStackTrace();
-        }
-        return newCamera;
-    }
-
-    private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            Log.d("mPictureCallback", "called!");
-
-            File mediaFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            if (mediaFile == null){                                                     ////////////
-                Log.d("mydebug", "failed to open the IMG file");
-            }
-            try{
-                FileOutputStream fos = new FileOutputStream(mediaFile);
-                fos.write(data);
-                fos.close();
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-            // TODO 调用下一个intent，展示拍照结果。这里只能拍照一次
-            mCamera.release();
-        }
-    };
-
+    // 监听Activity状态
     @Override
-    public void onResume(){
+    protected void onResume(){
         super.onResume();
         // TODO
     }
     @Override
-    public void onPause(){
+    protected void onPause(){
         super.onPause();
         // TODO
     }
     @Override
-    public void onStop(){
+    protected void onStop(){
         super.onStop();
         // TODO
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopTimer();
     }
 }
