@@ -35,7 +35,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     private TimeTask mTask;
     private Handler mHandler;
     private Interview mInterview;
-    private ArrayList<Person> mStudents;
+    private String [] mStudentNames;
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
@@ -81,11 +81,11 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
             }
         };
 
-        mStudents = mInterview.getStudents();
+        mStudentNames = mInterview.getStudentNames();
 
         int i = 0;
-        for(Person s:mStudents) {
-            updateInfo(i, s.name);
+        for(String s:mStudentNames) {
+            updateInfo(i, s);
             i += 1;
         }
 
