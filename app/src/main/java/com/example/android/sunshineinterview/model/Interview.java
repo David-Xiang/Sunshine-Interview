@@ -77,6 +77,10 @@ public class Interview {
         return mStatus;
     }
 
+    public InterviewSide getSide(){
+        return mSide;
+    }
+
     public boolean setInterviewInfo(InterviewInfo i){
         mInterviewInfo = i;
         return true;
@@ -116,7 +120,7 @@ public class Interview {
         String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
         Log.v(TAG, "validate() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        new ValidateTask().execute(url, validateActivity);
+        new ValidateTask().execute(validateActivity, url);
         return true;
     }
 

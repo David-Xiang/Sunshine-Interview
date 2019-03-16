@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.sunshineinterview.model.Interview;
-import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class ChooseOrderActivity extends AppCompatActivity {
         if (serverInfo == ChooseOrderActivity.ServerInfo.PERMISSION){
             mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
             mInterview.setOrder(sp.getSelectedItemPosition());
-            Intent nextStep = new Intent(ChooseOrderActivity.this, WaitForChooseOrderActivity.class);
+            Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
             startActivity(nextStep);
         } else if(serverInfo == ChooseOrderActivity.ServerInfo.REJECTION) {
             Toast.makeText(ChooseOrderActivity.this, "选择考次错误", Toast.LENGTH_LONG).show();

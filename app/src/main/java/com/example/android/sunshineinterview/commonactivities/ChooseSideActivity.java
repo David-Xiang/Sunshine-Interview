@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
+import com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity;
 import com.example.myapplication.R;
 
 import com.example.android.sunshineinterview.model.Interview;
@@ -28,7 +29,6 @@ public class ChooseSideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_side);
 
         mInterview = Interview.getInstance();
-        mInterview.setStatus(Interview.InterviewStatus.VALIDATE);
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
@@ -74,8 +74,12 @@ public class ChooseSideActivity extends AppCompatActivity {
         pb_validate.setVisibility(View.GONE);
 
         if (serverInfo == ServerInfo.PERMISSION){
-            mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
-            Intent nextStep = new Intent(ChooseSideActivity.this, WaitForChooseOrderActivity.class);
+            mInterview.setStatus(Interview.InterviewStatus.CHOOSEORDER);
+            Intent nextStep = null;
+            if (mInterview.getSide() == Interview.InterviewSide.STUDENT)
+                nextStep = new Intent(ChooseSideActivity.this, WaitForChooseOrderActivity.class);
+            else
+                nextStep = new Intent(ChooseSideActivity.this, ChooseOrderActivity.class);
             startActivity(nextStep);
         } else if(serverInfo == ServerInfo.REJECTION) {
             Toast.makeText(ChooseSideActivity.this, "客户端冲突，请重新选择", Toast.LENGTH_LONG).show();

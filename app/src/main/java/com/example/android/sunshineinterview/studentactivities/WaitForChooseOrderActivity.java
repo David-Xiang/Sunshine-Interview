@@ -12,6 +12,7 @@ import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.model.TimeTask;
 import com.example.myapplication.R;
 
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class WaitForChooseOrderActivity extends AppCompatActivity {
@@ -36,15 +37,8 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
+
         // TODO: query
-        mTask = new TimeTask(1000, new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(TIMER);
-                //或者发广播，启动服务都是可以的
-            }
-        });
-        mTask.start();
 
         mHandler = new Handler(){
             @Override
@@ -60,6 +54,15 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
                 }
             }
         };
+
+        mTask = new TimeTask(1000, new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(TIMER);
+                //或者发广播，启动服务都是可以的
+            }
+        });
+        mTask.start();
     }
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
@@ -80,6 +83,7 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
     }
 
     public void onHttpResponse(){
+        mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
         Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentSigninActivity.class);
         startActivity(nextStep);
     }

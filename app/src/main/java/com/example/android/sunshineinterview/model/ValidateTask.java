@@ -50,6 +50,23 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
                 "                        \"name\": \"宋煦\"\n" +
                 "                    }\n" +
                 "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"order\": \"02\",\n" +
+                "                \"start_time\": \"2019-06-12 09:00:00\",\n" +
+                "                \"end_time\": \"2019-06-12 09:00:00\",\n" +
+                "                \"teacher\":[\n" +
+                "                    {\n" +
+                "                        \"id\":\"11990001\",\n" +
+                "                        \"name\": \"何炬\"\n" +
+                "                    }\n" +
+                "                ],\n" +
+                "                \"student\":[\n" +
+                "                    {\n" +
+                "                        \"id\":\"11990001\",\n" +
+                "                        \"name\": \"宋煦\"\n" +
+                "                    }\n" +
+                "                ]\n" +
                 "            }\n" +
                 "        ]\n" +
                 "    }\n" +
@@ -66,6 +83,7 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
             // something is wrong
             mValidateActivity.onHttpResponse(false);
         }
+        j = j.get("info").getAsJsonObject();
         Interview.getInstance().setInterviewInfo(new InterviewInfo(j));
         Interview.getInstance().setValidated();
         mValidateActivity.onHttpResponse(true);

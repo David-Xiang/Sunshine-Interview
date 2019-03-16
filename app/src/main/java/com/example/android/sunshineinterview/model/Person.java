@@ -16,11 +16,11 @@ public class Person{
         Log.v(TAG, "id = " + id);
         Log.v(TAG, "name = " + name);
 
-        if(!j.get("is_absent").isJsonNull()){
+        if(j.has("is_absent")){
             isAbsent = Boolean.valueOf(j.get("is_absent").getAsString());
             Log.v(TAG, "is_absent = " + isAbsent);
         }
-        if(!j.get("img_url").isJsonNull()){
+        if(j.has("img_url")){
             imgUrl = j.get("img_url").getAsString();
             Log.v(TAG, "imgUrl = " + imgUrl);
         }
