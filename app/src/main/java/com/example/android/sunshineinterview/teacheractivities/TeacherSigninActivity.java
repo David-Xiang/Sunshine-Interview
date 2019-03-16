@@ -1,20 +1,30 @@
 package com.example.android.sunshineinterview.teacheractivities;
 
+import android.content.ClipboardManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.hardware.Camera;
 
+import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Person;
+import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_VIDEO;
+import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_IMAGE;
+import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
@@ -27,15 +37,24 @@ public class TeacherSigninActivity extends AppCompatActivity {
     Interview mInterview;
     private String[] teacherNames;
     int mSigninNumber;
+    private Camera mCamera;
+    private CameraPreview mPreview;
+    private int cameraID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
+
         mInterview = Interview.getInstance();
         teacherNames = mInterview.getTeacherNames();
         mSigninNumber = 0;
+
+        mCamera = getCamera();
+        mPreview = new CameraPreview(this, mCamera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
 
         //TODO: get老师列表，或许是一个Person类型的？
         initSpinner();
@@ -44,6 +63,22 @@ public class TeacherSigninActivity extends AppCompatActivity {
         Button bShoot = findViewById(R.id.button_shoot);
         Button bReset = findViewById(R.id.button_reset);
         Button bConfirm = findViewById(R.id.button_confirm);
+
+        bShoot.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                // TODO 判断有没有选择考官（通过禁用按钮）
+                Log.d("mydebug", "start taking picture");
+                mCamera.takePicture(null, null, mPictureCallback);
+            }
+        });
+        bReset.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                // TODO 重置imageView
+            }
+        });
+
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,4 +133,54 @@ public class TeacherSigninActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> adapterView){}
     }
 
+    private Camera getCamera(){
+        Camera newCamera;
+        try{
+            newCamera = Camera.open(cameraID);
+        }
+        catch (Exception e)
+        {
+            newCamera = null;
+            e.printStackTrace();
+        }
+        return newCamera;
+    }
+
+    private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            Log.d("mPictureCallback", "called!");
+
+            File mediaFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+            if (mediaFile == null){                                                     ////////////
+                Log.d("mydebug", "failed to open the IMG file");
+            }
+            try{
+                FileOutputStream fos = new FileOutputStream(mediaFile);
+                fos.write(data);
+                fos.close();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            // TODO 调用下一个intent，展示拍照结果。这里只能拍照一次
+            mCamera.release();
+        }
+    };
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        // TODO
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        // TODO
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        // TODO
+    }
 }
