@@ -92,7 +92,7 @@ public class StudentSigninActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
                 mInterview.studentSignin(StudentSigninActivity.this, sp.getSelectedItemPosition());
-                // TODO: show a progress bar
+                // TODO: show a progress bar & 传照片
             }
         });
 
@@ -128,13 +128,8 @@ public class StudentSigninActivity extends AppCompatActivity {
     private void initSpinner() {
         ArrayAdapter<String> studentAdapter = new ArrayAdapter<>(this, R.layout.item_select, studentsNames);
         studentAdapter.setDropDownViewResource(R.layout.item_dropdown);
-        //TODO: 老师sigin，可能要传图片，这里传的代表老师的参数是id
-        // if (mInterview.student(mStudents.get(sp.getSelectedItemPosition()).id))
-        // {
-        //     studentNames.remove(sp.getSelectedItemPosition());
-        // }
         Spinner sp = findViewById(R.id.spinner);
-        sp.setPrompt("请选择考次");
+        sp.setPrompt("请选择考生");
         sp.setAdapter(studentAdapter);
         sp.setSelection(0);
         sp.setOnItemSelectedListener(new MySelectedListener());
@@ -143,7 +138,7 @@ public class StudentSigninActivity extends AppCompatActivity {
     class MySelectedListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(StudentSigninActivity.this, "您选择的是" + studentsNames[i], Toast.LENGTH_LONG).show();
+            Toast.makeText(StudentSigninActivity.this, "您选择的是" + studentsNames[i], Toast.LENGTH_SHORT).show();
         }
 
         @Override

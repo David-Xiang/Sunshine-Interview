@@ -57,15 +57,6 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
 
-        mTask = new TimeTask(1000, new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(TIMER);
-                //或者发广播，启动服务都是可以的
-            }
-        });
-        mTask.start();
-
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -80,6 +71,17 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                 }
             }
         };
+
+        mTask = new TimeTask(1000, new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(TIMER);
+                //或者发广播，启动服务都是可以的
+            }
+        });
+        mTask.start();
+
+
 
         mStudentNames = mInterview.getStudentNames();
 
