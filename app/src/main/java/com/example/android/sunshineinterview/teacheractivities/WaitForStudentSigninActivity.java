@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.model.Person;
-import com.example.android.sunshineinterview.model.TimeTask;
+import com.example.android.sunshineinterview.task.TimeTask;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;

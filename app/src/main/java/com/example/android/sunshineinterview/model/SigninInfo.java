@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class SigninInfo{
     public static final String TAG = "SigninInfo";
     public ArrayList<Person> students;
-    SigninInfo(JsonArray j){
+    public SigninInfo(JsonArray j){
         Log.v(TAG,"students: ");
         students = new ArrayList<>();
         for (JsonElement e: j){
