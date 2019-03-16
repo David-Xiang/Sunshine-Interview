@@ -338,8 +338,11 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:background="@color/colorPrimary"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="0.2"
-                    android:orientation="vertical">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/textView3"

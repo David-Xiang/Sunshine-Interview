@@ -56,7 +56,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
 
-        //TODO: get老师列表，或许是一个Person类型的？
         initSpinner();
 
         //TODO: 拍照

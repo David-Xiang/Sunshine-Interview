@@ -67,8 +67,8 @@ public class ChooseOrderActivity extends AppCompatActivity {
     }
 
     public void onHttpResponse(ChooseOrderActivity.ServerInfo serverInfo){
-        ProgressBar pb_validate = findViewById(R.id.pb_chooseside);
-        pb_validate.setVisibility(View.GONE);
+//        ProgressBar pb_validate = findViewById(R.id.pb_chooseside);
+//        pb_validate.setVisibility(View.GONE);
 
         if (serverInfo == ChooseOrderActivity.ServerInfo.PERMISSION){
             mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
