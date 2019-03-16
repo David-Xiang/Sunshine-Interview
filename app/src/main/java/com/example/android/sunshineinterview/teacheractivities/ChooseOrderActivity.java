@@ -3,6 +3,7 @@ package com.example.android.sunshineinterview.teacheractivities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -61,18 +62,17 @@ public class ChooseOrderActivity extends AppCompatActivity {
                 sp = findViewById(R.id.spinner);
                 // TODO: time?
                 String time = sp.getSelectedItem().toString();
+
+                mInterview.setOrder(sp.getSelectedItemPosition());
                 mInterview.chooseOrder(ChooseOrderActivity.this, sp.getSelectedItemPosition());
             }
         });
     }
 
-    public void onHttpResponse(ChooseOrderActivity.ServerInfo serverInfo){
-//        ProgressBar pb_validate = findViewById(R.id.pb_chooseside);
-//        pb_validate.setVisibility(View.GONE);
-
+    public void onHttpResponse(ChooseOrderActivity.ServerInfo serverInfo)
+    {
         if (serverInfo == ChooseOrderActivity.ServerInfo.PERMISSION){
             mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
-            mInterview.setOrder(sp.getSelectedItemPosition());
             Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
             startActivity(nextStep);
         } else if(serverInfo == ChooseOrderActivity.ServerInfo.REJECTION) {
