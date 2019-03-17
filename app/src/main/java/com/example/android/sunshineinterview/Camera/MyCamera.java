@@ -6,6 +6,8 @@ import android.hardware.Camera;
 import android.util.Log;
 import android.view.Surface;
 
+import com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity;
+
 import java.io.File;
 import java.io.FileOutputStream;
 

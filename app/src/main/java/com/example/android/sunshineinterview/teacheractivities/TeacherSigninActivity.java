@@ -3,6 +3,10 @@ package com.example.android.sunshineinterview.teacheractivities;
 import android.content.ClipboardManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -19,16 +23,21 @@ import android.widget.Toast;
 import android.hardware.Camera;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.FindDir;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Person;
+
+import static com.example.android.sunshineinterview.Camera.FindDir.*;
 import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_VIDEO;
 import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_IMAGE;
 import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -38,6 +47,10 @@ public class TeacherSigninActivity extends AppCompatActivity {
         REJECTION,  // the side is already chosen
         NOACCESS    // bad network connectivity
     }
+
+    private Uri imageUri;
+    public static final int TAKE_PHOTO = 1;
+
     Interview mInterview;
     private String[] teacherNames;
     int mSigninNumber;
@@ -70,18 +83,36 @@ public class TeacherSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 // TODO 判断有没有选择考官（通过禁用按钮）
-                Log.d("mydebug", "start taking picture");
-                mCamera.takePhoto();
-                // 下面三行有bug
-                // ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
-                // Bitmap bm = BitmapFactory.decodeFile(mCamera.LastStoreLoction);
-                // interviewerPhoto.setImageBitmap(bm);
+//                Log.d("mydebug", "start taking picture");
+//                mCamera.takePhoto();
+                File outputImage = new FindDir().getOutputMediaFile(MEDIA_TYPE_IMAGE);
+                try {
+                    if (outputImage.exists()){
+                        outputImage.delete();
+                    }
+                    else
+                    outputImage.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (Build.VERSION.SDK_INT>=24){
+                    imageUri= FileProvider.getUriForFile(TeacherSigninActivity.this,
+                            "com.example.android.sunshineinterview.fileprovider",outputImage);
+                }else {
+                    imageUri=Uri.fromFile(outputImage);
+                }
+                //启动相机程序
+                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+                startActivityForResult(intent,TAKE_PHOTO);
             }
         });
         bReset.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 // TODO 重置imageView
+                ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+                interviewerPhoto.setImageResource(R.drawable.bigbrother);
             }
         });
 
@@ -155,5 +186,26 @@ public class TeacherSigninActivity extends AppCompatActivity {
     protected void onStop(){
         super.onStop();
         // TODO
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch(requestCode){
+            case TAKE_PHOTO:
+                if (resultCode == RESULT_OK){
+                    try{
+                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                        ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+                        interviewerPhoto.setImageBitmap(bitmap);
+                        mCamera = new MyCamera(this);
+                        mPreview.resetCamera(mCamera);
+                        }catch (FileNotFoundException e){
+                        e.printStackTrace();;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

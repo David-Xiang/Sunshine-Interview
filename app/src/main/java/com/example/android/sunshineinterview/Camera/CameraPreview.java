@@ -24,6 +24,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mHolder.addCallback(this);
     }
 
+    public void resetCamera(MyCamera cmr)
+    {
+        mCamera = cmr.camera;
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         // The Surface has been created, now tell the camera where to draw the preview.
