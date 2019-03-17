@@ -59,7 +59,9 @@ public class ValidateActivity extends AppCompatActivity {
 
         // TODO 有一个小bug，第一次申请权限时，右下角预览会不成功。
 
-        mCamera = new MyCamera(this);
+        mCamera = MyCamera.getInstance();
+        mCamera.setCameraDisplayOrientation(this);
+
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
