@@ -1,6 +1,8 @@
 package com.example.android.sunshineinterview.teacheractivities;
 
 import android.content.ClipboardManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -10,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +72,10 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 // TODO 判断有没有选择考官（通过禁用按钮）
                 Log.d("mydebug", "start taking picture");
                 mCamera.takePhoto();
+                // 下面三行有bug
+                // ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+                // Bitmap bm = BitmapFactory.decodeFile(mCamera.LastStoreLoction);
+                // interviewerPhoto.setImageBitmap(bm);
             }
         });
         bReset.setOnClickListener(new View.OnClickListener(){

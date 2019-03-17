@@ -24,14 +24,18 @@ import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Interview;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class ValidateActivity extends AppCompatActivity {
     private Interview mInterview;
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
+    private FrameLayout preview;
 
     private static String[] permissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -123,12 +127,25 @@ public class ValidateActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        // TODO
+        Log.d("mydebug", "onResume called");
+        /*if (mCamera.camera == null){
+            Log.d("mydebug", "onResume if called");
+            mCamera.reGetCamera();
+            mPreview = new CameraPreview(this, mCamera.camera);
+            preview.addView(mPreview);
+        }*/
     }
     @Override
     protected void onPause(){
+        Log.d("mydebug", "onPause called");
         super.onPause();
-        // TODO
+        /*if (mCamera.camera != null){
+            mCamera.camera.stopPreview();
+            mCamera.camera.setPreviewCallback(null);
+            mCamera.releaseCamera();
+            preview.removeView(mPreview);
+            mPreview = null;
+        }*/
     }
     @Override
     protected void onStop(){

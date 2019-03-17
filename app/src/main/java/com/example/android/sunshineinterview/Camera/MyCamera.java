@@ -13,12 +13,14 @@ import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMedi
 public class MyCamera {
     private String info; // 教师姓名或者学生姓名等
     public Camera camera;
-    private int cameraID = 0;
+    private int cameraID = 1;
     private Context mContext;
+    public String LastStoreLoction;
     
     public MyCamera(Context context, String information){
         mContext = context;
         info = information;
+        LastStoreLoction = null;
         if (camera == null){
             camera = getCamera();
         }
@@ -30,6 +32,11 @@ public class MyCamera {
         if (camera == null){
             camera = getCamera();
         }
+    }
+
+    public void reGetCamera()
+    {
+        camera = getCamera();
     }
 
     public void setInfo(String information){
@@ -62,8 +69,7 @@ public class MyCamera {
             catch (Exception e){
                 e.printStackTrace();
             }
-            // TODO 调用下一个intent，展示拍照结果。这里只能拍照一次
-            releaseCamera();
+            LastStoreLoction = mediaFile.toString();
         }
     };
 
