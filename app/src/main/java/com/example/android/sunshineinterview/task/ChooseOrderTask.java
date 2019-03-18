@@ -48,7 +48,7 @@ public class ChooseOrderTask extends AsyncTask<Object, Void, JsonObject> {
         } else if (j.get("permission").getAsString().equals("false")) {
             mChooseOrderActivity.onHttpResponse(ChooseOrderActivity.ServerInfo.REJECTION);
         } else {
-            Log.e(TAG, "Something is wrong in PoseExecute");
+            Log.w(TAG, "Something is wrong in PoseExecute");
         }
     }
 }

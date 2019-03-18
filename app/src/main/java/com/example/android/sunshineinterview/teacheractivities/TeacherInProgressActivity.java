@@ -44,7 +44,7 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mInterview.end();
+                mInterview.end(TeacherInProgressActivity.this);
             }
         });
     }
@@ -52,7 +52,7 @@ public class TeacherInProgressActivity extends AppCompatActivity {
     public void onHttpResponse(ServerInfo serverInfo){
         if (serverInfo == ServerInfo.PERMISSION){
             mInterview.setStatus(Interview.InterviewStatus.END);
-            Intent nextStep = new Intent(TeacherInProgressActivity.this, WaitForStudentSigninActivity.class);
+            Intent nextStep = new Intent(TeacherInProgressActivity.this, ChooseOrderActivity.class);
             startActivity(nextStep);
         } else if(serverInfo == ServerInfo.REJECTION) {
             Toast.makeText(TeacherInProgressActivity.this, "签到错误", Toast.LENGTH_LONG).show();

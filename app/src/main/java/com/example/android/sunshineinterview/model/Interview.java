@@ -9,6 +9,8 @@ import com.example.android.sunshineinterview.studentactivities.StudentSigninActi
 import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
 import com.example.android.sunshineinterview.studentactivities.WaitForTeacherConfirmActivity;
 import com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity;
+import com.example.android.sunshineinterview.teacheractivities.TeacherEndActivity;
+import com.example.android.sunshineinterview.teacheractivities.TeacherInProgressActivity;
 import com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity;
 import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
@@ -179,7 +181,7 @@ public class Interview {
         return true;
     }
 
-    // 设置场次只能是考官端
+    // 设置场次，可能是考官端收到场次确认，或者考生端收到场次确认
     public boolean setOrder(int index) {
         orderSelected = true;
         orderIndex = index;
@@ -285,23 +287,26 @@ public class Interview {
     }
 
     // 考官点击结束考试
-    public boolean end() {
+    public boolean end(TeacherInProgressActivity teacherInProgressActivity) {
         if (mSide != InterviewSide.TEACHER && !inProgress){
             Log.e(TAG, "end(): something is wrong.");
             return false;
         }
         String parameters = "/end?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = NetworkUtils.buildUrl(parameters);
-        new EndTask().execute(url);
+        new EndTask().execute(teacherInProgressActivity, url);
         return true;
     }
 
     // 学生端查询场次（与考官pad同步）
     public boolean query(WaitForChooseOrderActivity waitForChooseOrderActivity) {
-        if (!orderSelected) {
+        if (!sideSelected) {
+            Log.w(TAG, "query(): in fault 1");
             return false;
-        } else if (mSide != InterviewSide.STUDENT)
+        } else if (mSide != InterviewSide.STUDENT){
+            Log.w(TAG, "query(): in fault 2");
             return false;
+        }
         String parameters = "/query?siteid=" + mInterviewInfo.siteId;
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryTask().execute(waitForChooseOrderActivity, url);
