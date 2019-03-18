@@ -35,6 +35,7 @@ import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_IM
 import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -67,7 +68,9 @@ public class TeacherSigninActivity extends AppCompatActivity {
         teacherNames = mInterview.getTeacherNames();
         mSigninNumber = 0;
 
-        mCamera = new MyCamera(this);
+
+        ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+        mCamera = new MyCamera(this, interviewerPhoto);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
@@ -84,14 +87,14 @@ public class TeacherSigninActivity extends AppCompatActivity {
             public void onClick(View v){
                 // TODO 判断有没有选择考官（通过禁用按钮）
 //                Log.d("mydebug", "start taking picture");
-//                mCamera.takePhoto();
+                // mCamera.takePhoto();
                 File outputImage = new FindDir().getOutputMediaFile(MEDIA_TYPE_IMAGE);
                 try {
                     if (outputImage.exists()){
                         outputImage.delete();
                     }
                     else
-                    outputImage.createNewFile();
+                        outputImage.createNewFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

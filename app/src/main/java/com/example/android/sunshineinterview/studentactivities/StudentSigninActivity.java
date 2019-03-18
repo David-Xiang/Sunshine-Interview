@@ -91,7 +91,8 @@ public class StudentSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 // TODO 判断有没有选择考官（通过禁用按钮）
-                Log.d("mydebug", "start taking picture");
+                // mCamera.takePhoto();
+                // Log.d("mydebug", "start taking picture");
                 File outputImage = new FindDir().getOutputMediaFile(MEDIA_TYPE_IMAGE);
                 try {
                     if (outputImage.exists()){
@@ -119,8 +120,7 @@ public class StudentSigninActivity extends AppCompatActivity {
             public void onClick(View v){
                 // TODO 重置imageView
                 ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
-                interviewerPhoto.setImageResource(R.drawable.bigbrother);
-            }
+                interviewerPhoto.setImageResource(R.drawable.bigbrother);            }
         });
 
         bConfirm.setOnClickListener(new View.OnClickListener() {
