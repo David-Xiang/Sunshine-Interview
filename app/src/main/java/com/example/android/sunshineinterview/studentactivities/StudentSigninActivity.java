@@ -132,15 +132,6 @@ public class StudentSigninActivity extends AppCompatActivity {
             }
         });
 
-        mTask = new TimeTask(1000, new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(TIMER);
-                //或者发广播，启动服务都是可以的
-            }
-        });
-        mTask.start();
-
         mHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -155,6 +146,14 @@ public class StudentSigninActivity extends AppCompatActivity {
                 }
             }
         };
+        mTask = new TimeTask(1000, new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(TIMER);
+                //或者发广播，启动服务都是可以的
+            }
+        });
+        mTask.start();
     }
 
     private void stopTimer(){

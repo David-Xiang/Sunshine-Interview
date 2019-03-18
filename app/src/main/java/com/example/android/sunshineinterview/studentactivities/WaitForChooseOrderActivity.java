@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
@@ -19,6 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class WaitForChooseOrderActivity extends AppCompatActivity {
+    private final static String TAG = "WaitForChooseOrder";
     public enum ServerInfo{
         PERMISSION,
         REJECTION,  // the side is already chosen
@@ -59,6 +62,7 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
                 switch (msg.what){
                     case TIMER:
                         //在此执行定时操作
+                        Log.v(TAG, "In handler.");
                         mInterview.query(WaitForChooseOrderActivity.this);
                         break;
                     default:
@@ -94,10 +98,21 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         stopTimer();
     }
 
-    public void onHttpResponse(){
-        mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
-        Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentSigninActivity.class);
-        startActivity(nextStep);
+    public void onHttpResponse(ServerInfo serverInfo, String order){
+        Log.v(TAG, "onHttpResponse():  method entered!");
+        if (serverInfo == ServerInfo.PERMISSION){
+            Log.v(TAG, "onHttpResponse(): permisssion received!");
+            mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
+            mInterview.setOrder(Integer.valueOf(order));
+            mInterview.updatePersonInfo();
+            Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentSigninActivity.class);
+            startActivity(nextStep);
+        } else if(serverInfo == ServerInfo.REJECTION) {
+            Log.v(TAG, "onHttpResponse(): rejection received!");
+            Toast.makeText(WaitForChooseOrderActivity.this, "签到错误", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(WaitForChooseOrderActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
