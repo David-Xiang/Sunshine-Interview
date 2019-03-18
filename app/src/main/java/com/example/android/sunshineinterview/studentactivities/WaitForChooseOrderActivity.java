@@ -1,10 +1,8 @@
 package com.example.android.sunshineinterview.studentactivities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -14,11 +12,8 @@ import android.widget.Toast;
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
-import com.example.android.sunshineinterview.task.TimeTask;
 import com.example.myapplication.R;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class WaitForChooseOrderActivity extends AppCompatActivity {
     private final static String TAG = "WaitForChooseOrder";
@@ -28,15 +23,12 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         NOACCESS    // bad network connectivity
     }
 
-    private static final int TIMER = 999;
-    private TimeTask mTask;
-    private Handler mHandler;
     private Interview mInterview;
+    private TimeCount mTimeCount;
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
 
-    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,30 +47,8 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
 
         // TODO: query
 
-        mHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what){
-                    case TIMER:
-                        //在此执行定时操作
-                        Log.v(TAG, "In handler.");
-                        mInterview.query(WaitForChooseOrderActivity.this);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-
-        mTask = new TimeTask(1000, new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(TIMER);
-                //或者发广播，启动服务都是可以的
-            }
-        });
-        mTask.start();
+        mTimeCount = new TimeCount(60000, 10000);
+        mTimeCount.start();
     }
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
@@ -88,20 +58,17 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         textview.setText(originalString.replace("------", newString));
     }
 
-    private void stopTimer(){
-        mTask.stop();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopTimer();
+        mTimeCount.cancel();
     }
 
     public void onHttpResponse(ServerInfo serverInfo, String order){
         Log.v(TAG, "onHttpResponse():  method entered!");
         if (serverInfo == ServerInfo.PERMISSION){
             Log.v(TAG, "onHttpResponse(): permisssion received!");
+            mTimeCount.cancel();
             mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
             mInterview.setOrder(Integer.valueOf(order));
             mInterview.updatePersonInfo();
@@ -130,4 +97,28 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         super.onStop();
         // TODO
     }
+
+
+    class TimeCount extends CountDownTimer {
+        private int count;
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            count = 0;
+        }
+
+        @Override
+        public void onFinish() {
+            // TODO: no connection for a long time
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            Log.v(TAG, "onTick() triggered!");
+            if (count > 0)
+                mInterview.query(WaitForChooseOrderActivity.this);
+            count ++;
+        }
+    }
+
 }
+

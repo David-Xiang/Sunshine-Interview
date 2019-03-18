@@ -319,7 +319,7 @@ public class Interview {
             return false;
         } else if (mSide != InterviewSide.STUDENT)
             return false;
-        String id = mInterviewInfo.periods.get(orderIndex).teachers.get(studentIndex).id;
+        String id = mInterviewInfo.periods.get(orderIndex).students.get(studentIndex).id;
         String parameters = "/student?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
         URL url = NetworkUtils.buildUrl(parameters);
         new StudentSigninTask().execute(studentSigninActivity, url);

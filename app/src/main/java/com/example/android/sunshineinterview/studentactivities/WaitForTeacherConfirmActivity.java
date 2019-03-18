@@ -1,11 +1,10 @@
 package com.example.android.sunshineinterview.studentactivities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -15,10 +14,7 @@ import android.widget.Toast;
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
-import com.example.android.sunshineinterview.task.TimeTask;
 import com.example.myapplication.R;
-
-import java.util.TimerTask;
 
 public class WaitForTeacherConfirmActivity extends AppCompatActivity {
     public enum ServerInfo{
@@ -27,13 +23,10 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
         NOACCESS    // bad network connectivity
     }
     private Interview mInterview;
-    private TimeTask mTask;
-    private static final int TIMER = 999;
-    private Handler mHandler;
+    private TimeCount mTimeCount;
     private MyCamera mCamera;
     private CameraPreview mPreview;
 
-    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,43 +43,20 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
-        mTask = new TimeTask(1000, new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(TIMER);
-                //或者发广播，启动服务都是可以的
-            }
-        });
-        mTask.start();
 
-        mHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what){
-                    case TIMER:
-                        //在此执行定时操作
-                        mInterview.queryStart(WaitForTeacherConfirmActivity.this);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-    }
-
-    private void stopTimer(){
-        mTask.stop();
+        mTimeCount = new TimeCount(60000, 10000);
+        mTimeCount.start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopTimer();
+        mTimeCount.cancel();
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
         if (serverInfo == ServerInfo.PERMISSION){
+            mInterview.setStatus(Interview.InterviewStatus.INPROGRESS);
             Intent nextStep = new Intent(WaitForTeacherConfirmActivity.this, StudentInProgressActivity.class);
             startActivity(nextStep);
         } else if(serverInfo == ServerInfo.REJECTION) {
@@ -130,5 +100,25 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
     protected void onStop(){
         super.onStop();
         // TODO
+    }
+
+    class TimeCount extends CountDownTimer {
+        private int count;
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            count = 0;
+        }
+
+        @Override
+        public void onFinish() {
+            // TODO: no connection for a long time
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if (count > 0)
+                mInterview.queryStart(WaitForTeacherConfirmActivity.this);
+            count ++;
+        }
     }
 }

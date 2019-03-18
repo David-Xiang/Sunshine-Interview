@@ -1,7 +1,7 @@
 package com.example.android.sunshineinterview.teacheractivities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -17,13 +17,9 @@ import android.widget.Toast;
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
-import com.example.android.sunshineinterview.model.Person;
-import com.example.android.sunshineinterview.task.TimeTask;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class WaitForStudentSigninActivity extends AppCompatActivity {
     public enum ServerInfo{
@@ -31,10 +27,8 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         REJECTION,  // the side is already chosen
         NOACCESS    // bad network connectivity
     }
-    private static final int TIMER = 999;
-    private TimeTask mTask;
-    private Handler mHandler;
     private Interview mInterview;
+    private TimeCount mTimeCount;
     private String [] mStudentNames;
 
     private MyCamera mCamera;
@@ -44,7 +38,6 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
     // int cnt_ready = 0;
 
-    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,30 +50,8 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
 
-        mHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what){
-                    case TIMER:
-                        //在此执行定时操作
-                        mInterview.queryStudent(WaitForStudentSigninActivity.this);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-
-        mTask = new TimeTask(1000, new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(TIMER);
-                //或者发广播，启动服务都是可以的
-            }
-        });
-        mTask.start();
-
+        mTimeCount = new TimeCount(60000, 10000);
+        mTimeCount.start();
 
 
         mStudentNames = mInterview.getStudentNames();
@@ -117,14 +88,10 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         textview.setText(studentName);
     }
 
-    private void stopTimer(){
-        mTask.stop();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopTimer();
+        mTimeCount.cancel();
     }
 
     public void onStudentsUpdate(String [] names, String [] urls){
@@ -142,27 +109,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
             Toast.makeText(WaitForStudentSigninActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
         }
     }
-    //TODO: 实时更新照片，如果人齐了变换按钮（参数为签到的学生id和照片）
-//    protected void onHttpResponse(String id, image)
-//    {
-//        for (int i = 0; i < mStudents.size(); ++i)
-//        {
-//            if(id == mStudents.get(i).id)
-//            {
-//                ImageView imgview = (ImageView) findViewById(imageViewIDs[i]);
-//                imgview.setImageResource(image);
-//                cnt_ready += 1;
-//                break;
-//            }
-//        }
-//        if (cnt_ready == mStudents.size())
-//        {
-//            Button bReady = findViewById(R.id.button_ready_start2);
-//            Button bConfirm = findViewById(R.id.manual_start);
-//            bConfirm.setVisibility(View.GONE);
-//            bReady.setVisibility(View.VISIBLE);
-//        }
-//    }
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -177,5 +124,25 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     protected void onStop(){
         super.onStop();
         // TODO
+    }
+
+    class TimeCount extends CountDownTimer {
+        private int count;
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            count = 0;
+        }
+
+        @Override
+        public void onFinish() {
+            // TODO: no connection for a long time
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if (count > 0)
+                mInterview.queryStudent(WaitForStudentSigninActivity.this);
+            count++;
+        }
     }
 }

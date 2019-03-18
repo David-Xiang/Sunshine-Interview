@@ -1,6 +1,5 @@
 package com.example.android.sunshineinterview.studentactivities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,8 +7,7 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -28,8 +26,6 @@ import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.FindDir;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
-import com.example.android.sunshineinterview.task.TimeTask;
-import com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity;
 import com.example.myapplication.R;
 
 import java.io.File;
@@ -48,28 +44,35 @@ public class StudentSigninActivity extends AppCompatActivity {
         NOACCESS    // bad network connectivity
     }
 
+    private static final String TAG = "StudentSigninActivity";
     private Uri imageUri;
     public static final int TAKE_PHOTO = 1;
 
     private Interview mInterview;
     private String[] studentsNames;
     private int mSigninNumber;
-    private static final int TIMER = 999;
-    private TimeTask mTask;
-    private Handler mHandler;
+    private TimeCount mTimeCount;
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
 
-    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_1);
         mInterview = Interview.getInstance();
+
+        updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
+        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
+        updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
+
         studentsNames = mInterview.getStudentNames();
         mSigninNumber = 0;
+        // TODO: demo mode
+        // mTimeCount = new TimeCount(60000, 1000);
+        mTimeCount = new TimeCount(60000, 10000);
+        mTimeCount.start();
 
         mCamera = new MyCamera(this);
         mPreview = new CameraPreview(this, mCamera.camera);
@@ -132,33 +135,10 @@ public class StudentSigninActivity extends AppCompatActivity {
             }
         });
 
-        mHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what){
-                    case TIMER:
-                        //在此执行定时操作
-                        mInterview.queryStart(StudentSigninActivity.this);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-        mTask = new TimeTask(1000, new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(TIMER);
-                //或者发广播，启动服务都是可以的
-            }
-        });
-        mTask.start();
+
+
     }
 
-    private void stopTimer(){
-        mTask.stop();
-    }
 
     private void initSpinner() {
         ArrayAdapter<String> studentAdapter = new ArrayAdapter<>(this, R.layout.item_select, studentsNames);
@@ -198,8 +178,10 @@ public class StudentSigninActivity extends AppCompatActivity {
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
+        Log.v(TAG, "onHttpResponse():  method entered!");
         if (serverInfo == ServerInfo.PERMISSION){
-            mInterview.setStatus(Interview.InterviewStatus.READY);
+            mTimeCount.cancel();
+            mInterview.setStatus(Interview.InterviewStatus.INPROGRESS);
             Intent nextStep = new Intent(StudentSigninActivity.this, StudentInProgressActivity.class);
             startActivity(nextStep);
         } else if(serverInfo == ServerInfo.REJECTION) {
@@ -229,7 +211,7 @@ public class StudentSigninActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopTimer();
+        mTimeCount.cancel();
     }
 
     @Override
@@ -251,5 +233,33 @@ public class StudentSigninActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+
+    class TimeCount extends CountDownTimer {
+        private int count;
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            count = 0;
+        }
+
+        @Override
+        public void onFinish() {
+            // TODO: no connection for a long time
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if (count > 0)
+                mInterview.queryStart(StudentSigninActivity.this);
+            count++;
+        }
+    }
+
+    private void updateInfo(int textViewId, int originalStringId, String newString){
+        TextView textview = findViewById(textViewId);
+        String originalString = getResources().getString(originalStringId);
+        newString = newString == null ? "------" : newString;
+        textview.setText(originalString.replace("------", newString));
     }
 }
