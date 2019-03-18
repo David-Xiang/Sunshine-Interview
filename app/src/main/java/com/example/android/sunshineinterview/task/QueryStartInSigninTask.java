@@ -3,22 +3,20 @@ package com.example.android.sunshineinterview.task;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
-import com.example.android.sunshineinterview.studentactivities.WaitForTeacherConfirmActivity;
-import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.example.android.sunshineinterview.model.*;
 
 import java.net.URL;
 
-public class QueryStartTask extends AsyncTask<Object, Void, JsonObject> {
+public class QueryStartInSigninTask extends AsyncTask<Object, Void, JsonObject> {
     private final static String TAG = "QueryStartTask";
-    private WaitForTeacherConfirmActivity mWaitForTeacherConfirmActivity;
+    private StudentSigninActivity mStudentSigninActivity;
 
     @Override
     protected JsonObject doInBackground(Object... objects) {
-        mWaitForTeacherConfirmActivity = (WaitForTeacherConfirmActivity) objects[0];
+        mStudentSigninActivity = (StudentSigninActivity) objects[0];
         URL url = (URL) objects[1];
 
         /*JsonObject j = null;
@@ -42,13 +40,13 @@ public class QueryStartTask extends AsyncTask<Object, Void, JsonObject> {
         if (j == null
                 || j.get("type").isJsonNull()
                 || !j.get("type").getAsString().equals("permission")){
-            mWaitForTeacherConfirmActivity.onHttpResponse(WaitForTeacherConfirmActivity.ServerInfo.NOACCESS);
+            mStudentSigninActivity.onHttpResponse(StudentSigninActivity.ServerInfo.NOACCESS);
         } else if (j.get("permission").getAsString().equals("true")) {
             Interview.getInstance().setSideSelected();
             Interview.getInstance().updatePersonInfo();
-            mWaitForTeacherConfirmActivity.onHttpResponse(WaitForTeacherConfirmActivity.ServerInfo.PERMISSION);
+            mStudentSigninActivity.onHttpResponse(StudentSigninActivity.ServerInfo.PERMISSION);
         } else if (j.get("permission").getAsString().equals("false")) {
-            mWaitForTeacherConfirmActivity.onHttpResponse(WaitForTeacherConfirmActivity.ServerInfo.REJECTION);
+            mStudentSigninActivity.onHttpResponse(StudentSigninActivity.ServerInfo.REJECTION);
         } else {
             Log.e(TAG, "Something is wrong in PoseExecute");
         }

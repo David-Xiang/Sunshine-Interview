@@ -68,7 +68,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
         teacherNames = mInterview.getTeacherNames();
         mSigninNumber = 0;
 
-
         ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
         mCamera = new MyCamera(this, interviewerPhoto);
         mPreview = new CameraPreview(this, mCamera.camera);
@@ -151,6 +150,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
             Toast.makeText(TeacherSigninActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
         }
     }
+
 
     private void initSpinner() {
         ArrayAdapter<String> teacherAdapter = new ArrayAdapter<>(this, R.layout.item_select, teacherNames);

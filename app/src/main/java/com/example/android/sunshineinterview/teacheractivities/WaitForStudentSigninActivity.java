@@ -1,9 +1,6 @@
 package com.example.android.sunshineinterview.teacheractivities;
 
 import android.content.Intent;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +14,7 @@ import android.widget.Toast;
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -50,7 +48,14 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
 
-        mTimeCount = new TimeCount(60000, 10000);
+        mTimeCount = new TimeCount(60000, 10000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (count > 0)
+                    mInterview.queryStudent(WaitForStudentSigninActivity.this);
+                count++;
+            }
+        };
         mTimeCount.start();
 
 
@@ -100,6 +105,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
     public void onHttpResponse(ServerInfo serverInfo){
         if (serverInfo == ServerInfo.PERMISSION){
+            mTimeCount.cancel();
             mInterview.setStatus(Interview.InterviewStatus.INPROGRESS);
             Intent nextStep = new Intent(WaitForStudentSigninActivity.this, TeacherInProgressActivity.class);
             startActivity(nextStep);
@@ -124,25 +130,5 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     protected void onStop(){
         super.onStop();
         // TODO
-    }
-
-    class TimeCount extends CountDownTimer {
-        private int count;
-        public TimeCount(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-            count = 0;
-        }
-
-        @Override
-        public void onFinish() {
-            // TODO: no connection for a long time
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            if (count > 0)
-                mInterview.queryStudent(WaitForStudentSigninActivity.this);
-            count++;
-        }
     }
 }

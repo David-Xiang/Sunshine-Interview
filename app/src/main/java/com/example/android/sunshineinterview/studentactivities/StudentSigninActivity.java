@@ -7,7 +7,6 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -26,13 +25,13 @@ import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.FindDir;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.TimerTask;
 
 import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_IMAGE;
 import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
@@ -69,9 +68,14 @@ public class StudentSigninActivity extends AppCompatActivity {
 
         studentsNames = mInterview.getStudentNames();
         mSigninNumber = 0;
-        // TODO: demo mode
-        // mTimeCount = new TimeCount(60000, 1000);
-        mTimeCount = new TimeCount(60000, 10000);
+        mTimeCount = new TimeCount(60000, 10000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (count > 0)
+                    mInterview.queryStart(StudentSigninActivity.this);
+                count++;
+            }
+        };
         mTimeCount.start();
 
         mCamera = new MyCamera(this);
@@ -166,6 +170,7 @@ public class StudentSigninActivity extends AppCompatActivity {
             // TODO: then let another student take photo
             if(mSigninNumber == studentsNames.length){
                 // students all signed in
+                mTimeCount.cancel();
                 mInterview.setStatus(Interview.InterviewStatus.READY);
                 Intent nextStep = new Intent(StudentSigninActivity.this, WaitForTeacherConfirmActivity.class);
                 startActivity(nextStep);
@@ -232,27 +237,6 @@ public class StudentSigninActivity extends AppCompatActivity {
                 break;
             default:
                 break;
-        }
-    }
-
-
-    class TimeCount extends CountDownTimer {
-        private int count;
-        public TimeCount(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-            count = 0;
-        }
-
-        @Override
-        public void onFinish() {
-            // TODO: no connection for a long time
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            if (count > 0)
-                mInterview.queryStart(StudentSigninActivity.this);
-            count++;
         }
     }
 

@@ -14,6 +14,8 @@ public class TeacherEndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thank_you);
 
+
+
         Button bConfirm = findViewById(R.id.button_return);
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -23,4 +25,5 @@ public class TeacherEndActivity extends AppCompatActivity {
             }
         });
     }
+
 }

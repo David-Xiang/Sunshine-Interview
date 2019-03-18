@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
@@ -52,7 +53,7 @@ public class TeacherInProgressActivity extends AppCompatActivity {
     public void onHttpResponse(ServerInfo serverInfo){
         if (serverInfo == ServerInfo.PERMISSION){
             mInterview.setStatus(Interview.InterviewStatus.END);
-            Intent nextStep = new Intent(TeacherInProgressActivity.this, ChooseOrderActivity.class);
+            Intent nextStep = new Intent(TeacherInProgressActivity.this, TeacherEndActivity.class);
             startActivity(nextStep);
         } else if(serverInfo == ServerInfo.REJECTION) {
             Toast.makeText(TeacherInProgressActivity.this, "签到错误", Toast.LENGTH_LONG).show();

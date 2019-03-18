@@ -47,7 +47,6 @@ public class Interview {
     private boolean sideSelected;
     private boolean orderSelected;
     private int orderIndex;
-    private boolean inProgress;
 
     private ArrayList<Person> mTeachers;
     private ArrayList<Person> mStudents;
@@ -56,7 +55,6 @@ public class Interview {
         isValidated = false;
         sideSelected = false;
         orderSelected = false;
-        inProgress = false;
 
         orderIndex = -1;
 
@@ -110,9 +108,10 @@ public class Interview {
                     return false;
                 mStatus = status;
                 return true;
+            case INPROGRESS:
+                mStatus = status;
+                return true;
             case END: // 结束面试
-                if (!inProgress)
-                    return false;
                 mStatus = status;
                 return true;
         }
@@ -132,11 +131,6 @@ public class Interview {
         return true;
     }
 
-    public boolean setInProgress() {
-        inProgress = true;
-        return true;
-    }
-
     public boolean setSideSelected() {
         sideSelected = true;
         return true;
@@ -146,7 +140,6 @@ public class Interview {
         isValidated = false;
         sideSelected = false;
         orderSelected = false;
-        inProgress = false;
         return true;
     }
 
@@ -288,7 +281,7 @@ public class Interview {
 
     // 考官点击结束考试
     public boolean end(TeacherInProgressActivity teacherInProgressActivity) {
-        if (mSide != InterviewSide.TEACHER && !inProgress){
+        if (mSide != InterviewSide.TEACHER && getStatus() != InterviewStatus.INPROGRESS){
             Log.e(TAG, "end(): something is wrong.");
             return false;
         }
@@ -334,7 +327,7 @@ public class Interview {
             return false;
         String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = NetworkUtils.buildUrl(parameters);
-        new QueryStartTask().execute(studentSigninActivity, url);
+        new QueryStartInSigninTask().execute(studentSigninActivity, url);
         return true;
     }
 
@@ -351,10 +344,13 @@ public class Interview {
 
     // 学生端查询是否已经结束考试考试
     public boolean queryEnd(StudentInProgressActivity studentInProgressActivity) {
-        if (!inProgress) {
+        if (getStatus() != InterviewStatus.INPROGRESS) {
+            Log.w(TAG, "queryEnd(): fault 1");
             return false;
-        } else if (mSide != InterviewSide.STUDENT)
+        } else if (mSide != InterviewSide.STUDENT){
+            Log.w(TAG,  "queryEnd(): fault 2");
             return false;
+        }
         String parameters = "/queryend?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryEndTask().execute(studentInProgressActivity, url);
