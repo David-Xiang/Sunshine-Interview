@@ -8,13 +8,10 @@
     tools:context="com.example.android.sunshineinterview.studentactivities.WaitForTeacherConfirmActivity">
 
 
-    <!--最右栏-->
-
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="340"
         app:cardCornerRadius="4dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,247 +24,209 @@
             android:layout_height="match_parent"
             android:background="@drawable/border"
             android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/cardView"
-            tools:layout_editor_absoluteY="8dp">
+            app:layout_constraintEnd_toStartOf="@+id/cardView">
 
             <!--logo栏-->
-            <LinearLayout
-                android:id="@+id/information_column_row0"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/videoView"
+                    app:layout_constraintEnd_toEndOf="@+id/information_column_row0"
+                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/information_column_row0"
+                    app:layout_constraintTop_toBottomOf="@+id/information_column_row0">
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:paddingTop="20dp"
-                        android:text="@string/sunshine_interview"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="60sp"
-                        android:typeface="serif" />
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_percent="0.9"
+                        app:layout_constraintWidth_percent="0.8"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                        <TextClock
+                            android:id="@+id/textClock"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:format12Hour="北京时间 MM/dd/yy h:mmaa"
+                            android:typeface="serif"
+                            android:visibility="visible"
+                            android:paddingBottom="1dp"
+                            android:textSize="10sp"/>
 
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/website"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="16sp"
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/school_name_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/school_name_text"
+                            android:typeface="serif"
+                            android:paddingBottom="1dp"
+                            app:autoSizeTextType="uniform"
 
-                        android:typeface="serif" />
-                </LinearLayout>
+                            />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/classroom_id_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/classroom_id_text"
+                            android:typeface="serif"
+                            android:paddingBottom="1dp"
+                            app:autoSizeTextType="uniform" />
 
-                    <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/wechat"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20sp"
-                        android:typeface="serif" />
-                </LinearLayout>
 
-            </LinearLayout>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/classroom_location_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/classroom_location_text"
+                            android:typeface="serif"
+                            android:paddingBottom="1dp"
+                            app:autoSizeTextType="uniform" />
 
-            <!--相关信息-->
-            <LinearLayout
-                android:id="@+id/information_column_row1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:background="@drawable/border"
-                android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/interview_id_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/interview_id_text"
+                            android:typeface="serif"
+                            android:paddingBottom="1dp"
+                            app:autoSizeTextType="uniform" />
 
-                <LinearLayout
-                    android:id="@+id/time"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="10dp">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/interview_status_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/interview_status_text"
+                            android:typeface="serif"
+                            android:paddingBottom="1dp"
+                            app:autoSizeTextType="uniform" />
 
-                    <TextClock
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:format12Hour="北京时间 MM/dd/yy h:mmaa"
-                        android:textSize="18sp"
-                        android:typeface="serif"
-                        android:visibility="visible" />
-                </LinearLayout>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/processing_time_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/processing_time_text"
+                            android:typeface="serif"
+                            android:paddingBottom="1dp"
+                            app:autoSizeTextType="uniform" />
 
-                <LinearLayout
-                    android:id="@+id/school_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp">
 
-                    <TextView
-                        android:id="@+id/school_name_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/school_name_text"
-                        android:textSize="18sp"
-                        android:typeface="serif" />
-                </LinearLayout>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/interview_time_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/interview_time_text"
+                            android:typeface="serif"
+                            android:paddingBottom="1dp"
+                            app:autoSizeTextType="uniform" />
 
-                <LinearLayout
-                    android:id="@+id/classroom_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp"
-                    android:textSize="18sp"
-                    android:typeface="serif">
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/classroom_id_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/classroom_id_text"
-                        android:textSize="18sp"
-                        android:typeface="serif" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/classroom_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp">
-
-                    <TextView
-                        android:id="@+id/classroom_location_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/classroom_location_text"
-                        android:textSize="18sp"
-                        android:typeface="serif" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/interview_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp">
-
-                    <TextView
-                        android:id="@+id/interview_id_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/interview_id_text"
-                        android:textSize="18sp"
-                        android:typeface="serif" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/interview_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp">
-
-                    <TextView
-                        android:id="@+id/interview_time_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/interview_time_text"
-                        android:textSize="18sp"
-                        android:typeface="serif" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/processing_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp">
-
-                    <TextView
-                        android:id="@+id/processing_time_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/processing_time_text"
-                        android:textSize="18sp"
-                        android:typeface="serif" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/interview_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp"
-                    android:paddingBottom="10dp">
-
-                    <TextView
-                        android:id="@+id/interview_status_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/interview_status_text"
-                        android:textSize="18sp"
-                        android:typeface="serif" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!--视频-->
-            <LinearLayout
-                android:id="@+id/information_column_row2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/border"
-                android:orientation="vertical">
+                </android.support.constraint.ConstraintLayout>
 
                 <FrameLayout
                     android:id="@+id/videoView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.25"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/information_column_row0"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="0dp"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.25"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
 
-            </LinearLayout>
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:paddingTop="10dp"
+                            android:text="@string/sunshine_interview"
+                            android:textColor="@color/colorWhite"
+                            android:typeface="serif"
+                            app:autoSizeTextType="uniform"
+                            app:layout_constraintBottom_toTopOf="@+id/textView5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_percent="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent="0.8" />
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:text="@string/website"
+                            android:textColor="@color/colorWhite"
+                            android:typeface="serif"
+                            app:autoSizeTextType="uniform"
+                            app:layout_constraintBottom_toTopOf="@+id/textView6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_percent="0.1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView4"
+                            app:layout_constraintWidth_percent="0.9" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:gravity="center"
+                            android:text="@string/wechat"
+                            android:textColor="@color/colorWhite"
+                            app:autoSizeTextType="uniform"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_percent="0.2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView5"
+                            app:layout_constraintWidth_percent="0.8" />
+                    </android.support.constraint.ConstraintLayout>
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <!--相关信息-->
+
+            <!--视频-->
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
 
     <!--填空部分-->
     <android.support.v7.widget.CardView
@@ -309,32 +268,38 @@
 
             <LinearLayout
                 android:id="@+id/guide_text"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="3"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHeight_percent="0.4"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="15dp"
-                    android:text="@string/Guide_step3"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="30sp"
-                    android:typeface="serif"
-                    app:layout_constraintBottom_toTopOf="@+id/enter_blocks"
-                    app:layout_constraintStart_toStartOf="@+id/enter_blocks"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.26999998" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/Guide_step3"
+                        android:textColor="@color/colorWhite"
+                        android:typeface="serif"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_percent="0.7"
+                        app:layout_constraintHorizontal_bias="0.06"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.6" />
+                </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>
 
