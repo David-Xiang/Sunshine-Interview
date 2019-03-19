@@ -75,10 +75,15 @@ public class ValidateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String siteId = ((EditText) findViewById(R.id.editText4)).getText().toString();
                 String validateCode = ((EditText) findViewById(R.id.editText5)).getText().toString();
-                mInterview.validate(ValidateActivity.this, siteId, validateCode);
-                ProgressBar pb_validate = findViewById(R.id.pb_vaildate);
-                pb_validate.setVisibility(View.VISIBLE);
-
+                if (mInterview.validate(ValidateActivity.this, siteId, validateCode))
+                {
+                    ProgressBar pb_validate = findViewById(R.id.pb_vaildate);
+                    pb_validate.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    Toast.makeText(ValidateActivity.this, "考场号／验证码有误", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
