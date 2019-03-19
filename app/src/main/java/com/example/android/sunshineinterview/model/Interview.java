@@ -87,7 +87,7 @@ public class Interview {
         return true;
     }
 
-    // status 暂时不管
+    // API for frontend
     public boolean setStatus(InterviewStatus status) {
         switch (status) {
             case VALIDATE: // 验证考场
@@ -190,10 +190,13 @@ public class Interview {
     // 考官选择场次
     public boolean chooseOrder(ChooseOrderActivity chooseOrderActivity, int order) {
         if (!sideSelected) {
+            Log.v(TAG, "chooseOrder(): side not selected yet!");
             return false;
         } else if (order >= mInterviewInfo.periods.size()) {
+            Log.v(TAG, "chooseOrder(): order out of bound");
             return false;
         } else if (mSide != InterviewSide.TEACHER) {
+            Log.v(TAG, "choose Order(): not on teacher side");
             return false;
         }
         String parameters;
@@ -218,12 +221,12 @@ public class Interview {
         mTeachers = new ArrayList<>();
         mStudents = new ArrayList<>();
         Period p = mInterviewInfo.periods.get(orderIndex);
-        for (int i = 0; i < p.teachers.size(); i++){
+        for (int i = 0; i < p.teachers.size(); i++) {
             String id  = p.teachers.get(i).id;
             String name = p.teachers.get(i).name;
             mTeachers.add(new Person(id, name));
         }
-        for (int i = 0; i < p.students.size(); i++){
+        for (int i = 0; i < p.students.size(); i++) {
             String id = p.students.get(i).id;
             String name = p.students.get(i).name;
             mStudents.add(new Person(id, name));
@@ -261,9 +264,12 @@ public class Interview {
     // 考官签到
     public boolean teacherSignin(TeacherSigninActivity teacherSigninActivity, int teacherIndex) {
         if (!orderSelected) {
+            Log.v(TAG, "teacherSignIn(): order not selected");
             return false;
-        } else if (mSide != InterviewSide.TEACHER)
+        } else if (mSide != InterviewSide.TEACHER) {
+            Log.v(TAG, "teacherSignIn(): must be on teacher's side");
             return false;
+        }
         String id = mInterviewInfo.periods.get(orderIndex).teachers.get(teacherIndex).id;
         String parameters = "/teacher?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
@@ -275,9 +281,12 @@ public class Interview {
     // 考官动态查看考生签到情况
     public boolean queryStudent(WaitForStudentSigninActivity waitForStudentSigninActivity) {
         if (!orderSelected) {
+            Log.v(TAG, "queryStudent(): order not selected");
             return false;
-        } else if (mSide != InterviewSide.TEACHER)
+        } else if (mSide != InterviewSide.TEACHER) {
+            Log.v(TAG, "queryStudent(): must be on teacher's side");
             return false;
+        }
         String parameters = "/querystudent?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryStudentTask().execute(waitForStudentSigninActivity, url);
@@ -287,9 +296,12 @@ public class Interview {
     // 考官点击开始考试
     public boolean start(WaitForStudentSigninActivity waitForStudentSigninActivity) {
         if (!orderSelected) {
+            Log.w(TAG,  "start(): order not selected");
             return false;
-        } else if (mSide != InterviewSide.TEACHER)
+        } else if (mSide != InterviewSide.TEACHER) {
+            Log.w(TAG,  "start(): teacher side");
             return false;
+        }
         String parameters = "/start?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = NetworkUtils.buildUrl(parameters);
         new StartTask().execute(waitForStudentSigninActivity, url);
@@ -326,9 +338,12 @@ public class Interview {
     // 考生签到
     public boolean studentSignin(StudentSigninActivity studentSigninActivity, int studentIndex) {
         if (!orderSelected) {
+            Log.w(TAG,  "queryStart(): order not selected");
             return false;
-        } else if (mSide != InterviewSide.STUDENT)
+        } else if (mSide != InterviewSide.STUDENT) {
+            Log.w(TAG,  "queryStart(): not on student side");
             return false;
+        }
         String id = mInterviewInfo.periods.get(orderIndex).students.get(studentIndex).id;
         String parameters = "/student?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
         URL url = NetworkUtils.buildUrl(parameters);
@@ -339,9 +354,12 @@ public class Interview {
     // 学生端查询是否可以开始考试
     public boolean queryStart(StudentSigninActivity studentSigninActivity) {
         if (!orderSelected) {
+            Log.w(TAG,  "queryStart(): order not selected");
             return false;
-        } else if (mSide != InterviewSide.STUDENT)
+        } else if (mSide != InterviewSide.STUDENT) {
+            Log.w(TAG,  "queryStart(): not on student side");
             return false;
+        }
         String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryStartInSigninTask().execute(studentSigninActivity, url);
@@ -350,9 +368,12 @@ public class Interview {
 
     public boolean queryStart(WaitForTeacherConfirmActivity waitForTeacherConfirmActivity) {
         if (!orderSelected) {
+            Log.w(TAG,  "queryStart(): order not selected");
             return false;
-        } else if (mSide != InterviewSide.STUDENT)
+        } else if (mSide != InterviewSide.STUDENT) {
+            Log.w(TAG,  "queryStart(): not on student side");
             return false;
+        }
         String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryStartTask().execute(waitForTeacherConfirmActivity, url);
@@ -362,10 +383,10 @@ public class Interview {
     // 学生端查询是否已经结束考试考试
     public boolean queryEnd(StudentInProgressActivity studentInProgressActivity) {
         if (getStatus() != InterviewStatus.INPROGRESS) {
-            Log.w(TAG, "queryEnd(): fault 1");
+            Log.w(TAG, "queryEnd(): interview not in progress");
             return false;
         } else if (mSide != InterviewSide.STUDENT){
-            Log.w(TAG,  "queryEnd(): fault 2");
+            Log.w(TAG,  "queryEnd(): not on student side");
             return false;
         }
         String parameters = "/queryend?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
