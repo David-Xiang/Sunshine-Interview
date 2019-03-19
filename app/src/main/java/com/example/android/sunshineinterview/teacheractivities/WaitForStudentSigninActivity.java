@@ -48,6 +48,13 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
 
+        updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
+        updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
+        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
+        updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
+        updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
+        updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
+
         mTimeCount = new TimeCount(60000, 10000){
             @Override
             public void onTick(long millisUntilFinished) {
@@ -63,7 +70,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
         int i = 0;
         for(String s:mStudentNames) {
-            updateInfo(i, s);
+            updateNames(i, s);
             i += 1;
         }
 
@@ -87,10 +94,17 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         });
     }
 
-    private void updateInfo(int index, String studentName){
+    private void updateNames(int index, String studentName){
         int textViewId = textViewIDs[index];
         TextView textview = findViewById(textViewId);
         textview.setText(studentName);
+    }
+
+    private void updateInfo(int textViewId, int originalStringId, String newString){
+        TextView textview = findViewById(textViewId);
+        String originalString = getResources().getString(originalStringId);
+        newString = newString == null ? "------" : newString;
+        textview.setText(originalString.replace("------", newString));
     }
 
     @Override

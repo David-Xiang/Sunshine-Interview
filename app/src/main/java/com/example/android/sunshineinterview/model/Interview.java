@@ -241,6 +241,17 @@ public class Interview {
         return studentNames;
     }
 
+    public String getInterviewTime(){
+        Period p = mInterviewInfo.periods.get(orderIndex);
+        return p.startTime + '-' + p.endTime;
+    }
+
+    public String getStatusString(){
+        String[] StatusText = {"验证考场", "选择考次", "选择用户端", "签到", "就绪", "面试进行中", "面试已结束"};
+        return StatusText[mStatus.ordinal()];
+    }
+
+
     // 考官签到
     public boolean teacherSignin(TeacherSigninActivity teacherSigninActivity, int teacherIndex) {
         if (!orderSelected) {

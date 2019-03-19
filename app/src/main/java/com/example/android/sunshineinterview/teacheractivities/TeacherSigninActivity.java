@@ -74,6 +74,14 @@ public class TeacherSigninActivity extends AppCompatActivity {
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
 
+        updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
+        updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
+        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
+        updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
+        updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
+        updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
+
+
         initSpinner();
 
         //TODO: 拍照
@@ -210,5 +218,12 @@ public class TeacherSigninActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    private void updateInfo(int textViewId, int originalStringId, String newString){
+        TextView textview = findViewById(textViewId);
+        String originalString = getResources().getString(originalStringId);
+        newString = newString == null ? "------" : newString;
+        textview.setText(originalString.replace("------", newString));
     }
 }

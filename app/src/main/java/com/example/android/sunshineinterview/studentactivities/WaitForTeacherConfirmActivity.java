@@ -41,8 +41,12 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
         mInterview = Interview.getInstance();
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
+        updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
         updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
+        updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
+        updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
+
 
         mTimeCount = new TimeCount(60000, 10000){
             @Override

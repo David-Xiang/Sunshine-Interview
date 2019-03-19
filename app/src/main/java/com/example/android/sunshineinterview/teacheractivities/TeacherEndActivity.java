@@ -5,16 +5,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
 public class TeacherEndActivity extends AppCompatActivity {
+
+    Interview mInterview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thank_you);
 
+        mInterview = Interview.getInstance();
 
+        updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
+        updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
+        updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
+        updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
+        updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
 
         Button bConfirm = findViewById(R.id.button_return);
         bConfirm.setOnClickListener(new View.OnClickListener() {
@@ -24,6 +35,13 @@ public class TeacherEndActivity extends AppCompatActivity {
                 startActivity(nextStep);
             }
         });
+    }
+
+    private void updateInfo(int textViewId, int originalStringId, String newString){
+        TextView textview = findViewById(textViewId);
+        String originalString = getResources().getString(originalStringId);
+        newString = newString == null ? "------" : newString;
+        textview.setText(originalString.replace("------", newString));
     }
 
 }

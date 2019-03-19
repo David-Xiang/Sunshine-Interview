@@ -10,10 +10,10 @@
     <string name="school_name_text">学校：------</string>
     <string name="classroom_id_text">考场号：------</string>
     <string name="classroom_location_text">考试地点：------</string>
-    <string name="interview_id_text">场次号：------</string>
+    <string name="college_id_text">学校编号：------</string>
     <string name="interview_time_text">考试时间：------</string>
     <string name="processing_time_text">进行时间：------</string>
-    <string name="interview_status_text">状态：未开始</string>
+    <string name="interview_status_text">状态：------</string>
 
     <string name="roomid_text">考场号</string>
     <string name="verification_text">验证码</string>
