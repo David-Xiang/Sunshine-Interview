@@ -62,19 +62,18 @@ public class MyCamera {
         }
         return mCamera;
     }
-
-    public void reGetCamera()
-    {
-        camera = getCamera();
-    }
-
-    public void setInfo(String information){
-        info = information;
-    }
     
     public void releaseCamera(){
         camera.release();
         camera = null;
+    }
+
+    public void resetCamera(){
+        camera = getCamera();
+    }
+
+    public Camera AcquireCamera(){
+        return camera;
     }
     
     public void takePhoto(){

@@ -3,6 +3,7 @@ package com.example.android.sunshineinterview.commonactivities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -34,10 +35,10 @@ public class ChooseSideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_side);
 
-        mCamera = new MyCamera(this);
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
+        // mCamera = new MyCamera(this);
+        // mPreview = new CameraPreview(this, mCamera.camera);
+        // FrameLayout preview = findViewById(R.id.videoView);
+        // preview.addView(mPreview);
 
         mInterview = Interview.getInstance();
 
@@ -103,11 +104,19 @@ public class ChooseSideActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
         // TODO
     }
     @Override
     protected void onPause(){
+        Log.d("mydebug", "ChooseSide onPause called");
         super.onPause();
+        if (mCamera.AcquireCamera() == null){
+            Log.d("mydebug", "after pausing, camera released!");
+        }
         // TODO
     }
     @Override

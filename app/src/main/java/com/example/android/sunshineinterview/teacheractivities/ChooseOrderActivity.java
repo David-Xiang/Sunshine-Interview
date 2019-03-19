@@ -43,10 +43,10 @@ public class ChooseOrderActivity extends AppCompatActivity {
         mInterview = Interview.getInstance();
         mPeriods = mInterview.getPeriods();
 
-        mCamera = new MyCamera(this);
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
+        // mCamera = new MyCamera(this);
+        // mPreview = new CameraPreview(this, mCamera.camera);
+        // FrameLayout preview = findViewById(R.id.videoView);
+        // preview.addView(mPreview);
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
@@ -116,11 +116,19 @@ public class ChooseOrderActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
         // TODO
     }
     @Override
     protected void onPause(){
+        Log.d("mydebug", "ChooseOrder onPause called");
         super.onPause();
+        if (mCamera.AcquireCamera() == null){
+            Log.d("mydebug", "after pausing, camera released!");
+        }
         // TODO
     }
     @Override

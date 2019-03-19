@@ -68,11 +68,11 @@ public class TeacherSigninActivity extends AppCompatActivity {
         teacherNames = mInterview.getTeacherNames();
         mSigninNumber = 0;
 
-        ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
-        mCamera = new MyCamera(this, interviewerPhoto);
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
+        // ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+        // mCamera = new MyCamera(this, interviewerPhoto);
+        // mPreview = new CameraPreview(this, mCamera.camera);
+        // FrameLayout preview = findViewById(R.id.videoView);
+        // preview.addView(mPreview);
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
@@ -181,24 +181,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> adapterView){}
     }
 
-
-    // 监听Activity状态
-    @Override
-    protected void onResume(){
-        super.onResume();
-        // TODO
-    }
-    @Override
-    protected void onPause(){
-        super.onPause();
-        // TODO
-    }
-    @Override
-    protected void onStop(){
-        super.onStop();
-        // TODO
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){
@@ -225,5 +207,32 @@ public class TeacherSigninActivity extends AppCompatActivity {
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
         textview.setText(originalString.replace("------", newString));
+    }
+
+    // 监听Activity状态
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d("mydebug", "onResume if called");
+        ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+        mCamera = new MyCamera(this, interviewerPhoto);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
+        // TODO
+    }
+    @Override
+    protected void onPause(){
+        Log.d("mydebug", "TeacherSignin onPause called");
+        super.onPause();
+        if (mCamera.AcquireCamera() == null){
+            Log.d("mydebug", "after pausing, camera released!");
+        }
+        // TODO
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // TODO
     }
 }

@@ -5,13 +5,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.android.sunshineinterview.Camera.CameraPreview;
+import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
 public class StudentEndActivity extends AppCompatActivity {
     private Interview mInterview;
+    private MyCamera mCamera;
+    private CameraPreview mPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,5 +48,15 @@ public class StudentEndActivity extends AppCompatActivity {
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
         textview.setText(originalString.replace("------", newString));
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
+        // TODO
     }
 }
