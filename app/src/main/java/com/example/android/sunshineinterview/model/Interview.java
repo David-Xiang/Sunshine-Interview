@@ -118,7 +118,13 @@ public class Interview {
         return false;
     }
 
+    public boolean validId(String id) {
+        return id.length() == 4;
+    }
+
     public boolean validate(ValidateActivity validateActivity, String siteId, String validateCode) {
+        if (!validId(siteId) || !validId(validateCode))
+            return false;
         String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
         Log.v(TAG, "validate() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
