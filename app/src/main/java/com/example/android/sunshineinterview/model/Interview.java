@@ -158,6 +158,16 @@ public class Interview {
         return mPeriods;
     }
 
+    public boolean uploadImage(String Id, String localUrl) {
+        // TODO:
+        return true;
+    }
+
+    public boolean downloadImage(String imageUrl) {
+        // TODO:
+        return true;
+    }
+
     public boolean chooseSide(ChooseSideActivity chooseSideActivity, InterviewSide interviewFunction) {
         if (!isValidated) {
             Log.e(TAG, "Code not validated when selecting side!");
@@ -248,6 +258,27 @@ public class Interview {
             studentNames[i] = mStudents.get(i).name;
         }
         return studentNames;
+    }
+
+    public ArrayList<Person> getStudents(){
+        return mStudents;
+    }
+
+    // 返回学生是否缺席
+    public boolean getAbsent(String Id) {
+        for (Person student : mStudents) {
+            if (student.id.equals(Id))
+                return student.isAbsent;
+        }
+        return true;
+    }
+
+    public String getimageUrl(String Id) {
+        for (Person student : mStudents) {
+            if (student.id.equals(Id))
+                return student.imgUrl;
+        }
+        return null;
     }
 
     public String getInterviewTime(){

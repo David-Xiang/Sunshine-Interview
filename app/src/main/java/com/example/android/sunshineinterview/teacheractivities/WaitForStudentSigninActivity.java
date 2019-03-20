@@ -114,7 +114,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     }
 
     public void onStudentsUpdate(String [] names, String [] urls){
-        // update students' portraits
+        // update students' portraits，一个一个在mInterview里面修改/信息，name, url, isabsent
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
