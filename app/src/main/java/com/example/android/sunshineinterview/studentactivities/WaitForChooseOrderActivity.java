@@ -34,10 +34,10 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wait_for_selection);
 
-        mCamera = new MyCamera(this);
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
+        //mCamera = new MyCamera(this);
+        //mPreview = new CameraPreview(this, mCamera.camera);
+        //FrameLayout preview = findViewById(R.id.videoView);
+        //preview.addView(mPreview);
 
         mInterview = Interview.getInstance();
 
@@ -96,6 +96,10 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
         // TODO
     }
     @Override

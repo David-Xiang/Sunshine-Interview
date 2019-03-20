@@ -5,13 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -20,8 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.example.android.sunshineinterview.commonactivities.ValidateActivity"
+        <activity
+            android:name="com.example.android.sunshineinterview.commonactivities.ValidateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -30,42 +33,51 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.android.sunshineinterview.commonactivities.ChooseSideActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.teacheractivities.TeacherInProgressActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.teacheractivities.TeacherEndActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.studentactivities.StudentSigninActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.studentactivities.WaitForTeacherConfirmActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.studentactivities.StudentInProgressActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.studentactivities.StudentEndActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
 
-        <activity android:name="com.example.android.sunshineinterview.commonactivities.ChooseSideActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name="com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-        <activity android:name="com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-        <activity android:name="com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-        <activity android:name="com.example.android.sunshineinterview.teacheractivities.TeacherInProgressActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-        <activity android:name="com.example.android.sunshineinterview.teacheractivities.TeacherEndActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name="com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-        <activity android:name="com.example.android.sunshineinterview.studentactivities.StudentSigninActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-        <activity android:name="com.example.android.sunshineinterview.studentactivities.WaitForTeacherConfirmActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-        <activity android:name="com.example.android.sunshineinterview.studentactivities.StudentInProgressActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
-        <activity android:name="com.example.android.sunshineinterview.studentactivities.StudentEndActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.android.sunshineinterview.fileprovider"
@@ -76,7 +88,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
-
 
 </manifest>

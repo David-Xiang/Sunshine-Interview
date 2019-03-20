@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -35,7 +36,6 @@ public class ValidateActivity extends AppCompatActivity {
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
-    private FrameLayout preview;
 
     private static String[] permissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -59,12 +59,12 @@ public class ValidateActivity extends AppCompatActivity {
 
         // TODO 有一个小bug，第一次申请权限时，右下角预览会不成功。
 
-        mCamera = MyCamera.getInstance();
-        mCamera.setCameraDisplayOrientation(this);
+        // mCamera = MyCamera.getInstance();
+        // mCamera.setCameraDisplayOrientation(this);
 
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
+        // mPreview = new CameraPreview(this, mCamera.camera);
+        // FrameLayout preview = findViewById(R.id.videoView);
+        // preview.addView(mPreview);
 
         mInterview = Interview.getInstance();
         mInterview.setStatus(Interview.InterviewStatus.VALIDATE);
@@ -134,17 +134,15 @@ public class ValidateActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d("mydebug", "onResume called");
-        /*if (mCamera.camera == null){
-            Log.d("mydebug", "onResume if called");
-            mCamera.reGetCamera();
-            mPreview = new CameraPreview(this, mCamera.camera);
-            preview.addView(mPreview);
-        }*/
+        Log.d("mydebug", "onResume if called");
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
     }
     @Override
     protected void onPause(){
-        Log.d("mydebug", "onPause called");
+        Log.d("mydebug", "validation onPause called");
         super.onPause();
         /*if (mCamera.camera != null){
             mCamera.camera.stopPreview();
@@ -153,6 +151,10 @@ public class ValidateActivity extends AppCompatActivity {
             preview.removeView(mPreview);
             mPreview = null;
         }*/
+
+        if (mCamera.AcquireCamera() == null){
+            Log.d("mydebug", "after pausing, camera released!");
+        }
     }
     @Override
     protected void onStop(){
@@ -160,4 +162,3 @@ public class ValidateActivity extends AppCompatActivity {
         // TODO
     }
 }
-

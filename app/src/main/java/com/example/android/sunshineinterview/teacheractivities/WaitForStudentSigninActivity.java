@@ -41,10 +41,10 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirm_action);
 
-        mCamera = new MyCamera(this);
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
+        //mCamera = new MyCamera(this);
+        //mPreview = new CameraPreview(this, mCamera.camera);
+        //FrameLayout preview = findViewById(R.id.videoView);
+        //preview.addView(mPreview);
 
         mInterview = Interview.getInstance();
 
@@ -133,11 +133,16 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        mCamera = new MyCamera(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
         // TODO
     }
     @Override
     protected void onPause(){
         super.onPause();
+
         // TODO
     }
     @Override

@@ -82,10 +82,10 @@ public class StudentSigninActivity extends AppCompatActivity {
         };
         mTimeCount.start();
 
-        mCamera = new MyCamera(this);
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
+        //mCamera = new MyCamera(this);
+        //mPreview = new CameraPreview(this, mCamera.camera);
+        //FrameLayout preview = findViewById(R.id.videoView);
+        //preview.addView(mPreview);
 
         //TODO: 更新右栏信息，获得老师列表，拍照上传...
         //TODO: to continue
@@ -129,9 +129,9 @@ public class StudentSigninActivity extends AppCompatActivity {
         bReset.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                // TODO 重置imageView
                 ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
-                interviewerPhoto.setImageResource(R.drawable.bigbrother);            }
+                interviewerPhoto.setImageResource(R.drawable.bigbrother);
+            }
         });
 
         bConfirm.setOnClickListener(new View.OnClickListener() {
@@ -199,28 +199,6 @@ public class StudentSigninActivity extends AppCompatActivity {
         }
     }
 
-    // 监听Activity状态
-    @Override
-    protected void onResume(){
-        super.onResume();
-        // TODO
-    }
-    @Override
-    protected void onPause(){
-        super.onPause();
-        // TODO
-    }
-    @Override
-    protected void onStop(){
-        super.onStop();
-        // TODO
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mTimeCount.cancel();
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){
@@ -247,5 +225,32 @@ public class StudentSigninActivity extends AppCompatActivity {
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
         textview.setText(originalString.replace("------", newString));
+    }
+
+    // 监听Activity状态
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+        mCamera = new MyCamera(this, interviewerPhoto);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
+        // TODO
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        // TODO
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // TODO
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mTimeCount.cancel();
     }
 }
