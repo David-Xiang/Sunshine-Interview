@@ -138,7 +138,10 @@ public class StudentSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
-                mInterview.studentSignin(StudentSigninActivity.this, sp.getSelectedItemPosition());
+                // TODO(XIEXINTONG): 把图片地址填上
+                String imgpath = new String();
+                mInterview.studentSignin(StudentSigninActivity.this,
+                        sp.getSelectedItemPosition(), imgpath);
                 // TODO: show a progress bar & 传照片
             }
         });

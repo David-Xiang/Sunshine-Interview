@@ -132,7 +132,10 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 Spinner sp = findViewById(R.id.spinner);
                 // TODO: time
                 //String time = sp.getSelectedItem().toString();
-                mInterview.teacherSignin(TeacherSigninActivity.this, sp.getSelectedItemPosition());
+                // TODO(XIEXINTONG): 把图片地址填上
+                String imgpath = new String();
+                mInterview.teacherSignin(TeacherSigninActivity.this,
+                        sp.getSelectedItemPosition(), imgpath);
                 // TODO: merge
                 // String name = sp.getSelectedItem().toString();
                 // if (mInterview.teacher(mTeachers.get(sp.getSelectedItemPosition()).id))

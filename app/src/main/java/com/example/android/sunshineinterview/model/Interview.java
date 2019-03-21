@@ -293,7 +293,14 @@ public class Interview {
 
 
     // 考官签到
-    public boolean teacherSignin(TeacherSigninActivity teacherSigninActivity, int teacherIndex) {
+    // teacherSignIn函数增加img参数，表示的是和该教师相对应的照片文件名，例如"1234.jpg"
+    // teacher?siteid=0000&order=00&img=1234.jpg
+    // 上传文件到服务器指定目录下：new UploadTask().execute(img_path);
+    // studentSignIn函数同理
+    // 数据库端需要新增“人”与“图片”对应的数据结构存储这种对应关系
+    // 服务器端需要指定图片存储的位置
+    public boolean teacherSignin(TeacherSigninActivity teacherSigninActivity,
+                                 int teacherIndex, String path) {
         if (!orderSelected) {
             Log.v(TAG, "teacherSignIn(): order not selected");
             return false;
@@ -302,9 +309,13 @@ public class Interview {
             return false;
         }
         String id = mInterviewInfo.periods.get(orderIndex).teachers.get(teacherIndex).id;
-        String parameters = "/teacher?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
+        String filename = new String();
+        filename = path.substring(path.lastIndexOf('/') + 1);
+        String parameters = "/teacher?siteid=" + mInterviewInfo.siteId + "&order="
+                + String.valueOf(orderIndex) + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
+        new UploadTask().execute(path);
         new TeacherSigninTask().execute(teacherSigninActivity, url);
         return true;
     }
@@ -367,7 +378,8 @@ public class Interview {
     }
 
     // 考生签到
-    public boolean studentSignin(StudentSigninActivity studentSigninActivity, int studentIndex) {
+    public boolean studentSignin(StudentSigninActivity studentSigninActivity,
+                                 int studentIndex, String path) {
         if (!orderSelected) {
             Log.w(TAG,  "queryStart(): order not selected");
             return false;
@@ -375,9 +387,14 @@ public class Interview {
             Log.w(TAG,  "queryStart(): not on student side");
             return false;
         }
+        String filename = new String();
+        filename = path.substring(path.lastIndexOf('/') + 1);
         String id = mInterviewInfo.periods.get(orderIndex).students.get(studentIndex).id;
-        String parameters = "/student?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex) + "&id=" + id;
+        String parameters = "/student?siteid=" + mInterviewInfo.siteId + "&order="
+                + String.valueOf(orderIndex) + "&id=" + id + "&img=" + filename;
+        Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
+        new UploadTask().execute(path);
         new StudentSigninTask().execute(studentSigninActivity, url);
         return true;
     }
