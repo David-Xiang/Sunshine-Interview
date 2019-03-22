@@ -12,8 +12,9 @@ public class Period{
     private static final String TAG = "Period";
     public String startTime, endTime;
     public ArrayList<Person> teachers, students;
+    public String order;
     Period(JsonObject j){
-        String order = j.get("order").getAsString();
+        order = j.get("order").getAsString();
         startTime = j.get("start_time").getAsString();
         endTime = j.get("end_time").getAsString();
         teachers = new ArrayList<>();

@@ -200,11 +200,8 @@ public class Interview {
             return false;
         }
         String parameters;
-        if (order < 10) {
-            parameters = "/order?siteid=" + mInterviewInfo.siteId + "&order=0" + String.valueOf(order);
-        } else {
-            parameters = "/order?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(order);
-        }
+        orderIndex = order;
+        parameters = "/order?siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         Log.v(TAG, "chooseOrder() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
         new ChooseOrderTask().execute(chooseOrderActivity, url);
@@ -302,7 +299,7 @@ public class Interview {
         String filename = new String();
         filename = path.substring(path.lastIndexOf('/') + 1);
         String parameters = "/teacher?siteid=" + mInterviewInfo.siteId + "&order="
-                + String.valueOf(orderIndex) + "&id=" + id + "&img=" + filename;
+                + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
         //new UploadTask().execute(path);
@@ -319,7 +316,7 @@ public class Interview {
             Log.v(TAG, "queryStudent(): must be on teacher's side");
             return false;
         }
-        String parameters = "/querystudent?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
+        String parameters = "/querystudent?siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryStudentTask().execute(waitForStudentSigninActivity, url);
         return true;
@@ -334,7 +331,7 @@ public class Interview {
             Log.w(TAG,  "start(): teacher side");
             return false;
         }
-        String parameters = "/start?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
+        String parameters = "/start?siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         URL url = NetworkUtils.buildUrl(parameters);
         new StartTask().execute(waitForStudentSigninActivity, url);
         return true;
@@ -346,7 +343,7 @@ public class Interview {
             Log.e(TAG, "end(): something is wrong.");
             return false;
         }
-        String parameters = "/end?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
+        String parameters = "/end?siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         URL url = NetworkUtils.buildUrl(parameters);
         new EndTask().execute(teacherInProgressActivity, url);
         return true;
@@ -381,7 +378,7 @@ public class Interview {
         filename = path.substring(path.lastIndexOf('/') + 1);
         String id = mInterviewInfo.periods.get(orderIndex).students.get(studentIndex).id;
         String parameters = "/student?siteid=" + mInterviewInfo.siteId + "&order="
-                + String.valueOf(orderIndex) + "&id=" + id + "&img=" + filename;
+                + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
         //new UploadTask().execute(path);
@@ -398,7 +395,7 @@ public class Interview {
             Log.w(TAG,  "queryStart(): not on student side");
             return false;
         }
-        String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
+        String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryStartInSigninTask().execute(studentSigninActivity, url);
         return true;
@@ -412,7 +409,7 @@ public class Interview {
             Log.w(TAG,  "queryStart(): not on student side");
             return false;
         }
-        String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
+        String parameters = "/querystart?siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryStartTask().execute(waitForTeacherConfirmActivity, url);
         return true;
@@ -427,9 +424,13 @@ public class Interview {
             Log.w(TAG,  "queryEnd(): not on student side");
             return false;
         }
-        String parameters = "/queryend?siteid=" + mInterviewInfo.siteId + "&order=" + String.valueOf(orderIndex);
+        String parameters = "/queryend?siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryEndTask().execute(studentInProgressActivity, url);
         return true;
+    }
+
+    private String getOrderString(){
+        return mInterviewInfo.periods.get(orderIndex).order;
     }
 }
