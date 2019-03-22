@@ -24,36 +24,36 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
     protected JsonArray doInBackground(Object... objects) {
         mWaitForStudentSignActivity = (WaitForStudentSigninActivity) objects[0];
         URL url = (URL) objects[1];
-//        JsonObject j = null;
-//        JsonArray j2 = null;
-//        try{
-//            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
-//            j2 = new JsonParser().parse(j.toString()).getAsJsonObject().get("info").getAsJsonArray();
-//        } catch (IOException e){
-//            Log.e(TAG, "Server is not accessible.");
-//            e.printStackTrace();
-//        }
-        String jsonString = "{\n" +
-                "    \"type\": \"signin_info\",\n" +
-                "    \"info\":[\n" +
-                "        {\n" +
-                "            \"id\":\"11990001\",\n" +
-                "            \"name\": \"何炬\",\n" +
-                "            \"is_absent\": \"false\",\n" +
-                "            \"img_url\": \"http://10.0.0.1/img/1 " +
-                "1990001.jpg\" \n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"id\":\"11990002\",\n" +
-                "            \"name\": \"宋煦\",\n" +
-                "            \"is_absent\": \"true\",\n" +
-                "            \"img_url\": \"\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-        JsonArray j = new JsonParser().parse(jsonString).getAsJsonObject().get("info").getAsJsonArray();
-//        return j2;
-        return j;
+        JsonObject j = null;
+        JsonArray j2 = null;
+        try{
+            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
+            j2 = new JsonParser().parse(j.toString()).getAsJsonObject().get("info").getAsJsonArray();
+        } catch (IOException e){
+            Log.e(TAG, "Server is not accessible.");
+            e.printStackTrace();
+        }
+//        String jsonString = "{\n" +
+//                "    \"type\": \"signin_info\",\n" +
+//                "    \"info\":[\n" +
+//                "        {\n" +
+//                "            \"id\":\"11990001\",\n" +
+//                "            \"name\": \"何炬\",\n" +
+//                "            \"is_absent\": \"false\",\n" +
+//                "            \"img_url\": \"http://10.0.0.1/img/1 " +
+//                "1990001.jpg\" \n" +
+//                "        },\n" +
+//                "        {\n" +
+//                "            \"id\":\"11990002\",\n" +
+//                "            \"name\": \"宋煦\",\n" +
+//                "            \"is_absent\": \"true\",\n" +
+//                "            \"img_url\": \"\"\n" +
+//                "        }\n" +
+//                "    ]\n" +
+//                "}";
+//        JsonArray j = new JsonParser().parse(jsonString).getAsJsonObject().get("info").getAsJsonArray();
+        return j2;
+//        return j;
     }
 
     @Override

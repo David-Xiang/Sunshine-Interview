@@ -20,22 +20,22 @@ public class QueryTask extends AsyncTask<Object, Void, JsonObject> {
         mWaitForChooseOrderActivity = (WaitForChooseOrderActivity) objects[0];
         URL url = (URL) objects[1];
 
-//        JsonObject j = null;
-//        try{
-//            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
-//        } catch (IOException e){
-//            Log.e(TAG, "Server is not accessible.");
-//            e.printStackTrace();
-//        }
+        JsonObject j = null;
+        try{
+            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
+        } catch (IOException e){
+            Log.e(TAG, "Server is not accessible.");
+            e.printStackTrace();
+        }
 
-        String jsonString = "{\n" +
-                "    \"type\": \"site_info\",\n" +
-                "    \"permission\": \"true\",\n" +
-                "    \"info\": {\n" +
-                "        \"order\": \"01\"\n" +
-                "    }\n" +
-                "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
+//        String jsonString = "{\n" +
+//                "    \"type\": \"site_info\",\n" +
+//                "    \"permission\": \"true\",\n" +
+//                "    \"info\": {\n" +
+//                "        \"order\": \"01\"\n" +
+//                "    }\n" +
+//                "}";
+//        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
         return j;
     }
 
