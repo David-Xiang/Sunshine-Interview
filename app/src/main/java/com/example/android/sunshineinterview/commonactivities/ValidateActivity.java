@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -94,6 +95,8 @@ public class ValidateActivity extends AppCompatActivity {
         pb_validate.setVisibility(View.GONE);
         if (isValidated){
             Toast.makeText(ValidateActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
+            mInterview.setStatus(Interview.InterviewStatus.CHOOSESIDE);
+            mInterview.setValidated();
             Intent nextStep = new Intent(ValidateActivity.this, ChooseSideActivity.class);
             startActivity(nextStep);
         } else {
@@ -136,6 +139,7 @@ public class ValidateActivity extends AppCompatActivity {
         super.onResume();
         Log.d("mydebug", "onResume if called");
         mCamera = new MyCamera(this);
+        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

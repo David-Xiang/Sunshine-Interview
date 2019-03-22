@@ -236,6 +236,7 @@ public class StudentSigninActivity extends AppCompatActivity {
         super.onResume();
         ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
         mCamera = new MyCamera(this, interviewerPhoto);
+        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

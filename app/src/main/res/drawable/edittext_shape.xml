@@ -6,6 +6,6 @@
         android:color="#00FFFFFF" >
     </solid>
     <!-- 设置边框 -->
-    <stroke android:width="1dip" android:color="#ff000000" />
+    <stroke android:width="1dip" android:color="#6a6a6a" />
 
 </shape>

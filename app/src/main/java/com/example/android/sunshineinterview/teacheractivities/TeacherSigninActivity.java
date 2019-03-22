@@ -114,6 +114,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 //启动相机程序
                 Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+                intent.putExtra("android.intent.extras.CAMERA_FACING", 2);
                 startActivityForResult(intent,TAKE_PHOTO);
             }
         });
@@ -219,6 +220,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
         Log.d("mydebug", "onResume if called");
         ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
         mCamera = new MyCamera(this, interviewerPhoto);
+        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

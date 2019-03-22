@@ -9,72 +9,55 @@
     tools:context="com.example.android.sunshineinterview.commonactivities.ValidateActivity">
 
     <!--填空部分-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@color/colorWhite"
+        android:background="@color/colorPrimary"
+        app:title="@string/title_step0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorWhite"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39">
+        app:layout_constraintTop_toBottomOf="@+id/tl_head"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/bg_pic"
-            app:layout_constraintBottom_toBottomOf="@+id/confirm"
-            app:layout_constraintEnd_toStartOf="@+id/editText5"
-            app:layout_constraintHeight_percent="0.6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editText4" />
-
-        <LinearLayout
-            android:id="@+id/guide_text"
-            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="3"
-            android:background="@drawable/title_bg"
+            android:src="@drawable/bg_pic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.6" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="vertical"
+            android:text="@string/guide_step0"
+            android:textSize="65sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.3"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.486"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.7">
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/textView3"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/guide_step0"
-                    android:textColor="@color/colorWhite"
-                    android:typeface="serif"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.3"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.7" />
-            </android.support.constraint.ConstraintLayout>
-
-        </LinearLayout>
+            app:layout_constraintVertical_bias="0.17000002" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/editText5"
@@ -88,13 +71,13 @@
             android:maxLength="4"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:textSize="25sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.891"
-            app:layout_constraintStart_toStartOf="@+id/guide_text"
+            app:layout_constraintEnd_toEndOf="@+id/editText4"
+            app:layout_constraintStart_toStartOf="@+id/editText4"
             app:layout_constraintTop_toBottomOf="@+id/editText4"
-            app:layout_constraintVertical_bias="0.100000024" />
+            app:layout_constraintVertical_bias="0.13" />
 
         <EditText
             android:id="@+id/editText4"
@@ -110,30 +93,30 @@
             android:maxLines="1"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:textSize="25sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/editText5"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guide_text"
-            app:layout_constraintVertical_bias="0.18" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintVertical_bias="0.24000001" />
 
         <Button
             android:id="@+id/confirm"
             android:layout_width="wrap_content"
-            android:layout_height="47dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:text="@string/confirm_button"
             android:textColor="@color/colorWhite"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/editText4"
-            app:layout_constraintHorizontal_bias="0.595"
             app:layout_constraintStart_toStartOf="@+id/editText4"
             app:layout_constraintTop_toBottomOf="@+id/editText5"
-            app:layout_constraintVertical_bias="0.056" />
+            app:layout_constraintVertical_bias="0.23000002" />
 
         <ProgressBar
             android:id="@+id/pb_vaildate"
@@ -158,7 +141,7 @@
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_head"
         app:layout_constraintWidth_percent="0.3">
 
         <LinearLayout
@@ -176,6 +159,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:background="@drawable/border"
                     app:layout_constraintBottom_toTopOf="@+id/videoView"
                     app:layout_constraintEnd_toEndOf="@+id/information_column_row0"
                     app:layout_constraintHeight_percent="0.5"
@@ -189,9 +173,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHeight_percent="0.9"
-                        app:layout_constraintWidth_percent="0.8"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.8">
 
                         <TextClock
                             android:id="@+id/textClock"
@@ -199,10 +183,10 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:format12Hour="北京时间 MM/dd/yy h:mmaa"
-                            android:typeface="serif"
-                            android:visibility="visible"
                             android:paddingBottom="1dp"
-                            android:textSize="10sp"/>
+                            android:textSize="11sp"
+                            android:typeface="serif"
+                            android:visibility="visible" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/college_id_text"
@@ -219,9 +203,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:paddingBottom="1dp"
                             android:text="@string/school_name_text"
                             android:typeface="serif"
-                            android:paddingBottom="1dp"
                             app:autoSizeTextType="uniform"
 
                             />
@@ -231,9 +215,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:paddingBottom="1dp"
                             android:text="@string/classroom_id_text"
                             android:typeface="serif"
-                            android:paddingBottom="1dp"
                             app:autoSizeTextType="uniform" />
 
 
@@ -242,9 +226,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:paddingBottom="1dp"
                             android:text="@string/classroom_location_text"
                             android:typeface="serif"
-                            android:paddingBottom="1dp"
                             app:autoSizeTextType="uniform" />
 
                         <android.support.v7.widget.AppCompatTextView
@@ -252,19 +236,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:paddingBottom="1dp"
                             android:text="@string/interview_status_text"
                             android:typeface="serif"
-                            android:paddingBottom="1dp"
-                            app:autoSizeTextType="uniform" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/processing_time_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/processing_time_text"
-                            android:typeface="serif"
-                            android:paddingBottom="1dp"
                             app:autoSizeTextType="uniform" />
 
 
@@ -273,9 +247,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:paddingBottom="1dp"
                             android:text="@string/interview_time_text"
                             android:typeface="serif"
-                            android:paddingBottom="1dp"
                             app:autoSizeTextType="uniform" />
 
                     </LinearLayout>
@@ -286,6 +260,8 @@
                     android:id="@+id/videoView"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:background="@drawable/border"
+                    android:padding="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="0.25"
@@ -315,33 +291,17 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:paddingTop="10dp"
                             android:text="@string/sunshine_interview"
                             android:textColor="@color/colorWhite"
                             android:typeface="serif"
                             app:autoSizeTextType="uniform"
-                            app:layout_constraintBottom_toTopOf="@+id/textView5"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHeight_percent="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.19"
                             app:layout_constraintWidth_percent="0.8" />
-
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:gravity="center"
-                            android:text="@string/website"
-                            android:textColor="@color/colorWhite"
-                            android:typeface="serif"
-                            app:autoSizeTextType="uniform"
-                            app:layout_constraintBottom_toTopOf="@+id/textView6"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHeight_percent="0.1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView4"
-                            app:layout_constraintWidth_percent="0.9" />
 
                         <TextView
                             android:id="@+id/textView6"
@@ -355,7 +315,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHeight_percent="0.2"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView5"
+                            app:layout_constraintTop_toBottomOf="@+id/textView4"
                             app:layout_constraintWidth_percent="0.8" />
                     </android.support.constraint.ConstraintLayout>
 

@@ -41,6 +41,7 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
 
         mCamera = new MyCamera(this);
+        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

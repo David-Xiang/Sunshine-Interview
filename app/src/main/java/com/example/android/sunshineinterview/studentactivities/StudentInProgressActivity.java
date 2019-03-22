@@ -36,6 +36,7 @@ public class StudentInProgressActivity extends AppCompatActivity {
         setContentView(R.layout.interviewed);
 
         mCamera = new MyCamera(this);
+        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
