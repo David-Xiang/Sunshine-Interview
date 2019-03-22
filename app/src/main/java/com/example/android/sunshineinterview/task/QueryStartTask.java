@@ -6,10 +6,12 @@ import android.util.Log;
 import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
 import com.example.android.sunshineinterview.studentactivities.WaitForTeacherConfirmActivity;
 import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
+import com.example.android.sunshineinterview.utilities.NetworkUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.example.android.sunshineinterview.model.*;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class QueryStartTask extends AsyncTask<Object, Void, JsonObject> {
@@ -21,19 +23,19 @@ public class QueryStartTask extends AsyncTask<Object, Void, JsonObject> {
         mWaitForTeacherConfirmActivity = (WaitForTeacherConfirmActivity) objects[0];
         URL url = (URL) objects[1];
 
-        /*JsonObject j = null;
+        JsonObject j = null;
         try{
             j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
         } catch (IOException e){
             Log.e(TAG, "Server is not accessible.");
             e.printStackTrace();
-        }*/
+        }
 
-        String jsonString = "{\n" +
+        /*String jsonString = "{\n" +
                 "    \"type\": \"permission\",\n" +
                 "    \"permission\": \"true\"\n" +
                 "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
+        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
         return j;
     }
 

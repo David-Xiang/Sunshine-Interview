@@ -14,18 +14,19 @@ import com.google.gson.*;
 public class NetworkUtils {
     final static private String TAG = "NetworkUtils";
 
-    final static private String BASE_URL = "https://192.168.1.5";
+    final static private String BASE_URL = "http://10.3.104.218";
 
-    final static private String PARAM_QUERY = "query";
+    //final static private String PARAM_QUERY = "query";
 
     public static URL buildUrl(String SearchQuery) {
-        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_QUERY, SearchQuery)
-                .build();
+        /*Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                .appendQueryParameter("", SearchQuery)
+                .build();*/
 
+        String urlString = BASE_URL + SearchQuery;
         URL url = null;
         try {
-            url = new URL(builtUri.toString());
+            url = new URL(urlString);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -52,14 +53,9 @@ public class NetworkUtils {
         }
     }
 
-    public static JsonElement getJsonReponse(URL url) {
-        String jsonString;
-        try {
-            jsonString = getResponseFromHttpUrl(url);
-        } catch (IOException e){
-            Log.e(TAG, "IOException encountered!");
-            return null;
-        }
+    public static JsonElement getJsonReponse(URL url) throws IOException {
+        String jsonString = getResponseFromHttpUrl(url);
+        Log.i(TAG, jsonString);
         JsonParser jsonParser = new JsonParser();
         return jsonParser.parse(jsonString);
     }

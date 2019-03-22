@@ -158,16 +158,6 @@ public class Interview {
         return mPeriods;
     }
 
-    public boolean uploadImage(String Id, String localUrl) {
-        // TODO:
-        return true;
-    }
-
-    public boolean downloadImage(String imageUrl) {
-        // TODO:
-        return true;
-    }
-
     public boolean chooseSide(ChooseSideActivity chooseSideActivity, InterviewSide interviewFunction) {
         if (!isValidated) {
             Log.e(TAG, "Code not validated when selecting side!");
@@ -315,7 +305,7 @@ public class Interview {
                 + String.valueOf(orderIndex) + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        new UploadTask().execute(path);
+        //new UploadTask().execute(path);
         new TeacherSigninTask().execute(teacherSigninActivity, url);
         return true;
     }
@@ -394,7 +384,7 @@ public class Interview {
                 + String.valueOf(orderIndex) + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        new UploadTask().execute(path);
+        //new UploadTask().execute(path);
         new StudentSigninTask().execute(studentSigninActivity, url);
         return true;
     }

@@ -20,14 +20,13 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
         mValidateActivity = (ValidateActivity) objects[0];
         URL url = (URL) objects[1];
 
-        /*JsonObject j = null;
-        try{
+        JsonObject j = null;
+        try {
             j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
         } catch (IOException e){
-            Log.e(TAG, "Server is not accessible.");
             e.printStackTrace();
-        }*/
-        String jsonString = "{\n" +
+        }
+        /*String jsonString = "{\n" +
                 "    \"type\": \"interview_info\",\n" +
                 "    \"permission\": \"true\",\n" +
                 "    \"info\":{\n" +
@@ -36,7 +35,7 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
                 "        \"site_id\": \"0001\",\n" +
                 "        \"site_name\": \"文史楼110\",\n" +
                 "        \"periods\":[{\n" +
-                "                \"order\": \"01\",\n" +
+                "                 \"order\": \"01\",\n" +
                 "                \"start_time\": \"2019-06-11 09:00:00\",\n" +
                 "                \"end_time\": \"2019-06-11 09:00:00\",\n" +
                 "                \"teacher\":[\n" +
@@ -72,7 +71,7 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
                 "        ]\n" +
                 "    }\n" +
                 "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
+        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
         return j;
     }
 

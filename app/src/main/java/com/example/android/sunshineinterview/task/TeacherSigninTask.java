@@ -5,9 +5,11 @@ import android.util.Log;
 
 import com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity;
 import com.example.android.sunshineinterview.model.*;
+import com.example.android.sunshineinterview.utilities.NetworkUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class TeacherSigninTask extends AsyncTask<Object, Void, JsonObject> {
@@ -18,19 +20,19 @@ public class TeacherSigninTask extends AsyncTask<Object, Void, JsonObject> {
     protected JsonObject doInBackground(Object... objects) {
         mTeacherSigninActivity = (TeacherSigninActivity) objects[0];
         URL url = (URL) objects[1];
-        /*JsonObject j = null;
+        JsonObject j = null;
         try{
             j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
         } catch (IOException e){
             Log.e(TAG, "Server is not accessible.");
             e.printStackTrace();
-        }*/
+        }
 
-        String jsonString = "{\n" +
+        /*String jsonString = "{\n" +
                 "    \"type\": \"permission\",\n" +
                 "    \"permission\": \"true\"\n" +
                 "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
+        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
         return j;
     }
 

@@ -5,12 +5,15 @@ import android.util.Log;
 
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
+import com.example.android.sunshineinterview.utilities.NetworkUtils;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.example.android.sunshineinterview.model.SigninInfo;
 import com.example.android.sunshineinterview.utilities.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
 public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
@@ -21,15 +24,16 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
     protected JsonArray doInBackground(Object... objects) {
         mWaitForStudentSignActivity = (WaitForStudentSigninActivity) objects[0];
         URL url = (URL) objects[1];
-        /*JsonObject j = null;
+        JsonObject j = null;
+        JsonArray j2 = null;
         try{
             j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
+            j2 = new JsonParser().parse(j.toString()).getAsJsonObject().get("info").getAsJsonArray();
         } catch (IOException e){
             Log.e(TAG, "Server is not accessible.");
             e.printStackTrace();
-        }*/
-
-        String jsonString = "{\n" +
+        }
+        /*String jsonString = "{\n" +
                 "    \"type\": \"signin_info\",\n" +
                 "    \"info\":[\n" +
                 "        {\n" +
@@ -47,8 +51,8 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
                 "        }\n" +
                 "    ]\n" +
                 "}";
-        JsonArray j = new JsonParser().parse(jsonString).getAsJsonObject().get("info").getAsJsonArray();
-        return j;
+        JsonArray j = new JsonParser().parse(jsonString).getAsJsonObject().get("info").getAsJsonArray();*/
+        return j2;
     }
 
     @Override

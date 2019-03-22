@@ -6,8 +6,10 @@ import android.util.Log;
 import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
 import com.example.android.sunshineinterview.model.*;
 import com.google.gson.JsonObject;
+import com.example.android.sunshineinterview.utilities.NetworkUtils;
 import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class ChooseSideTask extends AsyncTask<Object, Void, JsonObject> {
@@ -19,24 +21,25 @@ public class ChooseSideTask extends AsyncTask<Object, Void, JsonObject> {
         mChooseSideActivity = (ChooseSideActivity) objects[0];
         URL url = (URL) objects[1];
 
-        /*JsonObject j = null;
+        JsonObject j = null;
         try{
             j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, "Server is not accessible.");
             e.printStackTrace();
-        }*/
+        }
 
-        String jsonString = "{\n" +
+        /*String jsonString = "{\n" +
                 "    \"type\": \"permission\",\n" +
                 "    \"permission\": \"true\"\n" +
                 "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
+        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
         return j;
     }
 
     @Override
     protected void onPostExecute(JsonObject j) {
+        Log.i(TAG, j.toString());
         if (j == null
                 || j.get("type").isJsonNull()
                 || !j.get("type").getAsString().equals("permission")){
