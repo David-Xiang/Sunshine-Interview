@@ -20,13 +20,13 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
         mValidateActivity = (ValidateActivity) objects[0];
         URL url = (URL) objects[1];
 
-        JsonObject j = null;
-        try {
-            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        /*String jsonString = "{\n" +
+//        JsonObject j = null;
+//        try {
+//            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+        String jsonString = "{\n" +
                 "    \"type\": \"interview_info\",\n" +
                 "    \"permission\": \"true\",\n" +
                 "    \"info\":{\n" +
@@ -71,7 +71,7 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
                 "        ]\n" +
                 "    }\n" +
                 "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
+        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
         return j;
     }
 

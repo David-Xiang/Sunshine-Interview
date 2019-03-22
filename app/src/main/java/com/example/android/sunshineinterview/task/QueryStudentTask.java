@@ -24,16 +24,16 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
     protected JsonArray doInBackground(Object... objects) {
         mWaitForStudentSignActivity = (WaitForStudentSigninActivity) objects[0];
         URL url = (URL) objects[1];
-        JsonObject j = null;
-        JsonArray j2 = null;
-        try{
-            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
-            j2 = new JsonParser().parse(j.toString()).getAsJsonObject().get("info").getAsJsonArray();
-        } catch (IOException e){
-            Log.e(TAG, "Server is not accessible.");
-            e.printStackTrace();
-        }
-        /*String jsonString = "{\n" +
+//        JsonObject j = null;
+//        JsonArray j2 = null;
+//        try{
+//            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
+//            j2 = new JsonParser().parse(j.toString()).getAsJsonObject().get("info").getAsJsonArray();
+//        } catch (IOException e){
+//            Log.e(TAG, "Server is not accessible.");
+//            e.printStackTrace();
+//        }
+        String jsonString = "{\n" +
                 "    \"type\": \"signin_info\",\n" +
                 "    \"info\":[\n" +
                 "        {\n" +
@@ -51,8 +51,9 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
                 "        }\n" +
                 "    ]\n" +
                 "}";
-        JsonArray j = new JsonParser().parse(jsonString).getAsJsonObject().get("info").getAsJsonArray();*/
-        return j2;
+        JsonArray j = new JsonParser().parse(jsonString).getAsJsonObject().get("info").getAsJsonArray();
+//        return j2;
+        return j;
     }
 
     @Override

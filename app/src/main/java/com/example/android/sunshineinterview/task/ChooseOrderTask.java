@@ -21,19 +21,19 @@ public class ChooseOrderTask extends AsyncTask<Object, Void, JsonObject> {
         mChooseOrderActivity = (ChooseOrderActivity) objects[0];
         URL url = (URL) objects[1];
 
-        JsonObject j = null;
-        try{
-            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
-        } catch (IOException e){
-            Log.e(TAG, "Server is not accessible.");
-            e.printStackTrace();
-        }
+//        JsonObject j = null;
+//        try{
+//            j = NetworkUtils.getJsonReponse(url).getAsJsonObject();
+//        } catch (IOException e){
+//            Log.e(TAG, "Server is not accessible.");
+//            e.printStackTrace();
+//        }
 
-        /*String jsonString = "{\n" +
+        String jsonString = "{\n" +
                 "    \"type\": \"permission\",\n" +
                 "    \"permission\": \"true\"\n" +
                 "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
+        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
         return j;
     }
 
