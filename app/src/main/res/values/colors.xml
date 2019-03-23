@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
     <color name="colorPrimary">#9e0000</color>
     <color name="colorPrimaryDark">#7c0000</color>
+    <color name="colorMediumyDark">#910303</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorSky">#9e0000</color>
     <color name="colorWhite">#FFFFFF</color>

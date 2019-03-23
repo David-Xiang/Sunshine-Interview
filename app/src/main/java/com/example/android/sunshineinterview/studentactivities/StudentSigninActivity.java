@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class StudentSigninActivity extends AppCompatActivity {
 
     private Interview mInterview;
     private String[] studentsNames;
+    private ArrayAdapter<String> studentAdapter;
     private int mSigninNumber;
     private TimeCount mTimeCount;
 
@@ -87,12 +89,8 @@ public class StudentSigninActivity extends AppCompatActivity {
         //FrameLayout preview = findViewById(R.id.videoView);
         //preview.addView(mPreview);
 
-        //TODO: 更新右栏信息，获得老师列表，拍照上传...
-        //TODO: to continue
-
         initSpinner();
 
-        //TODO: 拍照
         Button bShoot = findViewById(R.id.button_shoot);
         Button bReset = findViewById(R.id.button_reset);
 
@@ -131,6 +129,7 @@ public class StudentSigninActivity extends AppCompatActivity {
             public void onClick(View v){
                 ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
                 interviewerPhoto.setImageResource(R.drawable.bigbrother);
+                imageUri = null;
             }
         });
 
@@ -138,11 +137,17 @@ public class StudentSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
-                // TODO(XIEXINTONG): 把图片地址填上
+
                 String imgpath = new String();
+
+                imgpath = imageUri.toString();
+
+                ProgressBar pb_validate = findViewById(R.id.pb_confirm);
+                pb_validate.setVisibility(View.VISIBLE);
+
                 mInterview.studentSignin(StudentSigninActivity.this,
                         sp.getSelectedItemPosition(), imgpath);
-                // TODO: show a progress bar & 传照片
+
             }
         });
 
@@ -150,7 +155,7 @@ public class StudentSigninActivity extends AppCompatActivity {
 
 
     private void initSpinner() {
-        ArrayAdapter<String> studentAdapter = new ArrayAdapter<>(this, R.layout.item_select, studentsNames);
+        studentAdapter = new ArrayAdapter<>(this, R.layout.item_select, studentsNames);
         studentAdapter.setDropDownViewResource(R.layout.item_dropdown);
         Spinner sp = findViewById(R.id.spinner);
         sp.setPrompt("请选择考生");
@@ -172,7 +177,6 @@ public class StudentSigninActivity extends AppCompatActivity {
     public void onStudentsUpdate(ServerInfo serverInfo){
         if (serverInfo == ServerInfo.PERMISSION){
             mSigninNumber++;
-            // TODO: then let another student take photo
             if(mSigninNumber == studentsNames.length){
                 // students all signed in
                 mTimeCount.cancel();
@@ -180,6 +184,9 @@ public class StudentSigninActivity extends AppCompatActivity {
                 Intent nextStep = new Intent(StudentSigninActivity.this, WaitForTeacherConfirmActivity.class);
                 startActivity(nextStep);
             }
+            //签到成功要把这个人从spinner里删掉？
+            Spinner sp = findViewById(R.id.spinner);
+            studentAdapter.remove(studentAdapter.getItem(sp.getSelectedItemPosition()));
         } else if(serverInfo == ServerInfo.REJECTION) {
             Toast.makeText(StudentSigninActivity.this, "签到错误", Toast.LENGTH_LONG).show();
         } else {
@@ -188,6 +195,8 @@ public class StudentSigninActivity extends AppCompatActivity {
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
+        ProgressBar pb_validate = findViewById(R.id.pb_confirm);
+        pb_validate.setVisibility(View.GONE);
         Log.v(TAG, "onHttpResponse():  method entered!");
         if (serverInfo == ServerInfo.PERMISSION){
             mTimeCount.cancel();
@@ -227,6 +236,11 @@ public class StudentSigninActivity extends AppCompatActivity {
         TextView textview = findViewById(textViewId);
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
+        if (newString.length() > 10)
+        {
+            String[] tmp = newString.split(" ");
+            newString = tmp[1].substring(0, 8) + " - " + tmp[2];
+        }
         textview.setText(originalString.replace("------", newString));
     }
 

@@ -91,7 +91,6 @@ public class ValidateActivity extends AppCompatActivity {
 
     public void onHttpResponse(boolean isValidated){
         ProgressBar pb_validate = findViewById(R.id.pb_vaildate);
-
         pb_validate.setVisibility(View.GONE);
         if (isValidated){
             Toast.makeText(ValidateActivity.this, "验证成功", Toast.LENGTH_SHORT).show();

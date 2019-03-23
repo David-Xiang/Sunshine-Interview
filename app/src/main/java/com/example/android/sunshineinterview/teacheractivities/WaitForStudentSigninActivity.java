@@ -1,6 +1,8 @@
 package com.example.android.sunshineinterview.teacheractivities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,8 @@ import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class WaitForStudentSigninActivity extends AppCompatActivity {
@@ -79,7 +83,8 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // send start information
-                // TODO: add a progress bar?
+                ProgressBar pb_validate = findViewById(R.id.pb_start);
+                pb_validate.setVisibility(View.VISIBLE);
                 mInterview.start(WaitForStudentSigninActivity.this);
             }
         });
@@ -104,6 +109,11 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         TextView textview = findViewById(textViewId);
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
+        if (newString.length() > 10)
+        {
+            String[] tmp = newString.split(" ");
+            newString = tmp[1].substring(0, 8) + " - " + tmp[2];
+        }
         textview.setText(originalString.replace("------", newString));
     }
 
@@ -113,11 +123,26 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         mTimeCount.cancel();
     }
 
-    public void onStudentsUpdate(String [] names, String [] urls){
-        // update students' portraits，一个一个在mInterview里面修改/信息，name, url, isabsent
+    public void onStudentsUpdate(String [] names, String [] urls) throws FileNotFoundException {
+        //一个一个在mInterview里面修改/信息，name, url, isabsent
+        for (int i = 0; i < names.length; ++i)
+        {
+            for (int j = 0; j < mStudentNames.length; ++j)
+            {
+                if(names[i].equals(mStudentNames[j]))
+                {
+                    ImageView interviewerPhoto = findViewById(imageViewIDs[j]);
+                    FileInputStream fis = new FileInputStream(urls[i]);
+                    interviewerPhoto.setImageBitmap(BitmapFactory.decodeStream(fis));
+                    break;
+                }
+            }
+        }
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
+        ProgressBar pb_validate = findViewById(R.id.pb_start);
+        pb_validate.setVisibility(View.GONE);
         if (serverInfo == ServerInfo.PERMISSION){
             mTimeCount.cancel();
             mInterview.setStatus(Interview.InterviewStatus.INPROGRESS);

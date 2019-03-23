@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/text1"
     style="?android:attr/spinnerDropDownItemStyle"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center|center_horizontal|center_vertical"
-    app:autoSizeTextType="uniform"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:textSize="25sp"
     android:singleLine="true" />
 
