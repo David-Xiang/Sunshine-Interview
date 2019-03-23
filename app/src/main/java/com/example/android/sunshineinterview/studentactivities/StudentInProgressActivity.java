@@ -2,6 +2,7 @@ package com.example.android.sunshineinterview.studentactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -35,13 +36,6 @@ public class StudentInProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interviewed);
 
-        mCamera = new MyCamera(this);
-        mCamera.setCameraDisplayOrientation(this);
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
-        mMediaRecorder = new MyMediaRecorder(this, mCamera.camera, mPreview.getHolder());
-
         mInterview = Interview.getInstance();
 
         mTimeCount = new TimeCount(60000, 10000){
@@ -72,7 +66,18 @@ public class StudentInProgressActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        // TODO
+        mCamera = new MyCamera(this);
+        mCamera.setCameraDisplayOrientation(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
+        mMediaRecorder = new MyMediaRecorder(this, mCamera.camera, mPreview.getHolder());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mMediaRecorder.startRecord();
+            }
+        }, 1000);
     }
     @Override
     protected void onPause(){

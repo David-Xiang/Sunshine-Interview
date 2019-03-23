@@ -57,7 +57,6 @@ public class TeacherEndActivity extends AppCompatActivity {
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
-        // TODO
     }
 
 }
