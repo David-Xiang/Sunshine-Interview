@@ -55,6 +55,7 @@ public class StudentInProgressActivity extends AppCompatActivity {
         if (serverInfo == ServerInfo.PERMISSION){
             mTimeCount.cancel();
             mInterview.setStatus(Interview.InterviewStatus.END);
+            mMediaRecorder.stopRecord();
             Intent nextStep = new Intent(StudentInProgressActivity.this, StudentEndActivity.class);
             startActivity(nextStep);
         } else {

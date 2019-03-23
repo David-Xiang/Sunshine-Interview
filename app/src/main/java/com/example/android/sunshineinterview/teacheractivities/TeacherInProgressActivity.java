@@ -49,6 +49,7 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mMediaRecorder.stopRecord();
                 mInterview.end(TeacherInProgressActivity.this);
             }
         });
