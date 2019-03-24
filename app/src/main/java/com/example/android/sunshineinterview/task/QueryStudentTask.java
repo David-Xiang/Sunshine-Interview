@@ -13,6 +13,7 @@ import com.example.android.sunshineinterview.model.SigninInfo;
 import com.example.android.sunshineinterview.utilities.FileUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -86,6 +87,10 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
         // 1. 对每一个签到的学生，对比状态，以前就签到了，则无需处理；
         // 2. 如果有新签到的学生，则首先解析url，得到文件名，如果本地有这个文件，则无需处理；
         // 3.如果本地没有这个文件，则需下载文件并保存。
-        mWaitForStudentSignActivity.onStudentsUpdate(names, imgUrl);
+        try{
+            mWaitForStudentSignActivity.onStudentsUpdate(names, imgUrl);
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }
