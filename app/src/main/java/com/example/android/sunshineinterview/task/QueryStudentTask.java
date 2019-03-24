@@ -70,7 +70,7 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
             names[i] = s.students.get(i).name;
             if (!s.students.get(i).isAbsent) {
                 imgUrl[i] = s.students.get(i).imgUrl;
-                /*if (!mInterview.getAbsent(s.students.get(i).id))
+                if (!mInterview.getAbsent(s.students.get(i).id))
                     continue;
                 String path = new String();
                 path = s.students.get(i).imgUrl.substring(s.students.get(i).imgUrl.lastIndexOf('/') + 1);
@@ -78,8 +78,7 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
                     continue;
                 if (fileUtiles.fileIsExists(path))
                     continue;
-                    new DownloadTask().execute(imgUrl[i]);
-                */
+                new DownloadTask().execute(imgUrl[i]);
             } else {
                 imgUrl[i] = null;
             }

@@ -67,8 +67,10 @@ public class NetworkUtils {
     }
 
     public static boolean uploadImg(File file, String name, URL url){
-        if (file == null)
+        if (file == null) {
+            Log.v(TAG, "uploadImg(): file does not exist");
             return false;
+        }
         String BOUNDARY =  UUID.randomUUID().toString();  //边界标识，随机生成
         try {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

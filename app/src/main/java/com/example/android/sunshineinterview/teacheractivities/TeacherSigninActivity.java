@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -60,6 +61,8 @@ public class TeacherSigninActivity extends AppCompatActivity {
     private MyCamera mCamera;
     private CameraPreview mPreview;
     private ArrayAdapter<String> teacherAdapter;
+    // 组长！我临时加的~
+    private String outputimage_path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,13 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 // mCamera.takePhoto();
                 File outputImage = new FindDir().getOutputMediaFile(MEDIA_TYPE_IMAGE);
                 try {
+                    Log.v("frontend", "TeacherSignInActivity(): "
+                            + outputImage.getCanonicalPath());
+                    outputimage_path = outputImage.getCanonicalPath();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
                     if (outputImage.exists()){
                         outputImage.delete();
                     }
@@ -146,8 +156,12 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
                 ProgressBar pb_validate = findViewById(R.id.pb_confirm);
                 pb_validate.setVisibility(View.VISIBLE);
+                Log.v("frontend", "TeacherSignInActivity(): outputimage_path: " + outputimage_path);
                 mInterview.teacherSignin(TeacherSigninActivity.this,
-                        sp.getSelectedItemPosition(), imgpath);
+                        sp.getSelectedItemPosition(), outputimage_path);
+                //mInterview.teacherSignin(TeacherSigninActivity.this,
+                // sp.getSelectedItemPosition(), imgpath);
+
 
                 // TODO: merge
                 // String name = sp.getSelectedItem().toString();
@@ -172,7 +186,8 @@ public class TeacherSigninActivity extends AppCompatActivity {
             }
             //签到成功要把这个人从spinner里删掉？
             Spinner sp = findViewById(R.id.spinner);
-            teacherAdapter.remove(teacherAdapter.getItem(sp.getSelectedItemPosition()));
+            // TODO:  把人从spinner中删掉
+            //teacherAdapter.remove(teacherAdapter.getItem(sp.getSelectedItemPosition()));
         } else if(serverInfo == ServerInfo.REJECTION) {
             Toast.makeText(TeacherSigninActivity.this, "签到错误", Toast.LENGTH_LONG).show();
         } else {

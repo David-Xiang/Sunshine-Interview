@@ -11,16 +11,20 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 
-public class DownloadTask extends AsyncTask<String, Boolean, Boolean> {
+public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
     private final static String TAG = "DownloadTask";
+    private WaitForStudentSigninActivity mWaitForStudentSigninActivity;
     @Override
-    protected Boolean doInBackground(String... params) {
+    protected Boolean doInBackground(Object... params) {
         //完成下载任务
-        // String string = params[0];//这是从execute方法中传过来的参数, 即服务器端的路径
+        mWaitForStudentSigninActivity = (WaitForStudentSigninActivity) params[0];
+        String string = (String) params[1];//这是从execute方法中传过来的参数, 即服务器端的路径
         Log.w(TAG, "Begin downloading!");
-        String string = "https://wx1.sinaimg.cn/orj480/006u8RMBly1fxabddexv6j30qo0f0weg.jpg";
+        //String string = "https://wx1.sinaimg.cn/orj480/006u8RMBly1fxabddexv6j30qo0f0weg.jpg";
         try {
             URL url = new URL(string);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -64,6 +68,7 @@ public class DownloadTask extends AsyncTask<String, Boolean, Boolean> {
         if(!bool) {
             Log.w(TAG, "Something is wrong when downloading picture");
         }
+
     }
 
 }

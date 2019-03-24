@@ -302,7 +302,7 @@ public class Interview {
                 + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        //new UploadTask().execute(path);
+        new UploadTask().execute(path, id);
         new TeacherSigninTask().execute(teacherSigninActivity, url);
         return true;
     }
@@ -379,9 +379,9 @@ public class Interview {
         String id = mInterviewInfo.periods.get(orderIndex).students.get(studentIndex).id;
         String parameters = "/student?siteid=" + mInterviewInfo.siteId + "&order="
                 + getOrderString() + "&id=" + id + "&img=" + filename;
-        Log.v(TAG, "teacherSignin() sending url = " + parameters);
+        Log.v(TAG, "studentSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        //new UploadTask().execute(path);
+        //new UploadTask().execute(path, id);
         new StudentSigninTask().execute(studentSigninActivity, url);
         return true;
     }

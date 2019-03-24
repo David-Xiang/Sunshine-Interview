@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.task.DownloadTask;
+import com.example.android.sunshineinterview.utilities.NetworkUtils;
 import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
 
@@ -24,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class WaitForStudentSigninActivity extends AppCompatActivity {
+    private final static String TAG = "WaitForStudentSigninAc";
     public enum ServerInfo{
         PERMISSION,
         REJECTION,  // the side is already chosen
@@ -74,6 +78,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
         int i = 0;
         for(String s:mStudentNames) {
+            Log.v(TAG, s);
             updateNames(i, s);
             i += 1;
         }
@@ -129,9 +134,9 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         {
             for (int j = 0; j < mStudentNames.length; ++j)
             {
-                if(names[i].equals(mStudentNames[j]))
-                {
+                if(names[i].equals(mStudentNames[j]) && urls[i] != null) {
                     ImageView interviewerPhoto = findViewById(imageViewIDs[j]);
+                    new DownloadTask().execute(urls[i]);
                     FileInputStream fis = new FileInputStream(urls[i]);
                     interviewerPhoto.setImageBitmap(BitmapFactory.decodeStream(fis));
                     break;

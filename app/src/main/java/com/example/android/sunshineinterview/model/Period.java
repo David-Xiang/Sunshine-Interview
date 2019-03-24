@@ -19,7 +19,6 @@ public class Period{
         endTime = j.get("end_time").getAsString();
         teachers = new ArrayList<>();
         students = new ArrayList<>();
-        students.add(new Person("12", "xdw"));
 
         Log.v(TAG, "order = " + order);
         Log.v(TAG, "startTime = " + startTime);

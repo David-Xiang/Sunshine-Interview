@@ -82,10 +82,11 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
                 || j.get("permission").getAsString().equals("false")){
             // something is wrong
             mValidateActivity.onHttpResponse(false);
+        } else {
+            j = j.get("info").getAsJsonObject();
+            Interview.getInstance().setInterviewInfo(new InterviewInfo(j));
+            Interview.getInstance().setValidated();
+            mValidateActivity.onHttpResponse(true);
         }
-        j = j.get("info").getAsJsonObject();
-        Interview.getInstance().setInterviewInfo(new InterviewInfo(j));
-        Interview.getInstance().setValidated();
-        mValidateActivity.onHttpResponse(true);
     }
 }
