@@ -1,6 +1,7 @@
 package com.example.android.sunshineinterview.teacheractivities;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,11 +41,6 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
         updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
 
-        mCamera = new MyCamera(this);
-        mPreview = new CameraPreview(this, mCamera.camera);
-        FrameLayout preview = findViewById(R.id.videoView);
-        preview.addView(mPreview);
-        mMediaRecorder = new MyMediaRecorder(this, mCamera.camera, mPreview.getHolder());
 
 
         //TODO:接视频
@@ -53,6 +49,7 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mMediaRecorder.stopRecord();
                 mInterview.end(TeacherInProgressActivity.this);
             }
         });
@@ -73,7 +70,18 @@ public class TeacherInProgressActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        // TODO
+        mCamera = new MyCamera(this);
+        mCamera.setCameraDisplayOrientation(this);
+        mPreview = new CameraPreview(this, mCamera.camera);
+        FrameLayout preview = findViewById(R.id.videoView);
+        preview.addView(mPreview);
+        mMediaRecorder = new MyMediaRecorder(this, mCamera.camera, mPreview.getHolder());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mMediaRecorder.startRecord();
+            }
+        }, 1000);
     }
     @Override
     protected void onPause(){
@@ -90,6 +98,11 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         TextView textview = findViewById(textViewId);
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
+        if (newString.length() > 10)
+        {
+            String[] tmp = newString.split(" ");
+            newString = tmp[1].substring(0, 8) + " - " + tmp[2];
+        }
         textview.setText(originalString.replace("------", newString));
     }
 }

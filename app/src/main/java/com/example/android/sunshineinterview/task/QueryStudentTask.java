@@ -13,6 +13,7 @@ import com.example.android.sunshineinterview.model.SigninInfo;
 import com.example.android.sunshineinterview.utilities.FileUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -33,26 +34,27 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
             Log.e(TAG, "Server is not accessible.");
             e.printStackTrace();
         }
-        /*String jsonString = "{\n" +
-                "    \"type\": \"signin_info\",\n" +
-                "    \"info\":[\n" +
-                "        {\n" +
-                "            \"id\":\"11990001\",\n" +
-                "            \"name\": \"何炬\",\n" +
-                "            \"is_absent\": \"false\",\n" +
-                "            \"img_url\": \"http://10.0.0.1/img/1 " +
-                "1990001.jpg\" \n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"id\":\"11990002\",\n" +
-                "            \"name\": \"宋煦\",\n" +
-                "            \"is_absent\": \"true\",\n" +
-                "            \"img_url\": \"\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-        JsonArray j = new JsonParser().parse(jsonString).getAsJsonObject().get("info").getAsJsonArray();*/
+//        String jsonString = "{\n" +
+//                "    \"type\": \"signin_info\",\n" +
+//                "    \"info\":[\n" +
+//                "        {\n" +
+//                "            \"id\":\"11990001\",\n" +
+//                "            \"name\": \"何炬\",\n" +
+//                "            \"is_absent\": \"false\",\n" +
+//                "            \"img_url\": \"http://10.0.0.1/img/1 " +
+//                "1990001.jpg\" \n" +
+//                "        },\n" +
+//                "        {\n" +
+//                "            \"id\":\"11990002\",\n" +
+//                "            \"name\": \"宋煦\",\n" +
+//                "            \"is_absent\": \"true\",\n" +
+//                "            \"img_url\": \"\"\n" +
+//                "        }\n" +
+//                "    ]\n" +
+//                "}";
+//        JsonArray j = new JsonParser().parse(jsonString).getAsJsonObject().get("info").getAsJsonArray();
         return j2;
+//        return j;
     }
 
     @Override
@@ -85,6 +87,10 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
         // 1. 对每一个签到的学生，对比状态，以前就签到了，则无需处理；
         // 2. 如果有新签到的学生，则首先解析url，得到文件名，如果本地有这个文件，则无需处理；
         // 3.如果本地没有这个文件，则需下载文件并保存。
-        mWaitForStudentSignActivity.onStudentsUpdate(names, imgUrl);
+        try{
+            mWaitForStudentSignActivity.onStudentsUpdate(names, imgUrl);
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }

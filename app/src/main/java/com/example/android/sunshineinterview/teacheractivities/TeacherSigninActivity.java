@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,8 +56,10 @@ public class TeacherSigninActivity extends AppCompatActivity {
     Interview mInterview;
     private String[] teacherNames;
     int mSigninNumber;
+    boolean [] Signed;
     private MyCamera mCamera;
     private CameraPreview mPreview;
+    private ArrayAdapter<String> teacherAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,11 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
         teacherNames = mInterview.getTeacherNames();
+        Signed = new boolean[teacherNames.length];
+        for (boolean b : Signed)
+        {
+            b = false;
+        }
         mSigninNumber = 0;
 
         // ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
@@ -84,7 +92,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
         initSpinner();
 
-        //TODO: 拍照
         Button bShoot = findViewById(R.id.button_shoot);
         Button bReset = findViewById(R.id.button_reset);
         Button bConfirm = findViewById(R.id.button_confirm);
@@ -114,15 +121,16 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 //启动相机程序
                 Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+                intent.putExtra("android.intent.extras.CAMERA_FACING", 2);
                 startActivityForResult(intent,TAKE_PHOTO);
             }
         });
         bReset.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                // TODO 重置imageView
                 ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
                 interviewerPhoto.setImageResource(R.drawable.bigbrother);
+                imageUri = null;
             }
         });
 
@@ -131,11 +139,16 @@ public class TeacherSigninActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
                 // TODO: time
-                //String time = sp.getSelectedItem().toString();
-                // TODO(XIEXINTONG): 把图片地址填上
+
                 String imgpath = new String();
+
+                imgpath = imageUri.toString();
+
+                ProgressBar pb_validate = findViewById(R.id.pb_confirm);
+                pb_validate.setVisibility(View.VISIBLE);
                 mInterview.teacherSignin(TeacherSigninActivity.this,
                         sp.getSelectedItemPosition(), imgpath);
+
                 // TODO: merge
                 // String name = sp.getSelectedItem().toString();
                 // if (mInterview.teacher(mTeachers.get(sp.getSelectedItemPosition()).id))
@@ -148,6 +161,8 @@ public class TeacherSigninActivity extends AppCompatActivity {
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
+        ProgressBar pb_validate = findViewById(R.id.pb_confirm);
+        pb_validate.setVisibility(View.GONE);
         if (serverInfo == ServerInfo.PERMISSION){
             mSigninNumber++;
             if (mSigninNumber == teacherNames.length){
@@ -155,6 +170,9 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 Intent nextStep = new Intent(TeacherSigninActivity.this, WaitForStudentSigninActivity.class);
                 startActivity(nextStep);
             }
+            //签到成功要把这个人从spinner里删掉？
+            Spinner sp = findViewById(R.id.spinner);
+            teacherAdapter.remove(teacherAdapter.getItem(sp.getSelectedItemPosition()));
         } else if(serverInfo == ServerInfo.REJECTION) {
             Toast.makeText(TeacherSigninActivity.this, "签到错误", Toast.LENGTH_LONG).show();
         } else {
@@ -164,7 +182,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
 
     private void initSpinner() {
-        ArrayAdapter<String> teacherAdapter = new ArrayAdapter<>(this, R.layout.item_select, teacherNames);
+        teacherAdapter = new ArrayAdapter<>(this, R.layout.item_select, teacherNames);
         teacherAdapter.setDropDownViewResource(R.layout.item_dropdown);
         Spinner sp = findViewById(R.id.spinner);
         sp.setPrompt("请选择考官");
@@ -209,6 +227,11 @@ public class TeacherSigninActivity extends AppCompatActivity {
         TextView textview = findViewById(textViewId);
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
+        if (newString.length() > 10)
+        {
+            String[] tmp = newString.split(" ");
+            newString = tmp[1].substring(0, 8) + " - " + tmp[2];
+        }
         textview.setText(originalString.replace("------", newString));
     }
 
@@ -219,6 +242,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
         Log.d("mydebug", "onResume if called");
         ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
         mCamera = new MyCamera(this, interviewerPhoto);
+        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

@@ -41,12 +41,13 @@ public class ChooseSideActivity extends AppCompatActivity {
         // preview.addView(mPreview);
 
         mInterview = Interview.getInstance();
+        mInterview.setStatus(Interview.InterviewStatus.CHOOSEORDER);
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
         updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
-
+        updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
 
         Button bTeacher = findViewById(R.id.button_interviewer);
         bTeacher.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +88,7 @@ public class ChooseSideActivity extends AppCompatActivity {
         pb_validate.setVisibility(View.GONE);
 
         if (serverInfo == ServerInfo.PERMISSION){
+            mInterview.setSideSelected();
             mInterview.setStatus(Interview.InterviewStatus.CHOOSEORDER);
             Intent nextStep = null;
             if (mInterview.getSide() == Interview.InterviewSide.STUDENT)
@@ -105,6 +107,7 @@ public class ChooseSideActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         mCamera = new MyCamera(this);
+        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

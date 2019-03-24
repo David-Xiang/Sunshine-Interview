@@ -6,6 +6,7 @@ import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import android.os.Handler;
 
 import java.io.File;
 
@@ -13,22 +14,74 @@ import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_VI
 import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
 
 public class MyMediaRecorder {
-    public MediaRecorder mediaRecorder;
+    public MediaRecorder MR;
     private SurfaceHolder holder;
     public Camera camera;
     public boolean isRecording;
+    private Handler handler;
+    Runnable runnable;
 
     public MyMediaRecorder(Context context, Camera inputCamera, SurfaceHolder inputHolder){
-        mediaRecorder = new MediaRecorder();
+        MR = new MediaRecorder();
         camera = inputCamera;
         holder = inputHolder;
+        handler = new Handler();
+        runnable=new Runnable(){
+            @Override
+            public void run() {
+                if (MR !=null) {
+                    MR.setOnErrorListener(null);
+                    MR.setOnInfoListener(null);
+                    MR.setPreviewDisplay(null);
+                    MR.stop();
+                    MR.reset();
+                    MR.release();
+                    camera.lock();
+                }
+                MR = new MediaRecorder();
+                startRecord();
+            }
+
+        };
         isRecording = false;
+
+        /*
+        MR.setOnInfoListener(new MediaRecorder.OnInfoListener() {
+            @Override
+            public void onInfo(MediaRecorder mr, int what, int extra) {
+                switch(what) {
+                    case MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED: {
+                        if (MR !=null) {
+                            MR.stop();
+                            MR.reset();
+                            MR.release();
+                            camera.lock();
+                        }
+                        MR = new MediaRecorder();
+                        startRecord();
+                    }
+                    break;
+
+                    case MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED: {
+                        if (mr!=null) {
+                            mr.stop();
+                            mr.release();
+                            mr=null;
+                        }
+                    }
+                    break;
+                }
+            }
+        });
+        */
     }
 
     public void startRecord(){
+        Log.d("videoDebug", "start recording!");
         if (setMediaRecorder()){
-            mediaRecorder.start();
+            MR.start();
             isRecording = true;
+            handler.postDelayed(runnable, 60000);
         }
         else{
             releaseMediaRecorder();
@@ -37,46 +90,55 @@ public class MyMediaRecorder {
     }
 
     public void stopRecord(){
-        mediaRecorder.stop();
+        Log.d("videoDebug", "stop recording!");
+        handler.removeCallbacks(runnable);
+        MR.setOnErrorListener(null);
+        MR.setOnInfoListener(null);
+        MR.setPreviewDisplay(null);
+        MR.stop();
         releaseMediaRecorder();
         camera.lock();
         isRecording = false;
     }
 
     private boolean setMediaRecorder(){
+        Log.d("videoDebug", "start setting the MR");
         camera.unlock();
-        mediaRecorder.setCamera(camera);
+        MR.setCamera(camera);
 
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-        mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+        MR.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        MR.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+        //MR.setMaxDuration(10000);//设置视频的最大持续时间
+        //MR.setMaxFileSize(1*1024*1024*1024);
 
-        mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_LOW));
+        MR.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_LOW));
 
         File mediaFile = getOutputMediaFile(MEDIA_TYPE_VIDEO);
         if (mediaFile == null){
-            Log.d("mydebug", "failed to open the VID file");
+            Log.d("videoDebug", "failed to open the VID file");
         }
-        mediaRecorder.setOutputFile(mediaFile.toString());
+        MR.setOutputFile(mediaFile.toString());
 
-        mediaRecorder.setPreviewDisplay(holder.getSurface());
-
+        MR.setPreviewDisplay(holder.getSurface());
+        Log.d("videoDebug", "setting MR Okay");
         try{
-            mediaRecorder.prepare();
+            MR.prepare();
         }
         catch (Exception e){
             releaseMediaRecorder();
-            Log.d("mydebug", "MediaRecorder failed to work");
+            Log.d("videoDebug", e.getMessage());
+            Log.d("videoDebug", "MediaRecorder failed to work");
             return false;
         }
         return true;
     }
 
     public void releaseMediaRecorder(){
-        if (mediaRecorder != null){
-            mediaRecorder.reset();
-            mediaRecorder.release();
+        if (MR != null){
+            MR.reset();
+            MR.release();
             camera.lock();
-            mediaRecorder = null;
+            MR = null;
         }
     }
 

@@ -28,14 +28,14 @@ public class QueryTask extends AsyncTask<Object, Void, JsonObject> {
             e.printStackTrace();
         }
 
-        /*String jsonString = "{\n" +
-                "    \"type\": \"site_info\",\n" +
-                "    \"permission\": \"true\",\n" +
-                "    \"info\": {\n" +
-                "        \"order\": \"01\"\n" +
-                "    }\n" +
-                "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
+//        String jsonString = "{\n" +
+//                "    \"type\": \"site_info\",\n" +
+//                "    \"permission\": \"true\",\n" +
+//                "    \"info\": {\n" +
+//                "        \"order\": \"01\"\n" +
+//                "    }\n" +
+//                "}";
+//        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
         return j;
     }
 

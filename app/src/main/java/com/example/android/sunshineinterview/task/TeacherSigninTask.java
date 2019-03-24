@@ -28,11 +28,11 @@ public class TeacherSigninTask extends AsyncTask<Object, Void, JsonObject> {
             e.printStackTrace();
         }
 
-        /*String jsonString = "{\n" +
-                "    \"type\": \"permission\",\n" +
-                "    \"permission\": \"true\"\n" +
-                "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
+//        String jsonString = "{\n" +
+//                "    \"type\": \"permission\",\n" +
+//                "    \"permission\": \"true\"\n" +
+//                "}";
+//        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
         return j;
     }
 

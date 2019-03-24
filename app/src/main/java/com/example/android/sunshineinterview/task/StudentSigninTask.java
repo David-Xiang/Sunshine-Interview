@@ -4,11 +4,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
-import com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity;
 import com.example.android.sunshineinterview.model.*;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,11 +27,11 @@ public class StudentSigninTask extends AsyncTask<Object, Void, JsonObject> {
             e.printStackTrace();
         }
 
-        /*String jsonString = "{\n" +
-                "    \"type\": \"permission\",\n" +
-                "    \"permission\": \"true\"\n" +
-                "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
+//        String jsonString = "{\n" +
+//                "    \"type\": \"permission\",\n" +
+//                "    \"permission\": \"true\"\n" +
+//                "}";
+//        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
         return j;
     }
 

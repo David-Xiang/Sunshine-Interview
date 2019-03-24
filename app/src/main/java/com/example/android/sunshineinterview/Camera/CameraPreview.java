@@ -31,11 +31,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        // The Surface has been created, now tell the camera where to draw the preview.
-        Log.d("debug", "surfaceCreated");
+        Log.d("videoDebug", "surfaceCreated");
         try {
             if (mCamera == null){
-                Log.d("mydebug", "mCamera == null");
+                Log.d("videoDebug", "mCamera == null");
             }
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
@@ -47,6 +46,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        Log.d("videoDebug", "surfaceDestroyed");
         if(mCamera != null){
             mCamera.stopPreview();
             mCamera.setPreviewCallback(null);
@@ -57,21 +57,23 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
+        Log.d("videoDebug", "surfaceChanged");
         if (mHolder.getSurface() == null){
             return;
         }
+
         try {
             mCamera.stopPreview();
-        } catch (Exception e){
-            // ignore: tried to stop a non-existent preview
         }
+        catch (Exception e){}
+
         try {
             mCamera.setPreviewDisplay(mHolder);
-//            mCamera.setDisplayOrientation(180);
             mCamera.startPreview();
             Log.v(TAG, "reachhere ");
 
-        } catch (Exception e){
+        }
+        catch (Exception e){
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
         }
     }

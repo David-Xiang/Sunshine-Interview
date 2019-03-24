@@ -274,7 +274,7 @@ public class Interview {
     }
 
     public String getStatusString(){
-        String[] StatusText = {"验证考场", "选择考次", "选择用户端", "签到", "就绪", "面试进行中", "面试已结束"};
+        String[] StatusText = {"验证考场", "选择用户端", "选择考次", "签到", "就绪", "面试进行中", "面试已结束"};
         return StatusText[mStatus.ordinal()];
     }
 

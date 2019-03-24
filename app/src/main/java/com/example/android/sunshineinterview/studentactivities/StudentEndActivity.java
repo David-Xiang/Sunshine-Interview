@@ -47,6 +47,11 @@ public class StudentEndActivity extends AppCompatActivity {
         TextView textview = findViewById(textViewId);
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
+        if (newString.length() > 10)
+        {
+            String[] tmp = newString.split(" ");
+            newString = tmp[1].substring(0, 8) + " - " + tmp[2];
+        }
         textview.setText(originalString.replace("------", newString));
     }
 
@@ -54,6 +59,7 @@ public class StudentEndActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         mCamera = new MyCamera(this);
+        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

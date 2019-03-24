@@ -9,4 +9,25 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppCompatTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="StandardTextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorGrey</item>
+
+    </style>
+
+    <style name="TitleTextView">
+        <item name="android:textSize">65sp</item>
+    </style>
+
+    <style name="SubTitleTextView">
+        <item name="android:textSize">35sp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
+
+
 </resources>

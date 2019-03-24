@@ -7,6 +7,17 @@
 
     tools:context="com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMediumyDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/title_step1"
+        app:titleTextColor="@color/colorWhite" />
+
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -15,215 +26,250 @@
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_head"
         app:layout_constraintWidth_percent="0.3">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/border"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/cardView">
+            android:layout_height="match_parent">
 
-            <!--logo栏-->
             <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/videoView"
+                app:layout_constraintEnd_toEndOf="@+id/information_column_row0"
+                app:layout_constraintStart_toStartOf="@+id/information_column_row0"
+                app:layout_constraintTop_toBottomOf="@+id/information_column_row0">
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="0dp"
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/interview_time"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/interview_time"
+                    app:layout_constraintBottom_toBottomOf="@+id/interview_time_text"
+                    app:layout_constraintEnd_toStartOf="@+id/interview_time_text"
+                    app:layout_constraintTop_toBottomOf="@+id/interview_status" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/classroom_id"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/classroom_id"
+                    app:layout_constraintBottom_toTopOf="@+id/classroom_location"
+                    app:layout_constraintEnd_toEndOf="@+id/classroom_location"
+                    app:layout_constraintTop_toBottomOf="@+id/school_name" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/interview_status"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/interview_status"
+                    app:layout_constraintBottom_toBottomOf="@+id/interview_status_text"
+                    app:layout_constraintEnd_toEndOf="@+id/interview_time"
+                    app:layout_constraintTop_toBottomOf="@+id/classroom_location" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/college_id"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/college_id"
+                    app:layout_constraintBottom_toTopOf="@+id/school_name_text"
+                    app:layout_constraintEnd_toEndOf="@+id/school_name"
+                    app:layout_constraintTop_toBottomOf="@+id/textClock" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/classroom_location"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/classroom_location"
+                    app:layout_constraintBottom_toBottomOf="@+id/classroom_location_text"
+                    app:layout_constraintEnd_toEndOf="@+id/interview_status"
+                    app:layout_constraintTop_toTopOf="@+id/classroom_location_text" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/school_name"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@+id/videoView"
-                    app:layout_constraintEnd_toEndOf="@+id/information_column_row0"
-                    app:layout_constraintHeight_percent="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/information_column_row0"
-                    app:layout_constraintTop_toBottomOf="@+id/information_column_row0">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHeight_percent="0.9"
-                        app:layout_constraintWidth_percent="0.8"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/school_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/school_name_text"
+                    app:layout_constraintEnd_toEndOf="@+id/classroom_id"
+                    app:layout_constraintTop_toBottomOf="@+id/college_id_text" />
 
-                        <TextClock
-                            android:id="@+id/textClock"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:format12Hour="北京时间 MM/dd/yy h:mmaa"
-                            android:typeface="serif"
-                            android:visibility="visible"
-                            android:paddingBottom="1dp"
-                            android:textSize="10sp"/>
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/college_id_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:paddingBottom="1dp"
-                            android:text="@string/college_id_text"
-                            android:typeface="serif"
-                            app:autoSizeTextType="uniform" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/school_name_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/school_name_text"
-                            android:typeface="serif"
-                            android:paddingBottom="1dp"
-                            app:autoSizeTextType="uniform"
-
-                            />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/classroom_id_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/classroom_id_text"
-                            android:typeface="serif"
-                            android:paddingBottom="1dp"
-                            app:autoSizeTextType="uniform" />
-
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/classroom_location_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/classroom_location_text"
-                            android:typeface="serif"
-                            android:paddingBottom="1dp"
-                            app:autoSizeTextType="uniform" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/interview_status_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/interview_status_text"
-                            android:typeface="serif"
-                            android:paddingBottom="1dp"
-                            app:autoSizeTextType="uniform" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/processing_time_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/processing_time_text"
-                            android:typeface="serif"
-                            android:paddingBottom="1dp"
-                            app:autoSizeTextType="uniform" />
-
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/interview_time_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/interview_time_text"
-                            android:typeface="serif"
-                            android:paddingBottom="1dp"
-                            app:autoSizeTextType="uniform" />
-
-                    </LinearLayout>
-
-                </android.support.constraint.ConstraintLayout>
-
-                <FrameLayout
-                    android:id="@+id/videoView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/interview_time_text"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/interview_time_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.25"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                </FrameLayout>
-
-                <LinearLayout
-                    android:id="@+id/information_column_row0"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@color/colorPrimary"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.25"
+                    app:layout_constraintHorizontal_bias="0.64"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.93" />
 
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/classroom_id_text"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/classroom_id_text"
+                    app:layout_constraintBottom_toTopOf="@+id/classroom_location_text"
+                    app:layout_constraintEnd_toEndOf="@+id/classroom_location_text"
+                    app:layout_constraintStart_toStartOf="@+id/classroom_location_text" />
 
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/interview_status_text"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/interview_status_text"
+                    app:layout_constraintBottom_toTopOf="@+id/interview_time_text"
+                    app:layout_constraintEnd_toEndOf="@+id/interview_time_text"
+                    app:layout_constraintStart_toStartOf="@+id/interview_time_text" />
 
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="@string/sunshine_interview"
-                            android:textColor="@color/colorWhite"
-                            android:typeface="serif"
-                            app:autoSizeTextType="uniform"
-                            app:layout_constraintBottom_toTopOf="@+id/textView5"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHeight_percent="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_percent="0.8" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/college_id_text"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/college_id_text"
+                    app:layout_constraintBottom_toTopOf="@+id/school_name_text"
+                    app:layout_constraintEnd_toEndOf="@+id/school_name_text"
+                    app:layout_constraintStart_toStartOf="@+id/school_name_text" />
 
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:gravity="center"
-                            android:text="@string/website"
-                            android:textColor="@color/colorWhite"
-                            android:typeface="serif"
-                            app:autoSizeTextType="uniform"
-                            app:layout_constraintBottom_toTopOf="@+id/textView6"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHeight_percent="0.1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView4"
-                            app:layout_constraintWidth_percent="0.9" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/classroom_location_text"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:paddingBottom="1dp"
+                    android:text="@string/classroom_location_text"
+                    app:layout_constraintBottom_toTopOf="@+id/interview_status_text"
+                    app:layout_constraintEnd_toEndOf="@+id/interview_status_text"
+                    app:layout_constraintStart_toStartOf="@+id/interview_status_text" />
 
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:gravity="center"
-                            android:text="@string/wechat"
-                            android:textColor="@color/colorWhite"
-                            app:autoSizeTextType="uniform"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHeight_percent="0.2"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView5"
-                            app:layout_constraintWidth_percent="0.8" />
-                    </android.support.constraint.ConstraintLayout>
+                <TextClock
+                    android:id="@+id/textClock"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:format12Hour="北京时间： MM/dd/yy h:mmaa"
+                    android:format24Hour="北京时间： MM/dd/yy h:mmaa"
+                    android:paddingBottom="1dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@+id/college_id_text"
+                    app:layout_constraintStart_toStartOf="@+id/college_id" />
 
-                </LinearLayout>
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/school_name_text"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+
+                    android:paddingBottom="1dp"
+                    android:text="@string/school_name_text"
+                    app:layout_constraintBottom_toTopOf="@+id/classroom_id_text"
+                    app:layout_constraintEnd_toEndOf="@+id/classroom_id_text"
+                    app:layout_constraintStart_toStartOf="@+id/classroom_id_text" />
 
             </android.support.constraint.ConstraintLayout>
 
-            <!--相关信息-->
+            <FrameLayout
+                android:id="@+id/videoView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-            <!--视频-->
-        </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/information_column_row0"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center"
+                        android:text="@string/sunshine_interview"
+                        android:textColor="@color/colorWhite"
+                        android:typeface="serif"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_percent="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.19"
+                        app:layout_constraintWidth_percent="0.8" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center"
+                        android:text="@string/wechat"
+                        android:textColor="@color/colorWhite"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_percent="0.2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView4"
+                        app:layout_constraintWidth_percent="0.8" />
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
 
@@ -268,14 +314,13 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        style="@style/SubTitleTextView"
                         android:id="@+id/textView3"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:gravity="center_vertical"
                         android:text="@string/be_patient"
                         android:textColor="@color/colorWhite"
-                        android:typeface="serif"
-                        app:autoSizeTextType="uniform"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHeight_percent="0.7"

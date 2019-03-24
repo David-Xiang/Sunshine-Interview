@@ -26,52 +26,52 @@ public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
         } catch (IOException e){
             e.printStackTrace();
         }
-        /*String jsonString = "{\n" +
-                "    \"type\": \"interview_info\",\n" +
-                "    \"permission\": \"true\",\n" +
-                "    \"info\":{\n" +
-                "        \"college_id\": \"01\",\n" +
-                "        \"college_name\": \"北清大学\",\n" +
-                "        \"site_id\": \"0001\",\n" +
-                "        \"site_name\": \"文史楼110\",\n" +
-                "        \"periods\":[{\n" +
-                "                 \"order\": \"01\",\n" +
-                "                \"start_time\": \"2019-06-11 09:00:00\",\n" +
-                "                \"end_time\": \"2019-06-11 09:00:00\",\n" +
-                "                \"teacher\":[\n" +
-                "                    {\n" +
-                "                        \"id\":\"11990001\",\n" +
-                "                        \"name\": \"何炬\"\n" +
-                "                    }\n" +
-                "                ],\n" +
-                "                \"student\":[\n" +
-                "                    {\n" +
-                "                        \"id\":\"11990001\",\n" +
-                "                        \"name\": \"宋煦\"\n" +
-                "                    }\n" +
-                "                ]\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"order\": \"02\",\n" +
-                "                \"start_time\": \"2019-06-12 09:00:00\",\n" +
-                "                \"end_time\": \"2019-06-12 09:00:00\",\n" +
-                "                \"teacher\":[\n" +
-                "                    {\n" +
-                "                        \"id\":\"11990001\",\n" +
-                "                        \"name\": \"何炬\"\n" +
-                "                    }\n" +
-                "                ],\n" +
-                "                \"student\":[\n" +
-                "                    {\n" +
-                "                        \"id\":\"11990001\",\n" +
-                "                        \"name\": \"宋煦\"\n" +
-                "                    }\n" +
-                "                ]\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    }\n" +
-                "}";
-        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();*/
+//        String jsonString = "{\n" +
+//                "    \"type\": \"interview_info\",\n" +
+//                "    \"permission\": \"true\",\n" +
+//                "    \"info\":{\n" +
+//                "        \"college_id\": \"01\",\n" +
+//                "        \"college_name\": \"北清大学\",\n" +
+//                "        \"site_id\": \"0001\",\n" +
+//                "        \"site_name\": \"文史楼110\",\n" +
+//                "        \"periods\":[{\n" +
+//                "                 \"order\": \"01\",\n" +
+//                "                \"start_time\": \"2019-06-11 09:00:00\",\n" +
+//                "                \"end_time\": \"2019-06-11 09:00:00\",\n" +
+//                "                \"teacher\":[\n" +
+//                "                    {\n" +
+//                "                        \"id\":\"11990001\",\n" +
+//                "                        \"name\": \"何炬\"\n" +
+//                "                    }\n" +
+//                "                ],\n" +
+//                "                \"student\":[\n" +
+//                "                    {\n" +
+//                "                        \"id\":\"11990001\",\n" +
+//                "                        \"name\": \"宋煦\"\n" +
+//                "                    }\n" +
+//                "                ]\n" +
+//                "            },\n" +
+//                "            {\n" +
+//                "                \"order\": \"02\",\n" +
+//                "                \"start_time\": \"2019-06-12 09:00:00\",\n" +
+//                "                \"end_time\": \"2019-06-12 09:00:00\",\n" +
+//                "                \"teacher\":[\n" +
+//                "                    {\n" +
+//                "                        \"id\":\"11990001\",\n" +
+//                "                        \"name\": \"何炬\"\n" +
+//                "                    }\n" +
+//                "                ],\n" +
+//                "                \"student\":[\n" +
+//                "                    {\n" +
+//                "                        \"id\":\"11990001\",\n" +
+//                "                        \"name\": \"宋煦\"\n" +
+//                "                    }\n" +
+//                "                ]\n" +
+//                "            }\n" +
+//                "        ]\n" +
+//                "    }\n" +
+//                "}";
+//        JsonObject j = new JsonParser().parse(jsonString).getAsJsonObject();
         return j;
     }
 
