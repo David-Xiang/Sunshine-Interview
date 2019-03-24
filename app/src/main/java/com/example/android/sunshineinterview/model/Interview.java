@@ -187,6 +187,21 @@ public class Interview {
         return true;
     }
 
+    public boolean setOrder(String order){
+        orderSelected = true;
+        Log.v(TAG, "setOrder to " + order);
+        int i = 0;
+        for (Period p: mInterviewInfo.periods){
+            Log.v(TAG, "setOrder(): check " + p.order);
+            if (order.equals(p.order)){
+                orderIndex = i;
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
+
     // 考官选择场次
     public boolean chooseOrder(ChooseOrderActivity chooseOrderActivity, int order) {
         if (!sideSelected) {
@@ -358,7 +373,7 @@ public class Interview {
             Log.w(TAG, "query(): in fault 2");
             return false;
         }
-        String parameters = "/query?siteid=" + mInterviewInfo.siteId;
+        String parameters = "/queryorder?siteid=" + mInterviewInfo.siteId;
         URL url = NetworkUtils.buildUrl(parameters);
         new QueryTask().execute(waitForChooseOrderActivity, url);
         return true;

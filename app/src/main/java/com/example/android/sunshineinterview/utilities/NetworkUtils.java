@@ -18,17 +18,13 @@ import com.google.gson.*;
 
 public class NetworkUtils {
     private final static String TAG = "NetworkUtils";
-    private final static String BASE_URL = "http://10.3.110.25";
+    private final static String BASE_URL = "http://10.2.183.130";
     private final static int UP_TIMEOUT = 10*1000;
     private final static String UP_CHARSET = "utf-8"; //设置编码
     private final static String UP_PREFIX = "--" , LINE_END = "\r\n";
     private final static String UP_CONTENT_TYPE = "multipart/form-data";   //内容类型
 
     public static URL buildUrl(String SearchQuery) {
-//        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-//                .appendQueryParameter("", SearchQuery)
-//                .build();
-
         String urlString = BASE_URL + SearchQuery;
         URL url = null;
         try {
