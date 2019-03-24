@@ -128,13 +128,18 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         mTimeCount.cancel();
     }
 
-    public void onStudentsUpdate(String name, String url) throws FileNotFoundException {
+    public void onStudentsUpdate(String name, String url) {
         //一个一个在mInterview里面修改/信息，name, url, isabsent
         for (int j = 0; j < mStudentNames.length; ++j)
         {
             if(name.equals(mStudentNames[j]) && url != null) {
                 ImageView interviewerPhoto = findViewById(imageViewIDs[j]);
-                FileInputStream fis = new FileInputStream(url);
+                FileInputStream fis = null;
+                try {
+                    fis = new FileInputStream(url);
+                } catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
                 interviewerPhoto.setImageBitmap(BitmapFactory.decodeStream(fis));
                 break;
             }

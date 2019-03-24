@@ -18,11 +18,15 @@ import com.example.android.sunshineinterview.utilities.NetworkUtils;
 public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
     private final static String TAG = "DownloadTask";
     private WaitForStudentSigninActivity mWaitForStudentSigninActivity;
+    private String name;
+    private String localPath;
     @Override
     protected Boolean doInBackground(Object... params) {
         //完成下载任务
         mWaitForStudentSigninActivity = (WaitForStudentSigninActivity) params[0];
         String string = (String) params[1];//这是从execute方法中传过来的参数, 即服务器端的路径
+        name = (String) params[2];
+
         Log.w(TAG, "Begin downloading!");
         //String string = "https://wx1.sinaimg.cn/orj480/006u8RMBly1fxabddexv6j30qo0f0weg.jpg";
         try {
@@ -45,9 +49,10 @@ public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
                 }
                 Log.d("mydebug", "created directory" + mediaStorageDir.getPath());
             }
-            FileOutputStream out = new FileOutputStream(
-                    mediaStorageDir.getPath() + File.separator + path);
-            Log.w(TAG, mediaStorageDir.getPath() + File.separator + path);
+
+            localPath = mediaStorageDir.getPath() + File.separator + path;
+            FileOutputStream out = new FileOutputStream(localPath);
+            Log.w(TAG, localPath);
             while( (len = in.read(bytes)) != -1 ){
                 out.write(bytes, 0, len);
                 out.flush();
@@ -69,6 +74,7 @@ public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
             Log.w(TAG, "Something is wrong when downloading picture");
         }
 
+        mWaitForStudentSigninActivity.onStudentsUpdate(name, localPath);
     }
 
 }

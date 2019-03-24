@@ -78,18 +78,10 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
                     continue;
                 if (fileUtiles.fileIsExists(path))
                     continue;
-                new DownloadTask().execute(imgUrl[i]);
+                new DownloadTask().execute(mWaitForStudentSignActivity, imgUrl[i], names[i]);
             } else {
                 imgUrl[i] = null;
             }
-        }
-        // 1. 对每一个签到的学生，对比状态，以前就签到了，则无需处理；
-        // 2. 如果有新签到的学生，则首先解析url，得到文件名，如果本地有这个文件，则无需处理；
-        // 3.如果本地没有这个文件，则需下载文件并保存。
-        try{
-            mWaitForStudentSignActivity.onStudentsUpdate(names, imgUrl);
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
         }
     }
 }
