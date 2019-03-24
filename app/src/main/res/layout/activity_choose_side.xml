@@ -287,12 +287,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tl_head">
 
         <android.support.v7.widget.AppCompatTextView
+            style="@style/TitleTextView"
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/guide_step00"
-            android:textSize="65sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
