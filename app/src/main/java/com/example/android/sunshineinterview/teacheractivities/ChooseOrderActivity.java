@@ -31,6 +31,8 @@ public class ChooseOrderActivity extends AppCompatActivity {
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
+    private ArrayList<Integer> OrderIDs;
+    private ArrayAdapter<String> periodAdapter;
 
     Interview mInterview;
     ArrayList<String> mPeriods;
@@ -42,6 +44,11 @@ public class ChooseOrderActivity extends AppCompatActivity {
         setContentView(R.layout.select_interview);
         mInterview = Interview.getInstance();
         mPeriods = mInterview.getPeriods();
+        OrderIDs = new ArrayList<Integer>();
+        for (int i = 0; i < mPeriods.size(); ++i)
+        {
+            OrderIDs.add(i);
+        }
 
         // mCamera = new MyCamera(this);
         // mPreview = new CameraPreview(this, mCamera.camera);
@@ -65,8 +72,8 @@ public class ChooseOrderActivity extends AppCompatActivity {
                 // TODO: time?
                 String time = sp.getSelectedItem().toString();
 
-                mInterview.setOrder(sp.getSelectedItemPosition());
-                mInterview.chooseOrder(ChooseOrderActivity.this, sp.getSelectedItemPosition());
+                mInterview.setOrder(OrderIDs.get(sp.getSelectedItemPosition()));
+                mInterview.chooseOrder(ChooseOrderActivity.this, OrderIDs.get(sp.getSelectedItemPosition()));
             }
         });
     }
@@ -75,6 +82,9 @@ public class ChooseOrderActivity extends AppCompatActivity {
     {
         if (serverInfo == ChooseOrderActivity.ServerInfo.PERMISSION){
             mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
+            Spinner sp = findViewById(R.id.spinner);
+            periodAdapter.remove(sp.getSelectedItem().toString());
+            OrderIDs.remove(sp.getSelectedItemPosition());
             Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
             startActivity(nextStep);
         } else if(serverInfo == ChooseOrderActivity.ServerInfo.REJECTION) {
@@ -85,7 +95,7 @@ public class ChooseOrderActivity extends AppCompatActivity {
     }
 
     private void initSpinner(ArrayList<String> timeArray) {
-        ArrayAdapter<String> periodAdapter = new ArrayAdapter<>(this, R.layout.item_select, timeArray);
+        periodAdapter = new ArrayAdapter<>(this, R.layout.item_select, timeArray);
         periodAdapter.setDropDownViewResource(R.layout.item_dropdown);
         Spinner sp = findViewById(R.id.spinner);
         sp.setPrompt("请选择考次");

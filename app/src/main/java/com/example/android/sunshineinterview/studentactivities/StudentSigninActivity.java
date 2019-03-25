@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_IMAGE;
 import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
@@ -48,13 +49,17 @@ public class StudentSigninActivity extends AppCompatActivity {
     public static final int TAKE_PHOTO = 1;
 
     private Interview mInterview;
-    private String[] studentsNames;
+    private ArrayList<String> studentsNames;
     private ArrayAdapter<String> studentAdapter;
+    private int numStudent;
     private int mSigninNumber;
     private TimeCount mTimeCount;
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
+
+    private ArrayList<Integer> studentIDs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,11 @@ public class StudentSigninActivity extends AppCompatActivity {
 
 
         studentsNames = mInterview.getStudentNames();
+        numStudent = studentsNames.size();
+        for (int i = 0; i < studentIDs.size(); ++i)
+        {
+            studentIDs.add(i);
+        }
         mSigninNumber = 0;
         mTimeCount = new TimeCount(60000, 10000){
             @Override
@@ -131,12 +141,18 @@ public class StudentSigninActivity extends AppCompatActivity {
                 ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
                 interviewerPhoto.setImageResource(R.drawable.bigbrother);
                 // TODO 删除刚刚拍摄的照片
+                MyCamera.LastSavedLoaction = null;
             }
         });
 
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (MyCamera.LastSavedLoaction == null)
+                {
+                    Toast.makeText(StudentSigninActivity.this, "请先拍照签到", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Spinner sp = findViewById(R.id.spinner);
 
                 ProgressBar pb_validate = findViewById(R.id.pb_confirm);
@@ -144,7 +160,7 @@ public class StudentSigninActivity extends AppCompatActivity {
 
                 // LastSavedLocation是MyCamera类的静态变量，指向上一次保存照片的路径字符串
                 mInterview.studentSignin(StudentSigninActivity.this,
-                        sp.getSelectedItemPosition(), MyCamera.LastSavedLoaction);
+                        studentIDs.get(sp.getSelectedItemPosition()), MyCamera.LastSavedLoaction);
 
             }
         });
@@ -165,7 +181,7 @@ public class StudentSigninActivity extends AppCompatActivity {
     class MySelectedListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(StudentSigninActivity.this, "您选择的是" + studentsNames[i], Toast.LENGTH_SHORT).show();
+            Toast.makeText(StudentSigninActivity.this, "您选择的是" + studentsNames.get(i), Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -175,16 +191,19 @@ public class StudentSigninActivity extends AppCompatActivity {
     public void onStudentsUpdate(ServerInfo serverInfo){
         if (serverInfo == ServerInfo.PERMISSION){
             mSigninNumber++;
-            if(mSigninNumber == studentsNames.length){
+            Spinner sp = findViewById(R.id.spinner);
+            studentAdapter.remove(studentAdapter.getItem(sp.getSelectedItemPosition()));
+            studentIDs.remove(sp.getSelectedItemPosition());
+            ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+            interviewerPhoto.setImageResource(R.drawable.bigbrother);
+            MyCamera.LastSavedLoaction = null;
+            if(mSigninNumber == numStudent){
                 // students all signed in
                 mTimeCount.cancel();
                 mInterview.setStatus(Interview.InterviewStatus.READY);
                 Intent nextStep = new Intent(StudentSigninActivity.this, WaitForTeacherConfirmActivity.class);
                 startActivity(nextStep);
             }
-            //签到成功要把这个人从spinner里删掉？
-            Spinner sp = findViewById(R.id.spinner);
-            studentAdapter.remove(studentAdapter.getItem(sp.getSelectedItemPosition()));
         } else if(serverInfo == ServerInfo.REJECTION) {
             Toast.makeText(StudentSigninActivity.this, "签到错误", Toast.LENGTH_LONG).show();
         } else {

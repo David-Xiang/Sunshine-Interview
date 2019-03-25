@@ -35,7 +35,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     }
     private Interview mInterview;
     private TimeCount mTimeCount;
-    private String [] mStudentNames;
+    private ArrayList<String> mStudentNames;
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
@@ -130,9 +130,9 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
     public void onStudentsUpdate(String name, String url) {
         //一个一个在mInterview里面修改/信息，name, url, isabsent
-        for (int j = 0; j < mStudentNames.length; ++j)
+        for (int j = 0; j < mStudentNames.size(); ++j)
         {
-            if(name.equals(mStudentNames[j]) && url != null) {
+            if(name.equals(mStudentNames.get(j)) && url != null) {
                 ImageView interviewerPhoto = findViewById(imageViewIDs[j]);
                 FileInputStream fis = null;
                 try {

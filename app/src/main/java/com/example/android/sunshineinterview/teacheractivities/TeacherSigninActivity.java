@@ -28,6 +28,7 @@ import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.FindDir;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
 import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Person;
 
@@ -54,12 +55,15 @@ public class TeacherSigninActivity extends AppCompatActivity {
     public static final int TAKE_PHOTO = 1;
 
     Interview mInterview;
-    private String[] teacherNames;
+    private ArrayList<String> teacherNames;
+    int numTeacher;
     int mSigninNumber;
     boolean [] Signed;
     private MyCamera mCamera;
     private CameraPreview mPreview;
     private ArrayAdapter<String> teacherAdapter;
+
+    private ArrayList<Integer> teacherIDs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +73,13 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
         teacherNames = mInterview.getTeacherNames();
-        Signed = new boolean[teacherNames.length];
+        numTeacher = teacherNames.size();
+        teacherIDs = new ArrayList<Integer>();
+        for (int i = 0; i < teacherNames.size(); ++i)
+        {
+            teacherIDs.add(i);
+        }
+        Signed = new boolean[teacherNames.size()];
         for (boolean b : Signed)
         {
             b = false;
@@ -133,12 +143,19 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
                 interviewerPhoto.setImageResource(R.drawable.bigbrother);
                 // TODO 删除刚刚拍摄的照片
+                MyCamera.LastSavedLoaction = null;
             }
         });
 
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (MyCamera.LastSavedLoaction == null)
+                {
+                    Toast.makeText(TeacherSigninActivity.this, "请先拍照签到", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 Spinner sp = findViewById(R.id.spinner);
                 // TODO: time
 
@@ -147,7 +164,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 //Log.v("frontend", "TeacherSignInActivity(): outputimage_path: " + outputimage_path);
                 // LastSavedLocation是MyCamera类的静态变量，指向上一次保存照片的路径字符串
                 mInterview.teacherSignin(TeacherSigninActivity.this,
-                        sp.getSelectedItemPosition(), MyCamera.LastSavedLoaction);
+                        teacherIDs.get(sp.getSelectedItemPosition()), MyCamera.LastSavedLoaction);
                 //mInterview.teacherSignin(TeacherSigninActivity.this,
                 // sp.getSelectedItemPosition(), imgpath);
 
@@ -168,15 +185,18 @@ public class TeacherSigninActivity extends AppCompatActivity {
         pb_validate.setVisibility(View.GONE);
         if (serverInfo == ServerInfo.PERMISSION){
             mSigninNumber++;
-            if (mSigninNumber == teacherNames.length){
+            Spinner sp = findViewById(R.id.spinner);
+            teacherAdapter.remove(teacherAdapter.getItem(sp.getSelectedItemPosition()));
+            teacherIDs.remove(sp.getSelectedItemPosition());
+            ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+            interviewerPhoto.setImageResource(R.drawable.bigbrother);
+            MyCamera.LastSavedLoaction = null;
+            if (mSigninNumber == numTeacher){
                 mInterview.setStatus(Interview.InterviewStatus.READY);
                 Intent nextStep = new Intent(TeacherSigninActivity.this, WaitForStudentSigninActivity.class);
                 startActivity(nextStep);
             }
-            //签到成功要把这个人从spinner里删掉？
-            Spinner sp = findViewById(R.id.spinner);
-            // TODO:  把人从spinner中删掉
-            //teacherAdapter.remove(teacherAdapter.getItem(sp.getSelectedItemPosition()));
+
         } else if(serverInfo == ServerInfo.REJECTION) {
             Toast.makeText(TeacherSigninActivity.this, "签到错误", Toast.LENGTH_LONG).show();
         } else {
@@ -199,7 +219,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(TeacherSigninActivity.this, "您选择的是" + teacherNames[i], Toast.LENGTH_SHORT).show();
+            Toast.makeText(TeacherSigninActivity.this, "您选择的是" + teacherNames.get(i), Toast.LENGTH_SHORT).show();
         }
 
         @Override

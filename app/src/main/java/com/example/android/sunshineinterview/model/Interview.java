@@ -245,19 +245,19 @@ public class Interview {
         }
         return true;
     }
-    public String [] getTeacherNames(){
+    public ArrayList<String> getTeacherNames(){
         int size = mTeachers.size();
-        String [] teacherNames = new String[size];
+        ArrayList<String> teacherNames = new ArrayList<>();
         for (int i = 0; i < size; i++){
-            teacherNames[i] = mTeachers.get(i).name;
+            teacherNames.add(mTeachers.get(i).name);
         }
         return teacherNames;
     }
-    public String [] getStudentNames(){
+    public ArrayList<String> getStudentNames(){
         int size = mStudents.size();
-        String [] studentNames = new String[size];
+        ArrayList<String> studentNames = new ArrayList<>();
         for (int i = 0; i < size; i++){
-            studentNames[i] = mStudents.get(i).name;
+            studentNames.add(mStudents.get(i).name);
         }
         return studentNames;
     }
