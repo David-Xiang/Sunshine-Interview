@@ -26,29 +26,31 @@ public class MyCamera {
     private String info; // 教师姓名或者学生姓名等
     public Camera camera;
     private int cameraID = 1;
-    private Context mContext;
+    private Activity mActivity;
     private static MyCamera mCamera;
     private ImageView showPhoto;
     public static String LastSavedLoaction;
 
 
-    public MyCamera(Context context, ImageView i){
+    public MyCamera(Activity activity, ImageView i){
         showPhoto = i;
-        mContext = context;
+        mActivity = activity;
         LastSavedLoaction = null;
         info = null;
         if (camera == null){
             camera = getCamera();
         }
+        setCameraDisplayOrientation(mActivity);
     }
 
-    public MyCamera(Context context){
-        mContext = context;
+    public MyCamera(Activity activity){
+        mActivity = activity;
         info = null;
         LastSavedLoaction = null;
         if (camera == null){
             camera = getCamera();
         }
+        setCameraDisplayOrientation(mActivity);
     }
 
     public MyCamera()

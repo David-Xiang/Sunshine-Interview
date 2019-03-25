@@ -3,6 +3,7 @@ package com.example.android.sunshineinterview.Camera;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,7 +23,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mHolder = getHolder();
         mHolder.setFormat(PixelFormat.TRANSLUCENT);
         mHolder.addCallback(this);
-        mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        if (mCamera != null)
+            Log.d("mydebug", "mCamera initialized!");
     }
 
     public void resetCamera(Camera cmr)
@@ -32,10 +34,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.d("videoDebug", "surfaceCreated");
+        Log.d("mydebug", "surfaceCreated");
+
         try {
             if (mCamera == null){
                 Log.d("videoDebug", "mCamera == null");
+                return;
             }
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
@@ -47,10 +51,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.d("videoDebug", "surfaceDestroyed");
-            if(mCamera != null){
+        Log.d("mydebug", "surfaceDestroyed");
+            if (mCamera != null){
             mCamera.stopPreview();
             mCamera.setPreviewCallback(null);
+
+            // 这里会释放相机
             mCamera.release();
             mCamera = null;
         }
@@ -58,11 +64,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-        Log.d("videoDebug", "surfaceChanged");
+        Log.d("mydebug", "surfaceChanged");
         if (mHolder.getSurface() == null){
             return;
         }
-
         try {
             mCamera.stopPreview();
         }

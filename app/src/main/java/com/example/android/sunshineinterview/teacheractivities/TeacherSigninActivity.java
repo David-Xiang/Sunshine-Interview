@@ -76,12 +76,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
         }
         mSigninNumber = 0;
 
-        // ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
-        // mCamera = new MyCamera(this, interviewerPhoto);
-        // mPreview = new CameraPreview(this, mCamera.camera);
-        // FrameLayout preview = findViewById(R.id.videoView);
-        // preview.addView(mPreview);
-
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
         updateInfo(R.id.classroom_id_text, R.string.classroom_id_text, mInterview.mInterviewInfo.siteId);
@@ -253,7 +247,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
         Log.d("mydebug", "onResume if called");
         ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
         mCamera = new MyCamera(this, interviewerPhoto);
-        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

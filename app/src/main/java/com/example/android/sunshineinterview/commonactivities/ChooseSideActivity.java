@@ -35,11 +35,6 @@ public class ChooseSideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_side);
 
-        // mCamera = new MyCamera(this);
-        // mPreview = new CameraPreview(this, mCamera.camera);
-        // FrameLayout preview = findViewById(R.id.videoView);
-        // preview.addView(mPreview);
-
         mInterview = Interview.getInstance();
         mInterview.setStatus(Interview.InterviewStatus.CHOOSEORDER);
 
@@ -105,21 +100,17 @@ public class ChooseSideActivity extends AppCompatActivity {
 
     @Override
     protected void onResume(){
+        Log.d("mydebug", "chooseSide onResume called");
         super.onResume();
         mCamera = new MyCamera(this);
-        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
-        // TODO
     }
     @Override
     protected void onPause(){
         Log.d("mydebug", "ChooseSide onPause called");
         super.onPause();
-        if (mCamera.AcquireCamera() == null){
-            Log.d("mydebug", "after pausing, camera released!");
-        }
         // TODO
     }
     @Override

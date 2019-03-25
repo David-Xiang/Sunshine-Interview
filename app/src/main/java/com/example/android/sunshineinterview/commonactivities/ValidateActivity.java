@@ -58,15 +58,6 @@ public class ValidateActivity extends AppCompatActivity {
             initPermission();
         }
 
-        // TODO 有一个小bug，第一次申请权限时，右下角预览会不成功。
-
-        // mCamera = MyCamera.getInstance();
-        // mCamera.setCameraDisplayOrientation(this);
-
-        // mPreview = new CameraPreview(this, mCamera.camera);
-        // FrameLayout preview = findViewById(R.id.videoView);
-        // preview.addView(mPreview);
-
         mInterview = Interview.getInstance();
         mInterview.setStatus(Interview.InterviewStatus.VALIDATE);
 
@@ -136,9 +127,8 @@ public class ValidateActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d("mydebug", "onResume if called");
+        Log.d("mydebug", "validation onResume called");
         mCamera = new MyCamera(this);
-        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
@@ -154,10 +144,6 @@ public class ValidateActivity extends AppCompatActivity {
             preview.removeView(mPreview);
             mPreview = null;
         }*/
-
-        if (mCamera.AcquireCamera() == null){
-            Log.d("mydebug", "after pausing, camera released!");
-        }
     }
     @Override
     protected void onStop(){

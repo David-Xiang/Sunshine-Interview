@@ -59,10 +59,8 @@ public class StudentEndActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         mCamera = new MyCamera(this);
-        mCamera.setCameraDisplayOrientation(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
-        // TODO
     }
 }
