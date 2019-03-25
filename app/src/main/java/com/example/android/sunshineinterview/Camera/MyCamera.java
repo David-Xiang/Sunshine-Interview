@@ -29,11 +29,13 @@ public class MyCamera {
     private Context mContext;
     private static MyCamera mCamera;
     private ImageView showPhoto;
+    public static String LastSavedLoaction;
 
 
     public MyCamera(Context context, ImageView i){
         showPhoto = i;
         mContext = context;
+        LastSavedLoaction = null;
         info = null;
         if (camera == null){
             camera = getCamera();
@@ -43,6 +45,7 @@ public class MyCamera {
     public MyCamera(Context context){
         mContext = context;
         info = null;
+        LastSavedLoaction = null;
         if (camera == null){
             camera = getCamera();
         }
@@ -51,6 +54,7 @@ public class MyCamera {
     public MyCamera()
     {
         info = null;
+        LastSavedLoaction = null;
         if (camera == null){
             camera = getCamera();
         }
@@ -98,7 +102,7 @@ public class MyCamera {
                 e.printStackTrace();
             }
 
-
+            LastSavedLoaction = mediaFile.toString();
             try {
                 FileInputStream fis = new FileInputStream(mediaFile);
                 BitmapFactory.Options options = new BitmapFactory.Options();
@@ -111,6 +115,9 @@ public class MyCamera {
             catch (IOException e){
                 e.printStackTrace();
             }
+
+            camera.stopPreview();
+            camera.startPreview();
         }
     };
 

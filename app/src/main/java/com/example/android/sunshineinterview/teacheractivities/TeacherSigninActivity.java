@@ -51,7 +51,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
         NOACCESS    // bad network connectivity
     }
 
-    private Uri imageUri;
     public static final int TAKE_PHOTO = 1;
 
     Interview mInterview;
@@ -61,8 +60,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
     private MyCamera mCamera;
     private CameraPreview mPreview;
     private ArrayAdapter<String> teacherAdapter;
-    // 组长！我临时加的~
-    private String outputimage_path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +100,8 @@ public class TeacherSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 // TODO 判断有没有选择考官（通过禁用按钮）
-//                Log.d("mydebug", "start taking picture");
-                // mCamera.takePhoto();
+                mCamera.takePhoto();
+/*
                 File outputImage = new FindDir().getOutputMediaFile(MEDIA_TYPE_IMAGE);
                 try {
                     Log.v("frontend", "TeacherSignInActivity(): "
@@ -133,6 +130,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
                 intent.putExtra("android.intent.extras.CAMERA_FACING", 2);
                 startActivityForResult(intent,TAKE_PHOTO);
+*/
             }
         });
         bReset.setOnClickListener(new View.OnClickListener(){
@@ -140,7 +138,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
             public void onClick(View v){
                 ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
                 interviewerPhoto.setImageResource(R.drawable.bigbrother);
-                imageUri = null;
+                // TODO 删除刚刚拍摄的照片
             }
         });
 
@@ -150,15 +148,12 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 Spinner sp = findViewById(R.id.spinner);
                 // TODO: time
 
-                String imgpath = new String();
-
-                imgpath = imageUri.toString();
-
                 ProgressBar pb_validate = findViewById(R.id.pb_confirm);
                 pb_validate.setVisibility(View.VISIBLE);
-                Log.v("frontend", "TeacherSignInActivity(): outputimage_path: " + outputimage_path);
+                //Log.v("frontend", "TeacherSignInActivity(): outputimage_path: " + outputimage_path);
+                // LastSavedLocation是MyCamera类的静态变量，指向上一次保存照片的路径字符串
                 mInterview.teacherSignin(TeacherSigninActivity.this,
-                        sp.getSelectedItemPosition(), outputimage_path);
+                        sp.getSelectedItemPosition(), MyCamera.LastSavedLoaction);
                 //mInterview.teacherSignin(TeacherSigninActivity.this,
                 // sp.getSelectedItemPosition(), imgpath);
 
@@ -216,7 +211,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
         @Override
         public void onNothingSelected(AdapterView<?> adapterView){}
     }
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){
@@ -227,9 +222,9 @@ public class TeacherSigninActivity extends AppCompatActivity {
                         ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
                         interviewerPhoto.setImageBitmap(bitmap);
                         mCamera = new MyCamera(this);
-                        mPreview.resetCamera(mCamera);
+                        mPreview.resetCamera(mCamera.AcquireCamera());
                         }catch (FileNotFoundException e){
-                        e.printStackTrace();;
+                        e.printStackTrace();
                     }
                 }
                 break;
@@ -237,6 +232,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
                 break;
         }
     }
+*/
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
         TextView textview = findViewById(textViewId);
@@ -261,7 +257,6 @@ public class TeacherSigninActivity extends AppCompatActivity {
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
-        // TODO
     }
     @Override
     protected void onPause(){

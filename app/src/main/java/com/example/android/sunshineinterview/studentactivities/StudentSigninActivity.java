@@ -45,7 +45,6 @@ public class StudentSigninActivity extends AppCompatActivity {
     }
 
     private static final String TAG = "StudentSigninActivity";
-    private Uri imageUri;
     public static final int TAKE_PHOTO = 1;
 
     private Interview mInterview;
@@ -100,8 +99,9 @@ public class StudentSigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 // TODO 判断有没有选择考官（通过禁用按钮）
-                // mCamera.takePhoto();
+                mCamera.takePhoto();
                 // Log.d("mydebug", "start taking picture");
+/*
                 File outputImage = new FindDir().getOutputMediaFile(MEDIA_TYPE_IMAGE);
                 try {
                     if (outputImage.exists()){
@@ -122,6 +122,7 @@ public class StudentSigninActivity extends AppCompatActivity {
                 Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
                 startActivityForResult(intent,TAKE_PHOTO);
+*/
             }
         });
         bReset.setOnClickListener(new View.OnClickListener(){
@@ -129,7 +130,7 @@ public class StudentSigninActivity extends AppCompatActivity {
             public void onClick(View v){
                 ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
                 interviewerPhoto.setImageResource(R.drawable.bigbrother);
-                imageUri = null;
+                // TODO 删除刚刚拍摄的照片
             }
         });
 
@@ -138,15 +139,12 @@ public class StudentSigninActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Spinner sp = findViewById(R.id.spinner);
 
-                String imgpath = new String();
-
-                imgpath = imageUri.toString();
-
                 ProgressBar pb_validate = findViewById(R.id.pb_confirm);
                 pb_validate.setVisibility(View.VISIBLE);
 
+                // LastSavedLocation是MyCamera类的静态变量，指向上一次保存照片的路径字符串
                 mInterview.studentSignin(StudentSigninActivity.this,
-                        sp.getSelectedItemPosition(), imgpath);
+                        sp.getSelectedItemPosition(), MyCamera.LastSavedLoaction);
 
             }
         });
@@ -211,6 +209,7 @@ public class StudentSigninActivity extends AppCompatActivity {
         }
     }
 
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){
@@ -221,7 +220,7 @@ public class StudentSigninActivity extends AppCompatActivity {
                         ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
                         interviewerPhoto.setImageBitmap(bitmap);
                         mCamera = new MyCamera(this);
-                        mPreview.resetCamera(mCamera);
+                        mPreview.resetCamera(mCamera.AcquireCamera());
                     }catch (FileNotFoundException e){
                         e.printStackTrace();;
                     }
@@ -231,6 +230,7 @@ public class StudentSigninActivity extends AppCompatActivity {
                 break;
         }
     }
+*/
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
         TextView textview = findViewById(textViewId);
@@ -254,7 +254,6 @@ public class StudentSigninActivity extends AppCompatActivity {
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);
-        // TODO
     }
     @Override
     protected void onPause(){
