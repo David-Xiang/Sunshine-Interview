@@ -65,6 +65,7 @@ public class StudentSigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        studentIDs = new ArrayList<>();
         setContentView(R.layout.sign_in_1);
         mInterview = Interview.getInstance();
 
@@ -78,7 +79,7 @@ public class StudentSigninActivity extends AppCompatActivity {
 
         studentsNames = mInterview.getStudentNames();
         numStudent = studentsNames.size();
-        for (int i = 0; i < studentIDs.size(); ++i)
+        for (int i = 0; i < studentsNames.size(); ++i)
         {
             studentIDs.add(i);
         }
