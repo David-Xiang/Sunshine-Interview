@@ -396,7 +396,7 @@ public class Interview {
                 + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "studentSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        //new UploadTask().execute(path, id);
+        new UploadTask().execute(path, id);
         new StudentSigninTask().execute(studentSigninActivity, url);
         return true;
     }
