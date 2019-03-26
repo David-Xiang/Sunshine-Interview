@@ -190,6 +190,8 @@ public class StudentSigninActivity extends AppCompatActivity {
     }
 
     public void onStudentsUpdate(ServerInfo serverInfo){
+        ProgressBar pb_validate = findViewById(R.id.pb_confirm);
+        pb_validate.setVisibility(View.GONE);
         if (serverInfo == ServerInfo.PERMISSION){
             mSigninNumber++;
             Spinner sp = findViewById(R.id.spinner);
@@ -213,8 +215,6 @@ public class StudentSigninActivity extends AppCompatActivity {
     }
 
     public void onHttpResponse(ServerInfo serverInfo){
-        ProgressBar pb_validate = findViewById(R.id.pb_confirm);
-        pb_validate.setVisibility(View.GONE);
         Log.v(TAG, "onHttpResponse():  method entered!");
         if (serverInfo == ServerInfo.PERMISSION){
             mTimeCount.cancel();
