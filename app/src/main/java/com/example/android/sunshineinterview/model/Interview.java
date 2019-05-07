@@ -125,7 +125,7 @@ public class Interview {
     public boolean validate(ValidateActivity validateActivity, String siteId, String validateCode) {
         if (!validId(siteId) || !validId(validateCode))
             return false;
-        String parameters = "/validate?collegeid=" + mInterviewInfo.collegeId + "siteid=" + siteId + "&validatecode=" + validateCode;
+        String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
         Log.v(TAG, "validate() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
         new ValidateTask().execute(validateActivity, url);
