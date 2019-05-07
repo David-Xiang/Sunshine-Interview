@@ -29,7 +29,7 @@ public class MyMediaRecorder {
         runnable=new Runnable(){
             @Override
             public void run() {
-                if (MR !=null) {
+                if (MR != null) {
                     MR.setOnErrorListener(null);
                     MR.setOnInfoListener(null);
                     MR.setPreviewDisplay(null);
@@ -41,39 +41,9 @@ public class MyMediaRecorder {
                 MR = new MediaRecorder();
                 startRecord();
             }
-
         };
         isRecording = false;
 
-        /*
-        MR.setOnInfoListener(new MediaRecorder.OnInfoListener() {
-            @Override
-            public void onInfo(MediaRecorder mr, int what, int extra) {
-                switch(what) {
-                    case MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED: {
-                        if (MR !=null) {
-                            MR.stop();
-                            MR.reset();
-                            MR.release();
-                            camera.lock();
-                        }
-                        MR = new MediaRecorder();
-                        startRecord();
-                    }
-                    break;
-
-                    case MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED: {
-                        if (mr!=null) {
-                            mr.stop();
-                            mr.release();
-                            mr=null;
-                        }
-                    }
-                    break;
-                }
-            }
-        });
-        */
     }
 
     public void startRecord(){
@@ -86,7 +56,6 @@ public class MyMediaRecorder {
         else{
             releaseMediaRecorder();
         }
-
     }
 
     public void stopRecord(){
@@ -111,7 +80,7 @@ public class MyMediaRecorder {
         //MR.setMaxDuration(10000);//设置视频的最大持续时间
         //MR.setMaxFileSize(1*1024*1024*1024);
 
-        MR.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_LOW));
+        MR.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_480P));
 
         File mediaFile = getOutputMediaFile(MEDIA_TYPE_VIDEO);
         if (mediaFile == null){
@@ -133,7 +102,7 @@ public class MyMediaRecorder {
         return true;
     }
 
-    public void releaseMediaRecorder(){
+    private void releaseMediaRecorder(){
         if (MR != null){
             MR.reset();
             MR.release();
@@ -142,11 +111,11 @@ public class MyMediaRecorder {
         }
     }
 
-    public void releaseCamera()
-    {
-        if (camera != null){
-            camera.release();
-            camera = null;
-        }
-    }
+//    public void releaseCamera()
+//    {
+//        if (camera != null){
+//            camera.release();
+//            camera = null;
+//        }
+//    }
 }

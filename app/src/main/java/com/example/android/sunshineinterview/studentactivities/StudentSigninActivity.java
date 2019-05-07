@@ -94,11 +94,6 @@ public class StudentSigninActivity extends AppCompatActivity {
         };
         mTimeCount.start();
 
-        //mCamera = new MyCamera(this);
-        //mPreview = new CameraPreview(this, mCamera.camera);
-        //FrameLayout preview = findViewById(R.id.videoView);
-        //preview.addView(mPreview);
-
         initSpinner();
 
         Button bShoot = findViewById(R.id.button_shoot);
@@ -112,28 +107,6 @@ public class StudentSigninActivity extends AppCompatActivity {
                 // TODO 判断有没有选择考官（通过禁用按钮）
                 mCamera.takePhoto();
                 // Log.d("mydebug", "start taking picture");
-/*
-                File outputImage = new FindDir().getOutputMediaFile(MEDIA_TYPE_IMAGE);
-                try {
-                    if (outputImage.exists()){
-                        outputImage.delete();
-                    }
-                    else
-                        outputImage.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (Build.VERSION.SDK_INT>=24){
-                    imageUri= FileProvider.getUriForFile(StudentSigninActivity.this,
-                            "com.example.android.sunshineinterview.fileprovider",outputImage);
-                }else {
-                    imageUri=Uri.fromFile(outputImage);
-                }
-                //启动相机程序
-                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-                startActivityForResult(intent,TAKE_PHOTO);
-*/
             }
         });
         bReset.setOnClickListener(new View.OnClickListener(){
@@ -228,29 +201,6 @@ public class StudentSigninActivity extends AppCompatActivity {
             Toast.makeText(StudentSigninActivity.this, "请检查网络", Toast.LENGTH_LONG).show();
         }
     }
-
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        switch(requestCode){
-            case TAKE_PHOTO:
-                if (resultCode == RESULT_OK){
-                    try{
-                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
-                        interviewerPhoto.setImageBitmap(bitmap);
-                        mCamera = new MyCamera(this);
-                        mPreview.resetCamera(mCamera.AcquireCamera());
-                    }catch (FileNotFoundException e){
-                        e.printStackTrace();;
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-    }
-*/
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
         TextView textview = findViewById(textViewId);

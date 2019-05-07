@@ -67,6 +67,11 @@ public class ValidateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String siteId = ((EditText) findViewById(R.id.editText4)).getText().toString();
                 String validateCode = ((EditText) findViewById(R.id.editText5)).getText().toString();
+                /* for test */
+//                Intent nextStep = new Intent(ValidateActivity.this, ChooseSideActivity.class);
+//                startActivity(nextStep);
+
+
                 if (mInterview.validate(ValidateActivity.this, siteId, validateCode))
                 {
                     ProgressBar pb_validate = findViewById(R.id.pb_vaildate);
