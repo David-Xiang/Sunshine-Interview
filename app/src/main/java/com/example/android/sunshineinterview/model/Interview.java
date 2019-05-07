@@ -125,7 +125,7 @@ public class Interview {
     public boolean validate(ValidateActivity validateActivity, String siteId, String validateCode) {
         if (!validId(siteId) || !validId(validateCode))
             return false;
-        String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
+        String parameters = "/validate?collegeid=" + mInterviewInfo.collegeId + "siteid=" + siteId + "&validatecode=" + validateCode;
         Log.v(TAG, "validate() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
         new ValidateTask().execute(validateActivity, url);
@@ -166,10 +166,10 @@ public class Interview {
 
         String parameters;
         if (interviewFunction == InterviewSide.TEACHER) {
-            parameters = "/side?siteid=" + mInterviewInfo.siteId + "&side=teacher";
+            parameters = "/side?collegeid=" + mInterviewInfo.collegeId + "siteid=" + mInterviewInfo.siteId + "&side=teacher";
             mSide = InterviewSide.TEACHER;
         } else if (interviewFunction == InterviewSide.STUDENT) {
-            parameters = "/side?siteid=" + mInterviewInfo.siteId + "&side=student";
+            parameters = "/side?collegeid=" + mInterviewInfo.collegeId + "siteid=" + mInterviewInfo.siteId + "&side=student";
             mSide = InterviewSide.STUDENT;
         } else {
             return false;
@@ -216,7 +216,7 @@ public class Interview {
         }
         String parameters;
         orderIndex = order;
-        parameters = "/order?siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
+        parameters = "/order?collegeid=" + mInterviewInfo.collegeId + "siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         Log.v(TAG, "chooseOrder() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
         new ChooseOrderTask().execute(chooseOrderActivity, url);
@@ -313,7 +313,7 @@ public class Interview {
         String id = mInterviewInfo.periods.get(orderIndex).teachers.get(teacherIndex).id;
         String filename = new String();
         filename = path.substring(path.lastIndexOf('/') + 1);
-        String parameters = "/teacher?siteid=" + mInterviewInfo.siteId + "&order="
+        String parameters = "/teacher?collegeid=" + mInterviewInfo.collegeId + "siteid=" + mInterviewInfo.siteId + "&order="
                 + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
