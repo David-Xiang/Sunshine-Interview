@@ -75,16 +75,17 @@ public class MyCamera {
         camera.takePicture(null, null, mPictureCallback);
     }
 
-    private Bitmap rotateBitmap(Bitmap bm, int degree){
+    private Bitmap convertBmp(Bitmap bm){
         Bitmap returnBm = null;
 
         // 根据旋转角度，生成旋转矩阵
         Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
+        matrix.postScale(-1, 1); // 镜像水平翻转
         try {
-            // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
             returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
-        } catch (OutOfMemoryError e) {
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
         }
         if (returnBm == null) {
             returnBm = bm;
@@ -121,7 +122,7 @@ public class MyCamera {
                 options.inJustDecodeBounds = false;
                 // options.inSampleSize = 10;
                 Bitmap btp = BitmapFactory.decodeStream(fis, null, options);
-                showPhoto.setImageBitmap(rotateBitmap(btp, 90));
+                showPhoto.setImageBitmap(convertBmp(btp));
                 // showPhoto.setImageBitmap(btp);
                 fis.close();
             }
