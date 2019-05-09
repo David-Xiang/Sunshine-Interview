@@ -25,17 +25,12 @@ import android.widget.Toast;
 import android.hardware.Camera;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
-import com.example.android.sunshineinterview.Camera.FindDir;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
 import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Person;
 
-import static com.example.android.sunshineinterview.Camera.FindDir.*;
-import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_VIDEO;
-import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_IMAGE;
-import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -20,8 +20,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_IMAGE;
-import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
+import static com.example.android.sunshineinterview.utilities.FileUtils.MEDIA_TYPE_IMAGE;
+import static com.example.android.sunshineinterview.utilities.FileUtils.getOutputMediaFile;
+
 
 public class MyCamera {
     public Camera camera;
@@ -148,7 +149,7 @@ public class MyCamera {
         return newCamera;
     }
 
-    public void setCameraDisplayOrientation(Activity activity) {
+    private void setCameraDisplayOrientation(Activity activity) {
         android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
         android.hardware.Camera.getCameraInfo(cameraID, info);
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();

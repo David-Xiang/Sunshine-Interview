@@ -23,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
-import com.example.android.sunshineinterview.Camera.FindDir;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.utilities.TimeCount;
@@ -35,8 +34,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_IMAGE;
-import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
 
 public class StudentSigninActivity extends AppCompatActivity {
     public enum ServerInfo{

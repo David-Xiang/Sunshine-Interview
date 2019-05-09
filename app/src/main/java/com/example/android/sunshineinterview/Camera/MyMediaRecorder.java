@@ -8,17 +8,20 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.os.Handler;
 
+import com.example.android.sunshineinterview.task.handleHash;
+
 import java.io.File;
 
-import static com.example.android.sunshineinterview.Camera.FindDir.MEDIA_TYPE_VIDEO;
-import static com.example.android.sunshineinterview.Camera.FindDir.getOutputMediaFile;
+import static com.example.android.sunshineinterview.utilities.FileUtils.MEDIA_TYPE_VIDEO;
+import static com.example.android.sunshineinterview.utilities.FileUtils.getOutputMediaFile;
 
 public class MyMediaRecorder {
-    public MediaRecorder MR;
+    private MediaRecorder MR;
     private SurfaceHolder holder;
     public Camera camera;
-    public boolean isRecording;
+    private boolean isRecording;
     private Handler handler;
+    private String mediaFilePath;
     Runnable runnable;
 
     public MyMediaRecorder(Context context, Camera inputCamera, SurfaceHolder inputHolder){
@@ -42,6 +45,7 @@ public class MyMediaRecorder {
                 startRecord();
             }
         };
+        mediaFilePath = "";
         isRecording = false;
 
     }
@@ -68,6 +72,8 @@ public class MyMediaRecorder {
         releaseMediaRecorder();
         camera.lock();
         isRecording = false;
+
+        new handleHash().execute(mediaFilePath);
     }
 
     private boolean setMediaRecorder(){
@@ -86,6 +92,7 @@ public class MyMediaRecorder {
         if (mediaFile == null){
             Log.d("videoDebug", "failed to open the VID file");
         }
+        mediaFilePath = mediaFile.toString();
         MR.setOutputFile(mediaFile.toString());
 
         MR.setPreviewDisplay(holder.getSurface());
