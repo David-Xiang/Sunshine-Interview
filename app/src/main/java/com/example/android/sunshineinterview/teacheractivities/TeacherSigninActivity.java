@@ -255,6 +255,7 @@ public class TeacherSigninActivity extends AppCompatActivity {
         if (newString.length() > 10)
         {
             String[] tmp = newString.split(" ");
+
             newString = tmp[1].substring(0, 8) + " - " + tmp[2];
         }
         textview.setText(originalString.replace("------", newString));

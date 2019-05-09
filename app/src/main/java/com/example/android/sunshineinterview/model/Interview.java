@@ -3,6 +3,7 @@ package com.example.android.sunshineinterview.model;
 import android.util.Log;
 
 import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
+import com.example.android.sunshineinterview.commonactivities.UploadMainActivity;
 import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.android.sunshineinterview.studentactivities.StudentInProgressActivity;
 import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
@@ -123,6 +124,17 @@ public class Interview {
     }
 
     public boolean validate(ValidateActivity validateActivity, String siteId, String validateCode) {
+        if (!validId(siteId) || !validId(validateCode))
+            return false;
+        String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
+        Log.v(TAG, "validate() sending url = " + parameters);
+        URL url = NetworkUtils.buildUrl(parameters);
+        new ValidateTask().execute(validateActivity, url);
+        return true;
+    }
+
+    // TODO: new validate function for uploading videos
+    public boolean validate(UploadMainActivity validateActivity, String siteId, String validateCode) {
         if (!validId(siteId) || !validId(validateCode))
             return false;
         String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;

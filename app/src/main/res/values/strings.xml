@@ -86,5 +86,11 @@
 
     感谢你参与本次考试！</string>
 
+    <!--视频上传-->
+    <string name="upload_title0">管理员验证</string>
+    <string name="upload_guide1">点击确认上传面试视频</string>
+    <string name="video_info">本地有------个视频文件待上传，点击按钮确认上传</string>
+    <string name="video_uploading">视频正在上传中，请勿退出此页面</string>
+
 
 </resources>
