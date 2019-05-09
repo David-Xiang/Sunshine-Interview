@@ -21,7 +21,8 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
             return false;
         }
         // check exist
-        String parameters = "/upload?id=" + id;
+        String filename = string.substring(string.lastIndexOf('/') + 1);
+        String parameters = "/upload/images/" + filename + "?id=" + id + "&collegeid=" + params[2];
         Log.v(TAG, "UploadTask() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
         Log.v(TAG, "Begin uploading!");

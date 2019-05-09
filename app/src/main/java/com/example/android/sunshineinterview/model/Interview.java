@@ -317,7 +317,7 @@ public class Interview {
                 + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        new UploadTask().execute(path, id);
+        new UploadTask().execute(path, id, mInterviewInfo.collegeId);
         new TeacherSigninTask().execute(teacherSigninActivity, url);
         return true;
     }
@@ -396,7 +396,7 @@ public class Interview {
                 + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "studentSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        new UploadTask().execute(path, id);
+        new UploadTask().execute(path, id, mInterviewInfo.collegeId);
         new StudentSigninTask().execute(studentSigninActivity, url);
         return true;
     }
