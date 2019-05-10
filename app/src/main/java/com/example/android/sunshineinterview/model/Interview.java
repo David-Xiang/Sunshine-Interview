@@ -48,6 +48,7 @@ public class Interview {
     private boolean sideSelected;
     private boolean orderSelected;
     private int orderIndex;
+    private int interviewID;
 
     private ArrayList<Person> mTeachers;
     private ArrayList<Person> mStudents;
@@ -117,6 +118,9 @@ public class Interview {
                 return true;
         }
         return false;
+    }
+    public int getInterviewID() {
+        return interviewID;
     }
 
     public boolean validId(String id) {
@@ -207,6 +211,7 @@ public class Interview {
             Log.v(TAG, "setOrder(): check " + p.order);
             if (order.equals(p.order)){
                 orderIndex = i;
+                interviewID = p.interviewID;
                 return true;
             }
             i++;
