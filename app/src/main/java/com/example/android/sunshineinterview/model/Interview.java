@@ -48,7 +48,7 @@ public class Interview {
     private boolean sideSelected;
     private boolean orderSelected;
     private int orderIndex;
-    private int interviewID;
+    private static int interviewID;
 
     private ArrayList<Person> mTeachers;
     private ArrayList<Person> mStudents;
@@ -119,12 +119,12 @@ public class Interview {
         }
         return false;
     }
-    public int getInterviewID() {
-        return interviewID;
+    public String getInterviewID() {
+        return interviewID + "";
     }
 
-    public boolean validId(String id) {
-        return id.length() == 4;
+    public boolean validId(String id){
+            return id.length() == 4;
     }
 
     public boolean validate(ValidateActivity validateActivity, String siteId, String validateCode) {
@@ -334,7 +334,7 @@ public class Interview {
                 + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "teacherSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        new UploadTask().execute(path, id, mInterviewInfo.collegeId);
+        new UploadTask().execute("0", path, id, mInterviewInfo.collegeId);
         new TeacherSigninTask().execute(teacherSigninActivity, url);
         return true;
     }
@@ -413,7 +413,7 @@ public class Interview {
                 + getOrderString() + "&id=" + id + "&img=" + filename;
         Log.v(TAG, "studentSignin() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        new UploadTask().execute(path, id, mInterviewInfo.collegeId);
+        new UploadTask().execute("0", path, id, mInterviewInfo.collegeId);
         new StudentSigninTask().execute(studentSigninActivity, url);
         return true;
     }
