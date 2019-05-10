@@ -62,7 +62,7 @@ public class NetworkUtils {
         return jsonParser.parse(jsonString);
     }
 
-    public static boolean uploadImg(File file, String name, URL url){
+    public static boolean uploadFile(File file, String name, URL url){
         if (file == null) {
             Log.v(TAG, "uploadImg(): file does not exist");
             return false;

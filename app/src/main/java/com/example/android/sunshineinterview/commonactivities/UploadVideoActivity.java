@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.android.sunshineinterview.task.UploadTask;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                 TextView textview = findViewById(R.id.text_uploading);
                 textview.setVisibility(View.VISIBLE);
 
-                //TODO:uploadVideos();
+                new UploadTask().execute("1");
 
             }
         });

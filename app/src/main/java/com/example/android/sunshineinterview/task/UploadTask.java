@@ -1,38 +1,109 @@
 package com.example.android.sunshineinterview.task;
 
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
     private static final String TAG = "uploadTask";
 
     @Override
     protected Boolean doInBackground(String... params) {
-        String string = params[0]; // 本地完整路径
-        String id = params[1];
-        File file = new File(string);
-        if (!file.exists()) {
-            Log.v(TAG, "UploadTask() file does not exist?: " + string);
-            return false;
+        // 新增一个参数，第一个参数表示是上传图片("0")还是上传视频("1")
+        // 如果是上传视频，在根目录列出所有文件的列表，找出其中的.mp4文件
+        // 然后逐个上传，实时打log：正在上传什么文件，
+        if (params[0].equals("0")) {
+            // 上传文件
+            String string = params[1]; // 本地完整路径
+            String id = params[2];
+            File file = new File(string);
+            if (!file.exists()) {
+                Log.v(TAG, "UploadTask() file does not exist?: " + string);
+                return false;
+            }
+            // check exist
+            String filename = string.substring(string.lastIndexOf('/') + 1);
+            String parameters = "/upload/images/" + filename + "?id=" + id + "&collegeid=" + params[3];
+            Log.v(TAG, "UploadTask() sending url = " + parameters);
+            URL url = NetworkUtils.buildUrl(parameters);
+            Log.v(TAG, "Begin uploading!");
+            return NetworkUtils.uploadFile(file, id, url);
+        } else {
+            // 上传视频
+            File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "SunshineInterview");
+            if (!mediaStorageDir.exists()) {
+                if (!mediaStorageDir.mkdirs()) {
+                    Log.e("upload video", "SunshineInterview failed to create directory");
+                    return false;
+                }
+            }
+            ArrayList<ArrayList<String>> videoList = new ArrayList<> ();
+            ArrayList<String> interviewList = new ArrayList<> (); // 保存完整的路径！
+            for (File temp : mediaStorageDir.listFiles()) {
+                if (temp.isDirectory()) {
+                    continue;
+                }
+                String Filepath = temp.toString();
+                if (!Filepath.substring(Filepath.lastIndexOf('.') + 1).equals(".mp4"))
+                    continue;
+                String filename = Filepath.substring(Filepath.lastIndexOf('/') + 1);
+                String interviewID = filename.substring(
+                        filename.indexOf('_') + 1, filename.lastIndexOf('/'));
+                // 如果有，就按index在videoList中找到相应数组，添加
+                // 如果没有，append interviewList, new videoList
+                if (interviewList.contains(interviewID)) {
+                    int index = interviewList.indexOf(interviewID);
+                    videoList.get(index).add(Filepath);
+                    Log.d("add path to list: ", "" + videoList.get(index).size());
+                } else {
+                    interviewList.add(interviewID);
+                    ArrayList<String> temparray = new ArrayList<> ();
+                    temparray.add(Filepath);
+                    videoList.add(temparray);
+                }
+
+            }
+            // 按时间顺序排序
+            for (ArrayList<String> interviewVideo : videoList) {
+                Collections.sort(interviewVideo);
+            }
+
+            int index = 0;
+            int videoindex;
+            for (ArrayList<String> interviewVideo : videoList) {
+                videoindex = 0;
+                for (String video : interviewVideo) {
+                    // android上传视频 /upload/videos/(interviewid)/0.mp4（从0开始编号）
+                    // interviewID从文件名中获取
+                    String filename = video.substring(video.lastIndexOf('/') + 1);
+                    String interviewID = filename.substring(
+                            filename.indexOf('_') + 1, filename.lastIndexOf('/'));
+                    String parameters = "/upload/videos/" + interviewList.get(index)
+                            + "/" + interviewID + "/" + videoindex + ".mp4";
+                    Log.v(TAG, "UploadTask() sending url = " + parameters);
+                    URL url = NetworkUtils.buildUrl(parameters);
+                    File file = new File(video);
+                    if (!NetworkUtils.uploadFile(file, videoindex + ".mp4", url))
+                        Log.e(TAG, "error in UploadTask() sending url = " + parameters);
+                    videoindex += 1;
+                }
+                index += 1;
+            }
+            return true;
         }
-        // check exist
-        String filename = string.substring(string.lastIndexOf('/') + 1);
-        String parameters = "/upload/images/" + filename + "?id=" + id + "&collegeid=" + params[2];
-        Log.v(TAG, "UploadTask() sending url = " + parameters);
-        URL url = NetworkUtils.buildUrl(parameters);
-        Log.v(TAG, "Begin uploading!");
-        return NetworkUtils.uploadImg(file, id, url);
     }
 
     @Override
     protected void onPostExecute(Boolean bool) {
         if(!bool) {
-            Log.w(TAG, "Something is wrong when uploading picture");
+            Log.w(TAG, "Something is wrong when uploading picture/videos");
         }
     }
 }
