@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.android.sunshineinterview.model.Interview.getInterviewID;
+
 public class FileUtils {
 
     public static int MEDIA_TYPE_VIDEO = 2;
@@ -52,11 +54,11 @@ public class FileUtils {
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE){
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "IMG_"+ timeStamp + ".jpg");
+                    "IMG_"+ getInterviewID() + "_" + timeStamp + ".jpg");
         }
         else if(type == MEDIA_TYPE_VIDEO) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "VID_"+ timeStamp + ".mp4");
+                    "VID_" + getInterviewID() + "_" + timeStamp + ".mp4");
         }
         else {
             return null;

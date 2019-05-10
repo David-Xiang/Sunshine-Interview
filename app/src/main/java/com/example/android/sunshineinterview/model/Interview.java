@@ -119,7 +119,7 @@ public class Interview {
         }
         return false;
     }
-    public String getInterviewID() {
+    public static String getInterviewID() {
         return interviewID + "";
     }
 
