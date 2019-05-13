@@ -1,24 +1,24 @@
 package com.example.android.sunshineinterview.task;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
+import com.example.android.sunshineinterview.commonactivities.UploadMainActivity;
 import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
+import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.model.InterviewInfo;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
-import com.example.android.sunshineinterview.model.*;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class ValidateTask extends AsyncTask<Object, Void, JsonObject> {
-    private final static String TAG = "ValidateTask";
-    private ValidateActivity mValidateActivity;
+public class ValidateVideoTask extends AsyncTask<Object, Void, JsonObject> {
+    private final static String TAG = "ValidateVideoTask";
+    private UploadMainActivity mValidateActivity;
     @Override
     protected JsonObject doInBackground(Object... objects) {
 //        mValidateActivity = (ValidateActivity) objects[0];
-        mValidateActivity = (ValidateActivity) objects[0];
+        mValidateActivity = (UploadMainActivity) objects[0];
         URL url = (URL) objects[1];
 
         JsonObject j = null;

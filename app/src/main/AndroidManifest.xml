@@ -74,6 +74,14 @@
             android:name="com.example.android.sunshineinterview.studentactivities.StudentEndActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.commonactivities.UploadMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.example.android.sunshineinterview.commonactivities.UploadVideoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -35,6 +35,8 @@ public class UploadMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mInterview = Interview.getInstance();
         setContentView(R.layout.video_main);
 
         mPermissionList = new ArrayList<>();

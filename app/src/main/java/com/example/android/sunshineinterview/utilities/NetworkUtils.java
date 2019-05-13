@@ -18,7 +18,7 @@ import com.google.gson.*;
 
 public class NetworkUtils {
     private final static String TAG = "NetworkUtils";
-    private final static String BASE_URL = "http://10.0.24.115";
+    private final static String BASE_URL = "http://192.168.43.226";
     private final static int UP_TIMEOUT = 10*1000;
     private final static String UP_CHARSET = "utf-8"; //设置编码
     private final static String UP_PREFIX = "--" , LINE_END = "\r\n";

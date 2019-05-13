@@ -144,7 +144,7 @@ public class Interview {
         String parameters = "/validate?siteid=" + siteId + "&validatecode=" + validateCode;
         Log.v(TAG, "validate() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
-        new ValidateTask().execute(validateActivity, url);
+        new ValidateVideoTask().execute(validateActivity, url);
         return true;
     }
 
