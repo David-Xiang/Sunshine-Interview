@@ -130,6 +130,16 @@
             app:layout_constraintStart_toEndOf="@+id/confirm"
             app:layout_constraintTop_toTopOf="@+id/confirm" />
 
+        <Button
+            android:id="@+id/upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上传视频"
+            app:layout_constraintBottom_toTopOf="@+id/editText4"
+            app:layout_constraintEnd_toEndOf="@+id/editText4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.07999998" />
+
     </android.support.constraint.ConstraintLayout>
 
     <!--最右栏-->

@@ -83,6 +83,15 @@ public class ValidateActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button bUpload = findViewById(R.id.upload);
+        bUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent nextStep = new Intent(ValidateActivity.this, UploadMainActivity.class);
+                startActivity(nextStep);
+            }
+        });
     }
 
     public void onHttpResponse(boolean isValidated){
