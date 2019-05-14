@@ -3,6 +3,8 @@ package com.example.android.sunshineinterview.utilities;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.android.sunshineinterview.model.Interview;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
@@ -42,6 +44,7 @@ public class FileUtils {
     public static File getOutputMediaFile(int type){
         // TODO 检查存储状态
         // Environment.getExternalStorageState();
+        String sideID = Interview.getInstance().getSide().toString();
 
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "SunshineInterview");
         if (! mediaStorageDir.exists()){

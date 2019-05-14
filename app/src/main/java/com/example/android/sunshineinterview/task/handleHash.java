@@ -5,26 +5,23 @@ import android.util.Log;
 
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 import com.example.android.sunshineinterview.utilities.computeHash;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-import java.io.IOException;
-import java.net.URL;
-
-public class handleHash extends AsyncTask<String, Void, Integer> {
+public class handleHash extends AsyncTask<Object, Void, Integer> {
 
     @Override
-    protected Integer doInBackground(String... objects) {
+    protected Integer doInBackground(Object... objects) {
+        String filepath = (String)objects[0];
+        String interviewID = (String)objects[1];
+        int videoID = (int)objects[2];
         String hashMD5 = "";
         try {
-            hashMD5 = new computeHash().GetHashcodeFromFile(objects[0]);
+            hashMD5 = new computeHash().GetHashcodeFromFile(filepath);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         if (!hashMD5.equals("")){
-            if (NetworkUtils.uploadHashCode(objects[0], hashMD5)){
+            if (NetworkUtils.uploadHashCode(interviewID, videoID, hashMD5)){
                 Log.d("", "upload hashcode succeed!");
                 return new Integer(1);
             }

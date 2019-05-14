@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.os.Handler;
 
+import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.task.handleHash;
 
 import java.io.File;
@@ -22,7 +23,8 @@ public class MyMediaRecorder {
     private boolean isRecording;
     private Handler handler;
     private String mediaFilePath;
-    Runnable runnable;
+    private Runnable runnable;
+    private static int videoID;
 
     public MyMediaRecorder(Context context, Camera inputCamera, SurfaceHolder inputHolder){
         MR = new MediaRecorder();
@@ -47,8 +49,15 @@ public class MyMediaRecorder {
         };
         mediaFilePath = "";
         isRecording = false;
-
     }
+
+    public MyMediaRecorder(){
+        videoID = 0;
+    }
+
+//    public void resetVideoID(){
+//        videoID = 0;
+//    }
 
     public void startRecord(){
         Log.d("videoDebug", "start recording!");
@@ -73,7 +82,13 @@ public class MyMediaRecorder {
         camera.lock();
         isRecording = false;
 
-        new handleHash().execute(mediaFilePath);
+
+        // handle hash
+        Log.d("", Interview.getInstance().getSide().toString());
+        if (Interview.getInstance().getSide().toString().equals("STUDENT")) {
+            videoID++;
+            new handleHash().execute(mediaFilePath, Interview.getInstance().getInterviewID(), videoID);
+        }
     }
 
     private boolean setMediaRecorder(){
@@ -117,12 +132,4 @@ public class MyMediaRecorder {
             MR = null;
         }
     }
-
-//    public void releaseCamera()
-//    {
-//        if (camera != null){
-//            camera.release();
-//            camera = null;
-//        }
-//    }
 }

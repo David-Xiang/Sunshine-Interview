@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
+import com.example.android.sunshineinterview.Camera.MyMediaRecorder;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
@@ -71,6 +72,9 @@ public class ChooseOrderActivity extends AppCompatActivity {
                 sp = findViewById(R.id.spinner);
                 // TODO: time?
                 String time = sp.getSelectedItem().toString();
+
+                // reset videoID
+                new MyMediaRecorder();
 
                 mInterview.setOrder(OrderIDs.get(sp.getSelectedItemPosition()));
                 mInterview.chooseOrder(ChooseOrderActivity.this, OrderIDs.get(sp.getSelectedItemPosition()));
