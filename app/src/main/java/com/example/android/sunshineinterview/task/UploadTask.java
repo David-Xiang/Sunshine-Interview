@@ -53,12 +53,14 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
                     continue;
                 }
                 String Filepath = temp.toString();
-                Log.d(TAG, "in UploadTask(): in loop: " + Filepath);
-                if (!Filepath.substring(Filepath.lastIndexOf('.') + 1).equals(".mp4"))
+                //Log.d(TAG, "in ..UploadTask(): in loop: " + Filepath.substring(Filepath.lastIndexOf('.') + 1));
+                if (!Filepath.substring(Filepath.lastIndexOf('.') + 1).equals("mp4"))
                     continue;
                 String filename = Filepath.substring(Filepath.lastIndexOf('/') + 1);
+                Log.d(TAG, "in UploadTask(): in loop: " + filename);
                 String interviewID = filename.substring(
-                        filename.indexOf('_') + 1, filename.lastIndexOf('/'));
+                        filename.indexOf('_') + 1, filename.lastIndexOf('.'));
+                Log.d(TAG, "in UploadTask(): in loop, interviewID: " + interviewID);
                 // 如果有，就按index在videoList中找到相应数组，添加
                 // 如果没有，append interviewList, new videoList
                 if (interviewList.contains(interviewID)) {
@@ -87,13 +89,16 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
                     // android上传视频 /upload/videos/(interviewid)/0.mp4（从0开始编号）
                     // interviewID从文件名中获取
                     String filename = video.substring(video.lastIndexOf('/') + 1);
-                    String interviewID = filename.substring(
-                            filename.indexOf('_') + 1, filename.lastIndexOf('/'));
-                    String parameters = "/upload/videos/" + interviewList.get(index)
-                            + "/" + interviewID + "/" + videoindex + ".mp4";
+                    String temp = filename.substring(
+                            0, filename.lastIndexOf('_'));
+                    Log.v(TAG, "UploadTask() temp" + temp);
+                    String interviewID = temp.substring(
+                            temp.indexOf('_') + 1, temp.lastIndexOf('_'));
+                    String parameters = "/upload/videos/"  + interviewID + "/" + videoindex + ".mp4";
                     Log.v(TAG, "UploadTask() sending url = " + parameters);
                     URL url = NetworkUtils.buildUrl(parameters);
                     File file = new File(video);
+
                     if (!NetworkUtils.uploadFile(file, videoindex + ".mp4", url))
                         Log.e(TAG, "error in UploadTask() sending url = " + parameters);
                     videoindex += 1;

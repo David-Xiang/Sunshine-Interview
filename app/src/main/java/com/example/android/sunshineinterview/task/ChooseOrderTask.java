@@ -48,6 +48,7 @@ public class ChooseOrderTask extends AsyncTask<Object, Void, JsonObject> {
             Interview.getInstance().updatePersonInfo();
             int id = j.get("interviewID").getAsInt();
             Interview.getInstance().setInterviewID(id);
+            Log.d("INTERVIEWID: ", "" + id);
             mChooseOrderActivity.onHttpResponse(ChooseOrderActivity.ServerInfo.PERMISSION);
         } else if (j.get("permission").getAsString().equals("false")) {
             mChooseOrderActivity.onHttpResponse(ChooseOrderActivity.ServerInfo.REJECTION);
