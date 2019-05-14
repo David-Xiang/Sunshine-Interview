@@ -82,7 +82,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
             updateNames(i, s);
             i += 1;
         }
-
+               
         Button bConfirm = findViewById(R.id.manual_start);
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

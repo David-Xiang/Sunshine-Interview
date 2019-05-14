@@ -7,18 +7,6 @@
 
     tools:context="com.example.android.sunshineinterview.commonactivities.ChooseSideActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tl_head"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorMediumyDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/title_step00"
-        app:titleTextColor="@color/colorWhite" />
-
-    <!--最右栏-->
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -273,6 +261,19 @@
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMediumyDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/title_step00"
+        app:titleTextColor="@color/colorWhite" />
+
+    <!--最右栏-->
+
     <!--填空部分-->
 
     <android.support.constraint.ConstraintLayout
@@ -282,7 +283,6 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_head">
 
