@@ -27,10 +27,10 @@ public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
         String string = (String) params[1];//这是从execute方法中传过来的参数, 即服务器端的路径
         name = (String) params[2];
 
-        Log.w(TAG, "Begin downloading!");
+        Log.w(TAG, "Begin downloading!" + string);
         //String string = "https://wx1.sinaimg.cn/orj480/006u8RMBly1fxabddexv6j30qo0f0weg.jpg";
         try {
-            URL url = new URL(string);
+            URL url = NetworkUtils.buildUrl(string);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             //开始下载

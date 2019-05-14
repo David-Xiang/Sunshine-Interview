@@ -63,7 +63,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
         updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
 
-        mTimeCount = new TimeCount(60000, 10000){
+        mTimeCount = new TimeCount(60000, 2000){
             @Override
             public void onTick(long millisUntilFinished) {
                 if (count > 0)
@@ -129,6 +129,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     }
 
     public void onStudentsUpdate(String name, String url) {
+        Log.d(TAG, "update student @!!!!!!!!!!!!!!!!!!!!!!!!");
         //一个一个在mInterview里面修改/信息，name, url, isabsent
         for (int j = 0; j < mStudentNames.size(); ++j)
         {
@@ -141,6 +142,11 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 interviewerPhoto.setImageBitmap(BitmapFactory.decodeStream(fis));
+
+
+                TextView interviewerName = findViewById(textViewIDs[j]);
+                interviewerName.setText(name);
+
                 break;
             }
         }
