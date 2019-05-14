@@ -60,7 +60,7 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
                 String filename = Filepath.substring(Filepath.lastIndexOf('/') + 1);
                 Log.d(TAG, "in UploadTask(): in loop: " + filename);
                 String interviewID = filename.substring(
-                        filename.indexOf('_') + 1, filename.lastIndexOf('.'));
+                        filename.indexOf('_') + 1, filename.lastIndexOf('_'));
                 Log.d(TAG, "in UploadTask(): in loop, interviewID: " + interviewID);
                 // 如果有，就按index在videoList中找到相应数组，添加
                 // 如果没有，append interviewList, new videoList

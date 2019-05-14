@@ -38,7 +38,7 @@ public class StudentInProgressActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
 
-        mTimeCount = new TimeCount(60000, 10000){
+        mTimeCount = new TimeCount(6000000, 10000){
             @Override
             public void onTick(long millisUntilFinished) {
                 if (count > 0)
