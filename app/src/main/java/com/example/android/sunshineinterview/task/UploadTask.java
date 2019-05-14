@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 
 import java.io.File;
@@ -89,12 +90,12 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
                     // android上传视频 /upload/videos/(interviewid)/0.mp4（从0开始编号）
                     // interviewID从文件名中获取
                     String filename = video.substring(video.lastIndexOf('/') + 1);
-                    String temp = filename.substring(
-                            0, filename.lastIndexOf('_'));
-                    Log.v(TAG, "UploadTask() temp" + temp);
-                    String interviewID = temp.substring(
-                            temp.indexOf('_') + 1, temp.lastIndexOf('_'));
-                    String parameters = "/upload/videos/"  + interviewID + "/" + videoindex + ".mp4";
+                    String interviewID = filename.substring(
+                            filename.indexOf('_') + 1, filename.lastIndexOf('_'));
+                    //Log.v(TAG, "UploadTask() temp" + temp);
+                    //String interviewID = temp.substring(temp.indexOf('_') + 1, temp.lastIndexOf('_'));
+                    String parameters = "/upload/videos/"  + interviewID + "/" + videoindex
+                            + ".mp4?interviewid=" + interviewID;
                     Log.v(TAG, "UploadTask() sending url = " + parameters);
                     URL url = NetworkUtils.buildUrl(parameters);
                     File file = new File(video);

@@ -3,6 +3,7 @@ package com.example.android.sunshineinterview.task;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 import com.google.gson.JsonObject;
@@ -48,6 +49,9 @@ public class QueryTask extends AsyncTask<Object, Void, JsonObject> {
             mWaitForChooseOrderActivity.onHttpResponse(WaitForChooseOrderActivity.ServerInfo.NOACCESS, null);
         } else if (j.get("permission").getAsString().equals("true")) {
             String order = j.getAsJsonObject("info").get("order").getAsString();
+            int id = j.getAsJsonObject("info").get("interviewID").getAsInt();
+            Interview.getInstance().setInterviewID(id);
+            Log.d("INTERVIEWID: ", "" + id);
             mWaitForChooseOrderActivity.onHttpResponse(WaitForChooseOrderActivity.ServerInfo.PERMISSION, order);
         } else if (j.get("permission").getAsString().equals("false")) {
             Log.e(TAG, "onPostExecute(): fault 2");
