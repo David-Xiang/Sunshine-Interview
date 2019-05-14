@@ -13,12 +13,10 @@ public class Period{
     public String startTime, endTime;
     public ArrayList<Person> teachers, students;
     public String order;
-    public int interviewID;
     Period(JsonObject j){
         order = j.get("order").getAsString();
         startTime = j.get("start_time").getAsString();
         endTime = j.get("end_time").getAsString();
-        interviewID = Integer.valueOf(j.get("interviewID").getAsString());
         teachers = new ArrayList<>();
         students = new ArrayList<>();
 

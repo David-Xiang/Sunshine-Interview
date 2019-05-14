@@ -19,6 +19,7 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
         // 新增一个参数，第一个参数表示是上传图片("0")还是上传视频("1")
         // 如果是上传视频，在根目录列出所有文件的列表，找出其中的.mp4文件
         // 然后逐个上传，实时打log：正在上传什么文件，
+        Log.d(TAG, "in UploadTask()  " + params[0]);
         if (params[0].equals("0")) {
             // 上传文件
             String string = params[1]; // 本地完整路径
@@ -46,11 +47,13 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
             }
             ArrayList<ArrayList<String>> videoList = new ArrayList<> ();
             ArrayList<String> interviewList = new ArrayList<> (); // 保存完整的路径！
+            Log.d(TAG, "in UploadTask(): ready to loop");
             for (File temp : mediaStorageDir.listFiles()) {
                 if (temp.isDirectory()) {
                     continue;
                 }
                 String Filepath = temp.toString();
+                Log.d(TAG, "in UploadTask(): in loop: " + Filepath);
                 if (!Filepath.substring(Filepath.lastIndexOf('.') + 1).equals(".mp4"))
                     continue;
                 String filename = Filepath.substring(Filepath.lastIndexOf('/') + 1);
@@ -71,6 +74,7 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
 
             }
             // 按时间顺序排序
+            Log.d(TAG, "in UploadTask(): ready to sort");
             for (ArrayList<String> interviewVideo : videoList) {
                 Collections.sort(interviewVideo);
             }

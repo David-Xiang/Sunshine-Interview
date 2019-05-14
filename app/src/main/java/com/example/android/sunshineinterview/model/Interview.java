@@ -202,6 +202,11 @@ public class Interview {
         orderIndex = index;
         return true;
     }
+    public boolean setInterviewID(int id){
+        Log.v(TAG, "setid to " + id);
+        interviewID = id;
+        return true;
+    }
 
     public boolean setOrder(String order){
         orderSelected = true;
@@ -211,7 +216,6 @@ public class Interview {
             Log.v(TAG, "setOrder(): check " + p.order);
             if (order.equals(p.order)){
                 orderIndex = i;
-                interviewID = p.interviewID;
                 return true;
             }
             i++;

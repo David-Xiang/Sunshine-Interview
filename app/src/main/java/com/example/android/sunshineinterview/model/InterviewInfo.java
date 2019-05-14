@@ -15,6 +15,7 @@ public class InterviewInfo{
     public String collegeName;
     public String siteId;
     public String siteName;
+    public int interviewID;
     public ArrayList<Period> periods;
 
     public InterviewInfo(JsonObject j){
@@ -22,6 +23,7 @@ public class InterviewInfo{
         collegeName = j.get("college_name").getAsString();
         siteId = j.get("site_id").getAsString();
         siteName = j.get("site_name").getAsString();
+        interviewID = -1;
 
         periods = new ArrayList<>();
         Log.v(TAG,"Periods");
