@@ -63,7 +63,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
         updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
 
-        mTimeCount = new TimeCount(60000, 2000){
+        mTimeCount = new TimeCount(180000, 2000){
             @Override
             public void onTick(long millisUntilFinished) {
                 if (count > 0)

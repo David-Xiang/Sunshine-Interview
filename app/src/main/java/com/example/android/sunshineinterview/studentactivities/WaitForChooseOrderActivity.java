@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
+import com.example.android.sunshineinterview.Camera.MyMediaRecorder;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
@@ -40,6 +41,7 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         //preview.addView(mPreview);
 
         mInterview = Interview.getInstance();
+        new MyMediaRecorder();
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);

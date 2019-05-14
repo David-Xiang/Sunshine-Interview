@@ -35,13 +35,7 @@ public class MyMediaRecorder {
             @Override
             public void run() {
                 if (MR != null) {
-                    MR.setOnErrorListener(null);
-                    MR.setOnInfoListener(null);
-                    MR.setPreviewDisplay(null);
-                    MR.stop();
-                    MR.reset();
-                    MR.release();
-                    camera.lock();
+                    beforeStopRecord();
                 }
                 MR = new MediaRecorder();
                 startRecord();
@@ -71,17 +65,13 @@ public class MyMediaRecorder {
         }
     }
 
-    public void stopRecord(){
-        Log.d("videoDebug", "stop recording!");
-        handler.removeCallbacks(runnable);
+    public void beforeStopRecord(){
         MR.setOnErrorListener(null);
         MR.setOnInfoListener(null);
         MR.setPreviewDisplay(null);
         MR.stop();
         releaseMediaRecorder();
-        camera.lock();
         isRecording = false;
-
 
         // handle hash
         Log.d("videoDebug", Interview.getInstance().getSide().toString());
@@ -89,6 +79,12 @@ public class MyMediaRecorder {
             new handleHash().execute(mediaFilePath, Interview.getInstance().getInterviewID(), videoID);
             videoID++;
         }
+    }
+
+    public void stopRecord(){
+        Log.d("videoDebug", "stop recording!");
+        handler.removeCallbacks(runnable);
+        beforeStopRecord();
     }
 
     private boolean setMediaRecorder(){

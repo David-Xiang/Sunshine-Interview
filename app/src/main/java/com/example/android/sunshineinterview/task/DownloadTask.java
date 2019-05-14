@@ -30,7 +30,7 @@ public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
         Log.w(TAG, "Begin downloading!" + string);
         //String string = "https://wx1.sinaimg.cn/orj480/006u8RMBly1fxabddexv6j30qo0f0weg.jpg";
         try {
-            URL url = NetworkUtils.buildUrl(string);
+            URL url = new URL(string);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             //开始下载
