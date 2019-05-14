@@ -89,6 +89,9 @@ public class TeacherInProgressActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
+        if (mMediaRecorder.isRecording) {
+            mMediaRecorder.stopRecord();
+        }
         // TODO
     }
     @Override

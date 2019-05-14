@@ -20,7 +20,7 @@ public class MyMediaRecorder {
     private MediaRecorder MR;
     private SurfaceHolder holder;
     public Camera camera;
-    private boolean isRecording;
+    public boolean isRecording;
     private Handler handler;
     private String mediaFilePath;
     private Runnable runnable;
@@ -84,10 +84,10 @@ public class MyMediaRecorder {
 
 
         // handle hash
-        Log.d("", Interview.getInstance().getSide().toString());
+        Log.d("videoDebug", Interview.getInstance().getSide().toString());
         if (Interview.getInstance().getSide().toString().equals("STUDENT")) {
-            videoID++;
             new handleHash().execute(mediaFilePath, Interview.getInstance().getInterviewID(), videoID);
+            videoID++;
         }
     }
 
