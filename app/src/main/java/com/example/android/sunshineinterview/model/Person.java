@@ -10,6 +10,7 @@ public class Person{
     public String name;
     public String imgUrl;
     public boolean isAbsent;
+    public String storageImgUrl;
     Person(JsonObject j){
         id = j.get("id").getAsString();
         name = j.get("name").getAsString();
@@ -24,17 +25,25 @@ public class Person{
             imgUrl = j.get("img_url").getAsString();
             Log.v(TAG, "imgUrl = " + imgUrl);
         }
+
+        storageImgUrl = "";
     }
     Person(String id, String name){
         this.id = id;
         this.name = name;
         this.isAbsent = true;
         this.imgUrl = "";
+
+        storageImgUrl = "";
     }
-    void setImgUrl(String url){
+
+    public void setStorageImgUrl(String url) {
+        storageImgUrl = url;
+    }
+    public void setImgUrl(String url){
         this.imgUrl = url;
     }
-    void setIsAbsent(boolean status){
+    public void setIsAbsent(boolean status){
         isAbsent = status;
     }
 }
