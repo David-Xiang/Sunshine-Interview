@@ -296,6 +296,19 @@ public class Interview {
         return true;
     }
 
+    public void setStudentPhotoPath(int index, String url) {
+        mStudents.get(index).setStorageImgUrl(url);
+    }
+
+    public void setStudentPhotoPath(String Id, String url) {
+        for (int i = 0 ; i < mStudents.size(); i++) {
+            if (mStudents.get(i).id.equals(Id)) {
+                mStudents.get(i).setStorageImgUrl(url);
+                break;
+            }
+        }
+    }
+
     public String getimageUrl(String Id) {
         for (Person student : mStudents) {
             if (student.id.equals(Id))

@@ -134,6 +134,10 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         for (int j = 0; j < mStudentNames.size(); ++j)
         {
             if(name.equals(mStudentNames.get(j)) && url != null) {
+
+                // 保存每个学生的照片位置。
+                mInterview.setStudentPhotoPath(j, url);
+
                 ImageView interviewerPhoto = findViewById(imageViewIDs[j]);
                 FileInputStream fis = null;
                 try {
