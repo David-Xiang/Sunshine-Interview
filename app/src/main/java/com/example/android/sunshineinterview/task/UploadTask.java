@@ -11,6 +11,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
     private static final String TAG = "uploadTask";
@@ -79,7 +80,14 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
             // 按时间顺序排序
             Log.d(TAG, "in UploadTask(): ready to sort");
             for (ArrayList<String> interviewVideo : videoList) {
-                Collections.sort(interviewVideo);
+                // Collections.sort(interviewVideo);
+                Collections.sort(interviewVideo, new Comparator<String>() {
+                    @Override
+                    public int compare(String s1, String s2) {
+                        return s2.compareTo(s1);
+                    }
+
+                });
             }
 
             int index = 0;
