@@ -330,16 +330,17 @@
 
                     <TextView
                         android:id="@+id/textView3"
+                        style="@style/SubTitleTextView"
+                        android:maxLines="1"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:gravity="center_vertical"
                         android:text="@string/Guide_step3"
                         android:textColor="@color/colorWhite"
-                        style="@style/SubTitleTextView"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHeight_percent="0.7"
-                        app:layout_constraintHorizontal_bias="0.06"
+                        app:layout_constraintHorizontal_bias="0.05"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintWidth_percent="0.6" />

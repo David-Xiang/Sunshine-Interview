@@ -65,6 +65,7 @@
     <string name="title_step4">面试</string>
     <string name="the_end">结束面试</string>
     <string name="guide_step4">面试进行中</string>
+    <string name="inprogressreminder">面试已开始，面试视频信息实时上链中</string>>
 
 
     <!--结束页面-->
@@ -88,8 +89,9 @@
 
     <!--视频上传-->
     <string name="upload_title0">管理员验证</string>
+    <string name="upload_title1">视频上传</string>
     <string name="upload_guide1">点击确认上传面试视频</string>
-    <string name="video_info">本地有------个视频文件待上传，点击按钮确认上传</string>
+    <string name="video_info">本地有视频文件待上传，点击按钮确认上传</string>
     <string name="video_uploading">视频正在上传中，请勿退出此页面</string>
 
 

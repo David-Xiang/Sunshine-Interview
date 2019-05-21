@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
@@ -64,6 +66,10 @@ public class StudentInProgressActivity extends AppCompatActivity {
         }
     }
 
+    public void showHashResult(){
+        Toast.makeText(StudentInProgressActivity.this, "视频信息已实时上链", Toast.LENGTH_LONG).show();
+    }
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -75,7 +81,7 @@ public class StudentInProgressActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mMediaRecorder.startRecord();
+                mMediaRecorder.startRecord(StudentInProgressActivity.this);
             }
         }, 1000);
     }

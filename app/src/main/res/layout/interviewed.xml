@@ -4,15 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_dark_background"
 
     tools:context="com.example.android.sunshineinterview.studentactivities.StudentInProgressActivity">
 
-    <FrameLayout
-        android:id="@+id/videoView"
-        android:layout_width="1940dp"
-        android:layout_height="1383dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextClock
+        android:id="@+id/textClock2"
+        style="@style/StandardTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:format12Hour="北京时间： MM/dd/yy h:mmaa"
+        android:format24Hour="北京时间： MM/dd/yy h:mmaa"
+        android:background="@color/cardview_dark_background"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/videoView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/videoView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+
 </android.support.constraint.ConstraintLayout>

@@ -25,7 +25,7 @@
     </style>
 
     <style name="SubTitleTextView">
-        <item name="android:textSize">35sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/colorGrey</item>
     </style>
 

@@ -113,7 +113,7 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mMediaRecorder.startRecord();
+                mMediaRecorder.startRecord(null);
             }
         }, 1000);
     }
