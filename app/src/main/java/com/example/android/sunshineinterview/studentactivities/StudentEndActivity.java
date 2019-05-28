@@ -33,14 +33,6 @@ public class StudentEndActivity extends AppCompatActivity {
         updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
         updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
 
-        Button bConfirm = findViewById(R.id.button_ending);
-        bConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent nextStep = new Intent(StudentEndActivity.this, WaitForChooseOrderActivity.class);
-                startActivity(nextStep);
-            }
-        });
     }
 
     private void updateInfo(int textViewId, int originalStringId, String newString){

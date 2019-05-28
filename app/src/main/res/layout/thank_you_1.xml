@@ -36,25 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/guide_text"
-                app:layout_constraintVertical_bias="0.19999999" />
-
-            <Button
-                android:id="@+id/button_ending"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="28dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
-                android:gravity="center"
-                android:text="@string/the_end"
-                android:textColor="@color/colorWhite"
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/wordstosay" />
+                app:layout_constraintVertical_bias="0.37" />
 
             <LinearLayout
                 android:id="@+id/guide_text"
@@ -215,7 +197,6 @@
                     android:text="@string/interview_time_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.28"
                     app:layout_constraintStart_toEndOf="@+id/interview_time"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.93" />

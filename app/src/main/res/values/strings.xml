@@ -61,6 +61,8 @@
     <!--等待选考场页面-->
     <string name="Guide_step3">等待考官开始面试</string>
     <string name="be_patient">请耐心等待</string>
+    <string name="be_patient0">考官正在选择考次，请耐心等待</string>
+
 
     <!--面试进行页面-->
     <string name="title_step4">面试</string>
