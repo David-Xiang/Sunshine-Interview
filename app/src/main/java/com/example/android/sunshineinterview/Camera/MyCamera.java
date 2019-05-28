@@ -7,24 +7,24 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.media.Image;
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity;
-import com.example.myapplication.R;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import static com.example.android.sunshineinterview.utilities.FileUtils.MEDIA_TYPE_IMAGE;
 import static com.example.android.sunshineinterview.utilities.FileUtils.getOutputMediaFile;
 
 
 public class MyCamera {
+    private static final String TAG = "MyCamera";
     public Camera camera;
     private int cameraID = 1;
     private Activity mActivity;
@@ -40,7 +40,7 @@ public class MyCamera {
         if (camera == null){
             camera = getCamera();
         }
-        setCameraDisplayOrientation(mActivity);
+        setCameraParas(mActivity);
     }
 
     public MyCamera(Activity activity){
@@ -49,7 +49,7 @@ public class MyCamera {
         if (camera == null){
             camera = getCamera();
         }
-        setCameraDisplayOrientation(mActivity);
+        setCameraParas(mActivity);
     }
 
     public MyCamera()
@@ -147,6 +147,22 @@ public class MyCamera {
             e.printStackTrace();
         }
         return newCamera;
+    }
+
+    private void setCameraParas(Activity activity) {
+        setCameraDisplayOrientation(activity);
+
+        Camera.Parameters paras = camera.getParameters();
+        List<Camera.Size> picSize = paras.getSupportedPictureSizes();
+        Camera.Size minSize = picSize.get(0);
+        Log.d(TAG, String.valueOf(minSize.width) + String.valueOf(minSize.height));
+        paras.setPictureSize(minSize.width, minSize.height);
+
+//        List<Camera.Size> preSize = paras.getSupportedPreviewSizes();
+//        minSize = preSize.get(0);
+//        paras.setPreviewSize(minSize.width, minSize.height);
+
+        camera.setParameters(paras);
     }
 
     private void setCameraDisplayOrientation(Activity activity) {

@@ -18,6 +18,7 @@ import static com.example.android.sunshineinterview.utilities.FileUtils.MEDIA_TY
 import static com.example.android.sunshineinterview.utilities.FileUtils.getOutputMediaFile;
 
 public class MyMediaRecorder {
+    private final static String TAG = "MyMediaRecorder";
     private MediaRecorder MR;
     private SurfaceHolder holder;
     public Camera camera;
@@ -52,12 +53,12 @@ public class MyMediaRecorder {
         videoID = 0;
     }
 
-//    public void resetVideoID(){
-//        videoID = 0;
-//    }
+    public static void resetVideoID() {
+        videoID = 0;
+    }
 
     public void startRecord(StudentInProgressActivity studentInProgressActivity){
-        Log.d("videoDebug", "start recording!");
+        Log.d(TAG, "start recording!");
         if (studentInProgressActivity != null)
         {
             activity = studentInProgressActivity;
@@ -81,7 +82,7 @@ public class MyMediaRecorder {
         isRecording = false;
 
         // handle hash
-        Log.d("videoDebug", Interview.getInstance().getSide().toString());
+        Log.d(TAG, Interview.getInstance().getSide().toString());
         if (Interview.getInstance().getSide().toString().equals("STUDENT")) {
             new handleHash().execute(mediaFilePath, Interview.getInstance().getInterviewID(), videoID);
             videoID++;
@@ -92,39 +93,37 @@ public class MyMediaRecorder {
     }
 
     public void stopRecord(){
-        Log.d("videoDebug", "stop recording!");
+        Log.d(TAG, "stop recording!");
         handler.removeCallbacks(runnable);
         beforeStopRecord();
     }
 
     private boolean setMediaRecorder(){
-        Log.d("videoDebug", "start setting the MR");
+        Log.d(TAG, "start setting the MR");
         camera.unlock();
         MR.setCamera(camera);
 
         MR.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         MR.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-        //MR.setMaxDuration(10000);//设置视频的最大持续时间
-        //MR.setMaxFileSize(1*1024*1024*1024);
 
         MR.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_480P));
 
         File mediaFile = getOutputMediaFile(MEDIA_TYPE_VIDEO);
         if (mediaFile == null){
-            Log.d("videoDebug", "failed to open the VID file");
+            Log.d(TAG, "failed to open the VID file");
         }
         mediaFilePath = mediaFile.toString();
         MR.setOutputFile(mediaFile.toString());
 
         MR.setPreviewDisplay(holder.getSurface());
-        Log.d("videoDebug", "setting MR Okay");
+        Log.d(TAG, "setting MR Okay");
         try{
             MR.prepare();
         }
         catch (Exception e){
             releaseMediaRecorder();
-            Log.d("videoDebug", e.getMessage());
-            Log.d("videoDebug", "MediaRecorder failed to work");
+            Log.d(TAG, e.getMessage());
+            Log.d(TAG, "MediaRecorder failed to work");
             return false;
         }
         return true;

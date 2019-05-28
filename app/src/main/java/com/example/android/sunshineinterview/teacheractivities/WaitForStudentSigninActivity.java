@@ -3,6 +3,7 @@ package com.example.android.sunshineinterview.teacheractivities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -98,6 +99,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         bReady.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "confirm clicked");
                 Intent nextStep = new Intent(WaitForStudentSigninActivity.this, TeacherInProgressActivity.class);
                 startActivity(nextStep);
             }
@@ -138,7 +140,6 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                 // 保存每个学生的照片位置。
                 mInterview.addNameAndPath(name, url);
 
-
                 ImageView interviewerPhoto = findViewById(imageViewIDs[j]);
                 FileInputStream fis = null;
                 try {
@@ -147,7 +148,6 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 interviewerPhoto.setImageBitmap(BitmapFactory.decodeStream(fis));
-
 
                 TextView interviewerName = findViewById(textViewIDs[j]);
                 interviewerName.setText(name);

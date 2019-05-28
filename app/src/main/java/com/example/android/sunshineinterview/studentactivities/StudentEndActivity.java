@@ -2,7 +2,9 @@ package com.example.android.sunshineinterview.studentactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -14,9 +16,12 @@ import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
 public class StudentEndActivity extends AppCompatActivity {
+    private final static String TAG = "StudentEndActivity";
     private Interview mInterview;
     private MyCamera mCamera;
     private CameraPreview mPreview;
+    private Handler handler;
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,15 @@ public class StudentEndActivity extends AppCompatActivity {
         setContentView(R.layout.thank_you_1);
 
         mInterview = Interview.getInstance();
+
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                // TODO send request!
+                polling();
+            }
+        };
 
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
@@ -33,6 +47,10 @@ public class StudentEndActivity extends AppCompatActivity {
         updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
         updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
 
+    }
+
+    private void polling() {
+        handler.postDelayed(runnable, 2000);
     }
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
@@ -45,6 +63,12 @@ public class StudentEndActivity extends AppCompatActivity {
             newString = tmp[1].substring(0, 8) + " - " + tmp[2];
         }
         textview.setText(originalString.replace("------", newString));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        polling();
     }
 
     @Override
