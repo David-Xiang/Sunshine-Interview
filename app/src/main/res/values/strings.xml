@@ -23,6 +23,7 @@
     <string name="interview_time">考试时间：</string>
     <string name="processing_time">进行时间：</string>
     <string name="interview_status">状态：</string>
+    <string name="time_bj">北京时间：</string>
 
     <string name="roomid_text">考场号</string>
     <string name="verification_text">验证码</string>
