@@ -37,12 +37,12 @@
                     style="@style/StandardTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginStart="60dp"
                     android:layout_weight="1"
                     android:paddingBottom="1dp"
                     android:text="@string/interview_time"
                     app:layout_constraintBottom_toBottomOf="@+id/interview_time_text"
-                    app:layout_constraintEnd_toStartOf="@+id/interview_time_text"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/interview_status" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -111,13 +111,15 @@
                     style="@style/StandardTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:paddingBottom="1dp"
                     android:text="@string/interview_time_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.64"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.28"
+                    app:layout_constraintStart_toEndOf="@+id/interview_time"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.93" />
 
@@ -175,12 +177,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:format12Hour="北京时间： MM/dd/yy h:mmaa"
-                    android:format24Hour="北京时间： MM/dd/yy h:mmaa"
+                    android:format12Hour="MM/dd/yy h:mmaa"
+                    android:format24Hour="MM/dd/yy h:mmaa"
                     android:paddingBottom="1dp"
                     android:visibility="visible"
                     app:layout_constraintBottom_toTopOf="@+id/college_id_text"
-                    app:layout_constraintStart_toStartOf="@+id/college_id" />
+                    app:layout_constraintEnd_toEndOf="@+id/college_id_text"
+                    app:layout_constraintStart_toStartOf="@+id/college_id_text" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/school_name_text"
@@ -194,6 +197,15 @@
                     app:layout_constraintBottom_toTopOf="@+id/classroom_id_text"
                     app:layout_constraintEnd_toEndOf="@+id/classroom_id_text"
                     app:layout_constraintStart_toStartOf="@+id/classroom_id_text" />
+
+                <TextView
+                    android:id="@+id/time"
+                    style="@style/StandardTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_bj"
+                    app:layout_constraintBottom_toTopOf="@+id/college_id"
+                    app:layout_constraintEnd_toEndOf="@+id/college_id" />
 
             </android.support.constraint.ConstraintLayout>
 
