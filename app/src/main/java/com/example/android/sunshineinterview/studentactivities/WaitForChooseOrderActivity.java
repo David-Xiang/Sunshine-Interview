@@ -76,7 +76,6 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         Log.v(TAG, "onHttpResponse():  method entered!");
         if (serverInfo == ServerInfo.PERMISSION){
             Log.v(TAG, "onHttpResponse(): permisssion received!");
-//            mTimeCount.cancel();
             mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
             mInterview.setOrder(order);
             mInterview.updatePersonInfo();

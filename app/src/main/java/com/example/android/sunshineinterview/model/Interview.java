@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.android.sunshineinterview.commonactivities.ChooseSideActivity;
 import com.example.android.sunshineinterview.commonactivities.UploadMainActivity;
 import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
+import com.example.android.sunshineinterview.studentactivities.StudentEndActivity;
 import com.example.android.sunshineinterview.studentactivities.StudentInProgressActivity;
 import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
 import com.example.android.sunshineinterview.studentactivities.WaitForChooseOrderActivity;
@@ -442,6 +443,7 @@ public class Interview {
         new QueryTask().execute(waitForChooseOrderActivity, url);
         return true;
     }
+
 
     // 考生签到
     public boolean studentSignin(StudentSigninActivity studentSigninActivity,
