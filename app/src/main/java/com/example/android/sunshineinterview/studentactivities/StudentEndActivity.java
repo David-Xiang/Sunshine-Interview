@@ -1,8 +1,11 @@
 package com.example.android.sunshineinterview.studentactivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -30,6 +33,16 @@ public class StudentEndActivity extends AppCompatActivity {
         updateInfo(R.id.classroom_location_text, R.string.classroom_location_text, mInterview.mInterviewInfo.siteName);
         updateInfo(R.id.interview_time_text, R.string.interview_time_text, mInterview.getInterviewTime());
         updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
+
+        Button bConfirm = findViewById(R.id.button_ending);
+        bConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent nextStep = new Intent(StudentEndActivity.this, WaitForChooseOrderActivity.class);
+                startActivity(nextStep);
+            }
+        });
+
 
     }
 
