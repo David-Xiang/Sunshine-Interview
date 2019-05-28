@@ -295,6 +295,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_head">
 
+        <ProgressBar
+            android:id="@+id/pb_start"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/manual_start"
+            app:layout_constraintStart_toEndOf="@+id/manual_start"
+            app:layout_constraintTop_toTopOf="@+id/manual_start"
+            app:layout_constraintVertical_bias="1.0" />
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
