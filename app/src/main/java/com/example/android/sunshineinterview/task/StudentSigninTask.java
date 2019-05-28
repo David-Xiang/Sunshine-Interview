@@ -42,7 +42,7 @@ public class StudentSigninTask extends AsyncTask<Object, Void, JsonObject> {
                 || !j.get("type").getAsString().equals("permission")){
             mStudentSigninActivity.onStudentsUpdate(StudentSigninActivity.ServerInfo.NOACCESS);
         } else if (j.get("permission").getAsString().equals("true")) {
-            Interview.getInstance().updatePersonInfo();
+            //Interview.getInstance().updatePersonInfo();
             mStudentSigninActivity.onStudentsUpdate(StudentSigninActivity.ServerInfo.PERMISSION);
         } else if (j.get("permission").getAsString().equals("false")) {
             mStudentSigninActivity.onStudentsUpdate(StudentSigninActivity.ServerInfo.REJECTION);

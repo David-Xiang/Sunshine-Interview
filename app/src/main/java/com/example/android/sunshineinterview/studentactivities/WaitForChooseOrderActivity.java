@@ -52,7 +52,7 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
 
         // TODO: query
 
-        mTimeCount = new TimeCount(60000, 10000){
+        mTimeCount = new TimeCount(6000000, 10000){
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.v(TAG, "onTick() triggered!");
@@ -114,6 +114,5 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         super.onStop();
         // TODO
     }
-
 }
 

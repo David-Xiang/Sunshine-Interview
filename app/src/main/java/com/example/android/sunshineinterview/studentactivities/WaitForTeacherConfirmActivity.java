@@ -48,7 +48,7 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
         updateInfo(R.id.interview_status_text, R.string.interview_status_text, mInterview.getStatusString());
 
 
-        mTimeCount = new TimeCount(60000, 10000){
+        mTimeCount = new TimeCount(600000, 10000){
             @Override
             public void onTick(long millisUntilFinished) {
                 if (count > 0)

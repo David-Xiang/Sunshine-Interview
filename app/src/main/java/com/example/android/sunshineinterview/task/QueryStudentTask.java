@@ -78,6 +78,7 @@ public class QueryStudentTask extends AsyncTask<Object, Void, JsonArray> {
                     continue;
                 if (fileUtiles.fileIsExists(path))
                     continue;
+                mInterview.signin(s.students.get(i).id, s.students.get(i).name);
                 new DownloadTask().execute(mWaitForStudentSignActivity, imgUrl[i], names[i]);
             } else {
                 imgUrl[i] = null;

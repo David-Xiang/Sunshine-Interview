@@ -53,6 +53,14 @@ public class Interview {
     private ArrayList<Person> mTeachers;
     private ArrayList<Person> mStudents;
 
+    public ArrayList<String> pathList;
+    public ArrayList<String> nameList;
+
+    public void addNameAndPath(String name, String path) {
+        pathList.add(path);
+        nameList.add(name);
+    }
+
     private Interview() {
         isValidated = false;
         sideSelected = false;
@@ -66,6 +74,9 @@ public class Interview {
         mInterviewInfo = null;
         mTeachers = null;
         mStudents = null;
+
+        pathList = new ArrayList<>();
+        nameList = new ArrayList<>();
     }
 
     public static Interview getInstance() {
@@ -295,9 +306,28 @@ public class Interview {
         }
         return true;
     }
+    public void signin(String id, String name){
+        for (int i = 0; i < mStudents.size(); i++) {
+            if (mStudents.get(i).name.equals(name)) {
+                mStudents.get(i).id = id;
+                mStudents.get(i).isAbsent = false;
+                break;
+            }
+        }
+    }
 
-    public void setStudentPhotoPath(int index, String url) {
-        mStudents.get(index).setStorageImgUrl(url);
+    public void setStudentPhotoPath(int index, String name, String url) {
+        for (int i = 0; i < mStudents.size(); i++) {
+            if (mStudents.get(i).name.equals(name)) {
+                mStudents.get(i).storageImgUrl = url;
+                break;
+            }
+        }
+        for (int i = 0; i < mStudents.size(); i++)
+        {
+            Log.d(TAG, mStudents.get(i).name + " " + mStudents.get(i).storageImgUrl);
+        }
+        Log.d(TAG, index + " " + url);
     }
 
     public void setStudentPhotoPath(String Id, String url) {

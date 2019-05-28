@@ -38,7 +38,8 @@ public class Person{
     }
 
     public void setStorageImgUrl(String url) {
-        storageImgUrl = url;
+        this.storageImgUrl = url;
+        Log.d(TAG, url);
     }
     public void setImgUrl(String url){
         this.imgUrl = url;
