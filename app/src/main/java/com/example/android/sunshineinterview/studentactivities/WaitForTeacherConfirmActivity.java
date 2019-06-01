@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -112,5 +113,12 @@ public class WaitForTeacherConfirmActivity extends AppCompatActivity {
     protected void onStop(){
         super.onStop();
         // TODO
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode== KeyEvent.KEYCODE_BACK)
+            return true; //不执行父类点击事件
+        return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
     }
 }

@@ -101,11 +101,11 @@ public class MyCamera {
     private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            Log.d("mPictureCallback", "called!");
+            Log.d(TAG, "mPictureCallback called!");
 
             File mediaFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
             if (mediaFile == null){                                                     ////////////
-                Log.d("mydebug", "failed to open the IMG file");
+                Log.d(TAG, "failed to open the IMG file");
             }
             try{
                 FileOutputStream fos = new FileOutputStream(mediaFile);
@@ -143,7 +143,7 @@ public class MyCamera {
         catch (Exception e)
         {
             newCamera = null;
-            Log.d("mydebug", "Sorry! Can't open the camera!");
+            Log.d(TAG, "Sorry! Can't open the camera!");
             e.printStackTrace();
         }
         return newCamera;
@@ -157,10 +157,6 @@ public class MyCamera {
         Camera.Size minSize = picSize.get(0);
         Log.d(TAG, String.valueOf(minSize.width) + String.valueOf(minSize.height));
         paras.setPictureSize(minSize.width, minSize.height);
-
-//        List<Camera.Size> preSize = paras.getSupportedPreviewSizes();
-//        minSize = preSize.get(0);
-//        paras.setPreviewSize(minSize.width, minSize.height);
 
         camera.setParameters(paras);
     }

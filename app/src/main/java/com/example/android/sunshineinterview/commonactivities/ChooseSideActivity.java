@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -118,4 +120,18 @@ public class ChooseSideActivity extends AppCompatActivity {
         super.onStop();
         // TODO
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode== KeyEvent.KEYCODE_BACK)
+            return true; //不执行父类点击事件
+//        if(KeyEvent.KEYCODE_HOME==keyCode)
+//            android.os.Process.killProcess(android.os.Process.myPid());
+        return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
+    }
+//    @Override
+//    public void onAttachedToWindow() {
+//        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+//        super.onAttachedToWindow();
+//    }
 }

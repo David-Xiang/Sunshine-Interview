@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,6 +122,13 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         // handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode== KeyEvent.KEYCODE_BACK)
+            return true; //不执行父类点击事件
+        return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
     }
 }
 

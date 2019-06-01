@@ -9,9 +9,8 @@ import android.view.SurfaceView;
 
 import java.io.IOException;
 
-import static android.content.ContentValues.TAG;
-
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback{
+    private static final String TAG = "CameraPreview";
     private SurfaceHolder mHolder;
     private Camera mCamera;
 
@@ -23,21 +22,16 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mHolder.setFormat(PixelFormat.TRANSLUCENT);
         mHolder.addCallback(this);
         if (mCamera != null)
-            Log.d("mydebug", "mCamera initialized!");
-    }
-
-    public void resetCamera(Camera cmr)
-    {
-        mCamera = cmr;
+            Log.d(TAG, "mCamera initialized!");
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.d("mydebug", "surfaceCreated");
+        Log.d(TAG, "surfaceCreated");
 
         try {
             if (mCamera == null){
-                Log.d("videoDebug", "mCamera == null");
+                Log.d(TAG, "mCamera == null");
                 return;
             }
             mCamera.setPreviewDisplay(mHolder);
@@ -50,7 +44,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.d("mydebug", "surfaceDestroyed");
+        Log.d(TAG, "surfaceDestroyed");
             if (mCamera != null){
             mCamera.stopPreview();
             mCamera.setPreviewCallback(null);
@@ -63,7 +57,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-        Log.d("mydebug", "surfaceChanged");
+        Log.d(TAG, "surfaceChanged");
         if (mHolder.getSurface() == null){
             return;
         }

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -146,5 +147,12 @@ public class TeacherInProgressActivity extends AppCompatActivity {
             newString = tmp[1].substring(0, 8) + " - " + tmp[2];
         }
         textview.setText(originalString.replace("------", newString));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode== KeyEvent.KEYCODE_BACK)
+            return true; //不执行父类点击事件
+        return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
     }
 }
