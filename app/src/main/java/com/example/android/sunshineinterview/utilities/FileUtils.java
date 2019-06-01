@@ -1,5 +1,7 @@
 package com.example.android.sunshineinterview.utilities;
 
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Environment;
 import android.util.Log;
 
@@ -16,6 +18,28 @@ public class FileUtils {
 
     public static int MEDIA_TYPE_VIDEO = 2;
     public static int MEDIA_TYPE_IMAGE = 1;
+
+    public static Bitmap convertBmp(Bitmap bm){
+        Bitmap returnBm = null;
+
+        // 根据旋转角度，生成旋转矩阵
+        Matrix matrix = new Matrix();
+        matrix.postScale(-1, 1); // 镜像水平翻转
+        try {
+            returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+        }
+        if (returnBm == null) {
+            returnBm = bm;
+        }
+        if (bm != returnBm) {
+            // 回收空间！
+            bm.recycle();
+        }
+        return returnBm;
+    }
 
     public static boolean fileIsExists(String strFile) {
         try {

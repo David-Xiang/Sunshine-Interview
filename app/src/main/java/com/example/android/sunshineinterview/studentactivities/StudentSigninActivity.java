@@ -1,6 +1,8 @@
 package com.example.android.sunshineinterview.studentactivities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,10 +25,13 @@ import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static com.example.android.sunshineinterview.utilities.FileUtils.convertBmp;
 
 
 public class StudentSigninActivity extends AppCompatActivity {
@@ -87,15 +92,17 @@ public class StudentSigninActivity extends AppCompatActivity {
 
         initSpinner();
 
-        Button bShoot = findViewById(R.id.button_shoot);
-        Button bReset = findViewById(R.id.button_reset);
-
-        Button bConfirm = findViewById(R.id.button_confirm);
+        final Button bShoot = findViewById(R.id.button_shoot);
+        final Button bReset = findViewById(R.id.button_reset);
+        final Button bConfirm = findViewById(R.id.button_confirm);
 
         bShoot.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                // TODO 判断有没有选择考官（通过禁用按钮）
+                // 禁用button
+                bShoot.setEnabled(false);
+                bReset.setEnabled(false);
+                bConfirm.setEnabled(false);
                 mCamera.takePhoto();
                 // Log.d("mydebug", "start taking picture");
             }
@@ -129,9 +136,7 @@ public class StudentSigninActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
 
     private void initSpinner() {
         studentAdapter = new ArrayAdapter<>(this, R.layout.item_select, studentsNames);
@@ -205,12 +210,34 @@ public class StudentSigninActivity extends AppCompatActivity {
         textview.setText(originalString.replace("------", newString));
     }
 
+    public void onPhotoTaken(String filePath) {
+        try {
+            ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
+            FileInputStream fis = new FileInputStream(filePath);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = false;
+            Bitmap btp = BitmapFactory.decodeStream(fis, null, options);
+            interviewerPhoto.setImageBitmap(convertBmp(btp));
+            fis.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        //启用button
+        Button bShoot = findViewById(R.id.button_shoot);
+        Button bReset = findViewById(R.id.button_reset);
+        Button bConfirm = findViewById(R.id.button_confirm);
+        bShoot.setEnabled(true);
+        bReset.setEnabled(true);
+        bConfirm.setEnabled(true);
+    }
+
     // 监听Activity状态
     @Override
     protected void onResume(){
         super.onResume();
-        ImageView interviewerPhoto = findViewById(R.id.interviewer_photo);
-        mCamera = new MyCamera(this, interviewerPhoto);
+        mCamera = new MyCamera(this, null, StudentSigninActivity.this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
         preview.addView(mPreview);

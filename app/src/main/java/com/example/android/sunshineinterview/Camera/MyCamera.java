@@ -13,6 +13,9 @@ import android.view.Surface;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.android.sunshineinterview.studentactivities.StudentSigninActivity;
+import com.example.android.sunshineinterview.teacheractivities.TeacherSigninActivity;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,15 +31,17 @@ public class MyCamera {
     public Camera camera;
     private int cameraID = 1;
     private Activity mActivity;
-    private static MyCamera mCamera;
-    private ImageView showPhoto;
+    private TeacherSigninActivity mTeacherSinginActivity;
+    private StudentSigninActivity mStudentSigninActivity;
     public static String LastSavedLoaction;
 
 
-    public MyCamera(Activity activity, ImageView i){
-        showPhoto = i;
+    public MyCamera(Activity activity, TeacherSigninActivity inTeacherSinginActivity, StudentSigninActivity inStudentSigninActivity) {
         mActivity = activity;
         LastSavedLoaction = null;
+        mTeacherSinginActivity = inTeacherSinginActivity;
+        mStudentSigninActivity = inStudentSigninActivity;
+
         if (camera == null){
             camera = getCamera();
         }
@@ -46,26 +51,14 @@ public class MyCamera {
     public MyCamera(Activity activity){
         mActivity = activity;
         LastSavedLoaction = null;
+        mTeacherSinginActivity = null;
+        mStudentSigninActivity = null;
         if (camera == null){
             camera = getCamera();
         }
         setCameraParas(mActivity);
     }
 
-    public MyCamera()
-    {
-        LastSavedLoaction = null;
-        if (camera == null){
-            camera = getCamera();
-        }
-    }
-
-    public static MyCamera getInstance() {
-        if (mCamera == null) {
-            mCamera = new MyCamera();
-        }
-        return mCamera;
-    }
 
 
     public Camera AcquireCamera(){
@@ -74,28 +67,6 @@ public class MyCamera {
     
     public void takePhoto(){
         camera.takePicture(null, null, mPictureCallback);
-    }
-
-    private Bitmap convertBmp(Bitmap bm){
-        Bitmap returnBm = null;
-
-        // 根据旋转角度，生成旋转矩阵
-        Matrix matrix = new Matrix();
-        matrix.postScale(-1, 1); // 镜像水平翻转
-        try {
-            returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
-        }
-        catch (OutOfMemoryError e) {
-            e.printStackTrace();
-        }
-        if (returnBm == null) {
-            returnBm = bm;
-        }
-        if (bm != returnBm) {
-            // 回收空间！
-            bm.recycle();
-        }
-        return returnBm;
     }
 
     private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
@@ -117,21 +88,16 @@ public class MyCamera {
             }
 
             LastSavedLoaction = mediaFile.toString();
-            try {
-                FileInputStream fis = new FileInputStream(mediaFile);
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = false;
-                // options.inSampleSize = 10;
-                Bitmap btp = BitmapFactory.decodeStream(fis, null, options);
-                showPhoto.setImageBitmap(convertBmp(btp));
-                // showPhoto.setImageBitmap(btp);
-                fis.close();
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+            // 拍完一次照片后，预览会禁止，需要reset一下
             camera.stopPreview();
             camera.startPreview();
+
+            if (mStudentSigninActivity != null) {
+                mStudentSigninActivity.onPhotoTaken(LastSavedLoaction);
+            }
+            if (mTeacherSinginActivity != null) {
+                mTeacherSinginActivity.onPhotoTaken(LastSavedLoaction);
+            }
         }
     };
 

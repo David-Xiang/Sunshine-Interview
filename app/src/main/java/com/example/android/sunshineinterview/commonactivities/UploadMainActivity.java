@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UploadMainActivity extends AppCompatActivity {
+    private static final String TAG = "UploadMainActivity";
     private Interview mInterview;
 
     private static String[] permissions = {
@@ -122,7 +123,7 @@ public class UploadMainActivity extends AppCompatActivity {
     }
     @Override
     protected void onPause(){
-        Log.d("mydebug", "validation onPause called");
+        Log.d(TAG, "validation onPause called");
         super.onPause();
         /*if (mCamera.camera != null){
             mCamera.camera.stopPreview();
