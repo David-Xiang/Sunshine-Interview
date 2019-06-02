@@ -246,11 +246,13 @@ public class TeacherSigninActivity extends AppCompatActivity {
     }
     @Override
     protected void onPause(){
-        Log.d("mydebug", "TeacherSignin onPause called");
         super.onPause();
-        if (mCamera.AcquireCamera() == null){
-            Log.d("mydebug", "after pausing, camera released!");
-        }
+        Button bShoot = findViewById(R.id.button_shoot);
+        Button bReset = findViewById(R.id.button_reset);
+        Button bConfirm = findViewById(R.id.button_confirm);
+        bShoot.setEnabled(true);
+        bReset.setEnabled(true);
+        bConfirm.setEnabled(true);
         // TODO
     }
     @Override

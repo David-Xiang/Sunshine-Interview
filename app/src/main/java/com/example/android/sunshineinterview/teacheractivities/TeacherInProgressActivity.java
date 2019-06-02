@@ -1,6 +1,7 @@
 package com.example.android.sunshineinterview.teacheractivities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ import com.example.myapplication.R;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import static com.example.android.sunshineinterview.utilities.FileUtils.convertBmp;
 
 public class TeacherInProgressActivity extends AppCompatActivity {
 
@@ -65,8 +68,12 @@ public class TeacherInProgressActivity extends AppCompatActivity {
                 FileInputStream fis = null;
                 try {
                     fis = new FileInputStream(mInterview.pathList.get(i));
-                    interviewerPhoto.setImageBitmap(BitmapFactory.decodeStream(fis));
-                } catch (FileNotFoundException e) {
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = false;
+                    Bitmap btp = BitmapFactory.decodeStream(fis, null, options);
+                    interviewerPhoto.setImageBitmap(convertBmp(btp));
+                    fis.close();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

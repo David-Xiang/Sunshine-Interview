@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.Camera.MyMediaRecorder;
+import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
@@ -131,6 +132,10 @@ public class ChooseOrderActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        if (mPeriods.isEmpty()) {
+            Intent nextStep = new Intent(ChooseOrderActivity.this, ValidateActivity.class);
+            startActivity(nextStep);
+        }
         mCamera = new MyCamera(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);

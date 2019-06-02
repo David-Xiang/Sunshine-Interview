@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -22,6 +23,7 @@ import com.example.myapplication.R;
 import com.example.android.sunshineinterview.model.Interview;
 
 public class ChooseSideActivity extends AppCompatActivity {
+    private static final String TAG = "ChooseSideActivity";
     Interview mInterview;
     public enum ServerInfo{
         PERMISSION,
@@ -36,6 +38,8 @@ public class ChooseSideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_side);
+
+//        DisableHomeKey();
 
         mInterview = Interview.getInstance();
         mInterview.setStatus(Interview.InterviewStatus.CHOOSEORDER);
@@ -100,9 +104,13 @@ public class ChooseSideActivity extends AppCompatActivity {
         }
     }
 
+//    private void DisableHomeKey() {
+//        this.getWindow().setFlags(0x80000000, 0x80000000);
+//    }
+
     @Override
     protected void onResume(){
-        Log.d("mydebug", "chooseSide onResume called");
+        Log.d(TAG, "chooseSide onResume called");
         super.onResume();
         mCamera = new MyCamera(this);
         mPreview = new CameraPreview(this, mCamera.camera);
@@ -111,7 +119,7 @@ public class ChooseSideActivity extends AppCompatActivity {
     }
     @Override
     protected void onPause(){
-        Log.d("mydebug", "ChooseSide onPause called");
+        Log.d(TAG, "ChooseSide onPause called");
         super.onPause();
         // TODO
     }
@@ -125,13 +133,8 @@ public class ChooseSideActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if (keyCode== KeyEvent.KEYCODE_BACK)
             return true; //不执行父类点击事件
-//        if(KeyEvent.KEYCODE_HOME==keyCode)
-//            android.os.Process.killProcess(android.os.Process.myPid());
+        if(KeyEvent.KEYCODE_HOME==keyCode)
+            return true;
         return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
     }
-//    @Override
-//    public void onAttachedToWindow() {
-//        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
-//        super.onAttachedToWindow();
-//    }
 }

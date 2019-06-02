@@ -28,6 +28,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import static com.example.android.sunshineinterview.utilities.FileUtils.convertBmp;
+
 public class WaitForStudentSigninActivity extends AppCompatActivity {
     private final static String TAG = "WaitForStudentSigninAc";
     public enum ServerInfo{
@@ -145,10 +147,14 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                 FileInputStream fis = null;
                 try {
                     fis = new FileInputStream(url);
-                } catch (FileNotFoundException e){
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = false;
+                    Bitmap btp = BitmapFactory.decodeStream(fis, null, options);
+                    interviewerPhoto.setImageBitmap(convertBmp(btp));
+                    fis.close();
+                } catch (Exception e){
                     e.printStackTrace();
                 }
-                interviewerPhoto.setImageBitmap(BitmapFactory.decodeStream(fis));
 
                 TextView interviewerName = findViewById(textViewIDs[j]);
                 interviewerName.setText(name);

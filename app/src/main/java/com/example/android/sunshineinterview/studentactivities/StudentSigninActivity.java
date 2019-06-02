@@ -24,10 +24,7 @@ import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -245,6 +242,12 @@ public class StudentSigninActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
+        Button bShoot = findViewById(R.id.button_shoot);
+        Button bReset = findViewById(R.id.button_reset);
+        Button bConfirm = findViewById(R.id.button_confirm);
+        bShoot.setEnabled(true);
+        bReset.setEnabled(true);
+        bConfirm.setEnabled(true);
         // TODO
     }
     @Override

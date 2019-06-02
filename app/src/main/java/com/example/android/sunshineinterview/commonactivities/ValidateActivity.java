@@ -166,10 +166,10 @@ public class ValidateActivity extends AppCompatActivity {
         // TODO
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if (keyCode== KeyEvent.KEYCODE_BACK)
-            return true; //不执行父类点击事件
-        return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event){
+//        if (keyCode== KeyEvent.KEYCODE_BACK)
+//            return true; //不执行父类点击事件
+//        return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
+//    }
 }

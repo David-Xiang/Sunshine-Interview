@@ -13,9 +13,13 @@ import android.widget.Toast;
 import com.example.android.sunshineinterview.Camera.CameraPreview;
 import com.example.android.sunshineinterview.Camera.MyCamera;
 import com.example.android.sunshineinterview.Camera.MyMediaRecorder;
+import com.example.android.sunshineinterview.commonactivities.ValidateActivity;
 import com.example.android.sunshineinterview.model.Interview;
+import com.example.android.sunshineinterview.teacheractivities.ChooseOrderActivity;
 import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
+
+import java.util.ArrayList;
 
 
 public class WaitForChooseOrderActivity extends AppCompatActivity {
@@ -27,9 +31,9 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
     }
 
     private Interview mInterview;
-    private TimeCount mTimeCount;
     private Handler handler;
     private Runnable runnable;
+    ArrayList<String> mPeriods;
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
@@ -52,6 +56,7 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         handler = new Handler();
 
         mInterview = Interview.getInstance();
+        mPeriods = mInterview.getPeriods();
         MyMediaRecorder.resetVideoID();
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
@@ -102,6 +107,10 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        if (mPeriods.isEmpty()) {
+            Intent nextStep = new Intent(WaitForChooseOrderActivity.this, ValidateActivity.class);
+            startActivity(nextStep);
+        }
         mCamera = new MyCamera(this);
         mPreview = new CameraPreview(this, mCamera.camera);
         FrameLayout preview = findViewById(R.id.videoView);
