@@ -226,10 +226,6 @@ public class ChooseOrderActivity extends AppCompatActivity {
     protected void onPause(){
         Log.d("mydebug", "ChooseOrder onPause called");
         super.onPause();
-        if (mCamera.AcquireCamera() == null){
-            Log.d("mydebug", "after pausing, camera released!");
-        }
-        // TODO
     }
     @Override
     protected void onStop(){

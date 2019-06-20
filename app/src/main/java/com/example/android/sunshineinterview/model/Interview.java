@@ -247,6 +247,7 @@ public class Interview {
         return false;
     }
 
+
     // 考官选择场次
     public boolean chooseOrder(ChooseOrderActivity chooseOrderActivity, int order) {
         if (!sideSelected) {
@@ -261,7 +262,10 @@ public class Interview {
         }
         String parameters;
         orderIndex = order;
-        parameters = "/order?collegeid=" + mInterviewInfo.collegeId + "&siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
+        parameters = "/order";
+        if (isSigninSkipped())
+            parameters = "/skip";
+        parameters += "?collegeid=" + mInterviewInfo.collegeId + "&siteid=" + mInterviewInfo.siteId + "&order=" + getOrderString();
         Log.v(TAG, "chooseOrder() sending url = " + parameters);
         URL url = NetworkUtils.buildUrl(parameters);
         new ChooseOrderTask().execute(chooseOrderActivity, url);

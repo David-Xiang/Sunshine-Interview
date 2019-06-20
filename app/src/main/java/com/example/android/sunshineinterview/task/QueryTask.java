@@ -46,16 +46,17 @@ public class QueryTask extends AsyncTask<Object, Void, JsonObject> {
                 || j.get("type").isJsonNull()
                 || !j.get("type").getAsString().equals("site_info")){
             Log.e(TAG, "onPostExecute(): fault 1");
-            mWaitForChooseOrderActivity.onHttpResponse(WaitForChooseOrderActivity.ServerInfo.NOACCESS, null);
+            mWaitForChooseOrderActivity.onHttpResponse(WaitForChooseOrderActivity.ServerInfo.NOACCESS, null, "false");
         } else if (j.get("permission").getAsString().equals("true")) {
             String order = j.getAsJsonObject("info").get("order").getAsString();
+            String skip = j.getAsJsonObject("info").get("skip").getAsString();
             int id = j.getAsJsonObject("info").get("interviewID").getAsInt();
             Interview.getInstance().setInterviewID(id);
             Log.d("INTERVIEWID: ", "" + id);
-            mWaitForChooseOrderActivity.onHttpResponse(WaitForChooseOrderActivity.ServerInfo.PERMISSION, order);
+            mWaitForChooseOrderActivity.onHttpResponse(WaitForChooseOrderActivity.ServerInfo.PERMISSION, order, skip);
         } else if (j.get("permission").getAsString().equals("false")) {
             Log.e(TAG, "onPostExecute(): fault 2");
-            mWaitForChooseOrderActivity.onHttpResponse(WaitForChooseOrderActivity.ServerInfo.REJECTION, null);
+            mWaitForChooseOrderActivity.onHttpResponse(WaitForChooseOrderActivity.ServerInfo.REJECTION, null, "false");
         } else {
             Log.e(TAG, "onPostExecute(): Something is wrong");
         }

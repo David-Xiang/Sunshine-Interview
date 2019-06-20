@@ -78,7 +78,7 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
         textview.setText(originalString.replace("------", newString));
     }
 
-    public void onHttpResponse(ServerInfo serverInfo, String order){
+    public void onHttpResponse(ServerInfo serverInfo, String order, String skip){
         Log.v(TAG, "onHttpResponse():  method entered!");
         if (serverInfo == ServerInfo.PERMISSION){
             Log.v(TAG, "onHttpResponse(): permisssion received!");
@@ -86,8 +86,16 @@ public class WaitForChooseOrderActivity extends AppCompatActivity {
             mInterview.setOrder(order);
             mInterview.updatePersonInfo();
             handler.removeCallbacks(runnable);
-            Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentSigninActivity.class);
-            startActivity(nextStep);
+            if (skip.equals("true")) {
+                mInterview.setSigninSkipped(true);
+                Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentInProgressActivity.class);
+                startActivity(nextStep);
+            }
+            else {
+                mInterview.setSigninSkipped(false);
+                Intent nextStep = new Intent(WaitForChooseOrderActivity.this, StudentSigninActivity.class);
+                startActivity(nextStep);
+            }
         } else if(serverInfo == ServerInfo.REJECTION) {
             Log.v(TAG, "onHttpResponse(): rejection received!");
             // Toast.makeText(WaitForChooseOrderActivity.this, "签到错误", Toast.LENGTH_LONG).show();
