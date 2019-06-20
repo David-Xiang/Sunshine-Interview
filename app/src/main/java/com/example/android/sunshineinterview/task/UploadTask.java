@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.android.sunshineinterview.commonactivities.UploadVideoActivity;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 
@@ -13,19 +14,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
+public class UploadTask extends AsyncTask<Object, Boolean, Boolean> {
     private static final String TAG = "uploadTask";
+    private UploadVideoActivity mUploadVideoActivity;
+    boolean isVideo = false;
 
     @Override
-    protected Boolean doInBackground(String... params) {
+    protected Boolean doInBackground(Object... params) {
         // 新增一个参数，第一个参数表示是上传图片("0")还是上传视频("1")
         // 如果是上传视频，在根目录列出所有文件的列表，找出其中的.mp4文件
         // 然后逐个上传，实时打log：正在上传什么文件，
         Log.d(TAG, "in UploadTask()  " + params[0]);
         if (params[0].equals("0")) {
             // 上传文件
-            String string = params[1]; // 本地完整路径
-            String id = params[2];
+            String string = (String)params[1]; // 本地完整路径
+            String id = (String)params[2];
             File file = new File(string);
             if (!file.exists()) {
                 Log.v(TAG, "UploadTask() file does not exist?: " + string);
@@ -40,6 +43,8 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
             return NetworkUtils.uploadFile(file, id, url);
         } else {
             // 上传视频
+            isVideo = true;
+            mUploadVideoActivity = (UploadVideoActivity) params[1];
             File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "SunshineInterview");
             if (!mediaStorageDir.exists()) {
                 if (!mediaStorageDir.mkdirs()) {
@@ -121,6 +126,11 @@ public class UploadTask extends AsyncTask<String, Boolean, Boolean> {
     protected void onPostExecute(Boolean bool) {
         if(!bool) {
             Log.w(TAG, "Something is wrong when uploading picture/videos");
+            if (isVideo) mUploadVideoActivity.onHttpResponse(UploadVideoActivity.ServerInfo.REJECTION);
+        }
+        else
+        {
+            if (isVideo) mUploadVideoActivity.onHttpResponse(UploadVideoActivity.ServerInfo.PERMISSION);
         }
     }
 }

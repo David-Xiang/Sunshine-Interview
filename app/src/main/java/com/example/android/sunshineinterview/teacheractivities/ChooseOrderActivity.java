@@ -1,6 +1,8 @@
 package com.example.android.sunshineinterview.teacheractivities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -24,6 +28,7 @@ import com.example.android.sunshineinterview.model.Interview;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChooseOrderActivity extends AppCompatActivity {
     public enum ServerInfo{
@@ -36,6 +41,8 @@ public class ChooseOrderActivity extends AppCompatActivity {
     private CameraPreview mPreview;
     private ArrayList<Integer> OrderIDs;
     private ArrayAdapter<String> periodAdapter;
+
+    private boolean signinNeeded;
 
     Interview mInterview;
     ArrayList<String> mPeriods;
@@ -66,7 +73,7 @@ public class ChooseOrderActivity extends AppCompatActivity {
 
         initSpinner(mPeriods);
 
-        Button bConfirm = findViewById(R.id.confirm);
+        final Button bConfirm = findViewById(R.id.confirm);
 
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +86,26 @@ public class ChooseOrderActivity extends AppCompatActivity {
                 new MyMediaRecorder();
 
                 mInterview.setOrder(OrderIDs.get(sp.getSelectedItemPosition()));
-                mInterview.chooseOrder(ChooseOrderActivity.this, OrderIDs.get(sp.getSelectedItemPosition()));
+                CheckBox ad = findViewById(R.id.checkBox);
+                mInterview.setSigninSkipped(ad.isChecked());
+                mInterview.updatePersonInfo();
+                showListDialog();
+            }
+        });
+
+        CheckBox cb = findViewById(R.id.checkBox);
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if(isChecked){
+                    bConfirm.setText("开始面试");
+                    bConfirm.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                }
+                else{
+                    bConfirm.setText("确认");
+                    bConfirm.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
             }
         });
     }
@@ -87,12 +113,20 @@ public class ChooseOrderActivity extends AppCompatActivity {
     public void onHttpResponse(ChooseOrderActivity.ServerInfo serverInfo)
     {
         if (serverInfo == ChooseOrderActivity.ServerInfo.PERMISSION){
-            mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
-            Spinner sp = findViewById(R.id.spinner);
             periodAdapter.remove(sp.getSelectedItem().toString());
             OrderIDs.remove(sp.getSelectedItemPosition());
-            Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
-            startActivity(nextStep);
+            if (mInterview.isSigninSkipped())
+            {
+                mInterview.setStatus(Interview.InterviewStatus.INPROGRESS);
+                Intent nextStep = new Intent(ChooseOrderActivity.this, WaitForStudentSigninActivity.class);
+                startActivity(nextStep);
+            }
+            else
+            {
+                mInterview.setStatus(Interview.InterviewStatus.SIGNIN);
+                Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherSigninActivity.class);
+                startActivity(nextStep);
+            }
         } else if(serverInfo == ChooseOrderActivity.ServerInfo.REJECTION) {
             Toast.makeText(ChooseOrderActivity.this, "选择考次错误", Toast.LENGTH_LONG).show();
         } else {
@@ -127,6 +161,52 @@ public class ChooseOrderActivity extends AppCompatActivity {
         String originalString = getResources().getString(originalStringId);
         newString = newString == null ? "------" : newString;
         textview.setText(originalString.replace("------", newString));
+    }
+
+    private void showListDialog(){
+        ArrayList<String> listItems = new ArrayList<>(Arrays.asList("考试时间：" + sp.getSelectedItem().toString(),"是否需要签到：" + (mInterview.isSigninSkipped()?"否":"是"),"参与面试人员姓名："));
+        for(int i = 0; i < mInterview.getStudentNames().size(); ++i)
+        {
+            listItems.add(mInterview.getStudentNames().get(i));
+        }
+
+        final AlertDialog.Builder listDialog = new AlertDialog.Builder(this);
+        listDialog.setTitle(getString(R.string.dialog_list_text));
+        listDialog.setIcon(R.mipmap.ic_launcher_round);
+
+    /*
+        设置item 不能用setMessage()
+        用setItems
+        items : listItems[] -> 列表项数组
+        listener -> 回调接口
+    */
+        listDialog.setItems(listItems.toArray(new String[listItems.size()]),new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ;
+            }
+        });
+
+        //设置按钮
+        listDialog.setPositiveButton(getString(R.string.dialog_btn_confirm_text)
+                , new DialogInterface.OnClickListener() {
+                    @Override
+                    // TODO: 状态修改与同步
+                    public void onClick(DialogInterface dialog, int which) {
+                        Spinner sp = findViewById(R.id.spinner);
+                        mInterview.chooseOrder(ChooseOrderActivity.this, OrderIDs.get(sp.getSelectedItemPosition()));
+                    }
+                });
+
+        listDialog.setNegativeButton(getString(R.string.dialog_btn_cancel_text)
+                , new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        listDialog.create().show();
     }
 
     @Override

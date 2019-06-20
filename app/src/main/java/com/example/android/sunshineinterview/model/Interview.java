@@ -48,6 +48,7 @@ public class Interview {
     private boolean isValidated;    // next 2 items are trustworthy ONLY when isValidated == true
     private boolean sideSelected;
     private boolean orderSelected;
+    private boolean signinSkipped;
     private int orderIndex;
     private static int interviewID;
 
@@ -99,6 +100,17 @@ public class Interview {
     public boolean setInterviewInfo(InterviewInfo i){
         mInterviewInfo = i;
         return true;
+    }
+
+    public boolean setSigninSkipped(boolean skipped)
+    {
+        signinSkipped = skipped;
+        return true;
+    }
+
+    public boolean isSigninSkipped()
+    {
+        return signinSkipped;
     }
 
     // API for frontend

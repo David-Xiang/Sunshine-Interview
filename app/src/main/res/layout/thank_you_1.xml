@@ -7,6 +7,18 @@
 
     tools:context="com.example.android.sunshineinterview.studentactivities.StudentEndActivity">
 
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/dataware"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <android.support.v7.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="0dp"
@@ -24,6 +36,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="363dp"
+                android:layout_height="264dp"
+                android:layout_marginEnd="180dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.697"
+                app:srcCompat="@drawable/sunshine_bg" />
+
             <Button
                 android:id="@+id/button_ending"
                 android:layout_width="wrap_content"
@@ -37,9 +61,9 @@
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/wordstosay" />
+                app:layout_constraintTop_toBottomOf="@+id/wordstosay"
+                app:layout_constraintVertical_bias="0.763" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/wordstosay"
@@ -51,9 +75,10 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.788"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/guide_text"
-                app:layout_constraintVertical_bias="0.37" />
+                app:layout_constraintVertical_bias="0.413" />
 
             <LinearLayout
                 android:id="@+id/guide_text"

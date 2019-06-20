@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,6 +21,10 @@ import com.example.android.sunshineinterview.Camera.MyMediaRecorder;
 import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.utilities.TimeCount;
 import com.example.myapplication.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StudentInProgressActivity extends AppCompatActivity {
     public enum ServerInfo{
@@ -67,8 +73,36 @@ public class StudentInProgressActivity extends AppCompatActivity {
         }
     }
 
+    public void showMyToast(final Toast toast, final int cnt) {
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                toast.show();
+            }
+        }, 0, 3000);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                toast.cancel();
+                timer.cancel();
+            }
+        }, cnt);
+    }
+
     public void showHashResult(){
-        Toast.makeText(StudentInProgressActivity.this, "视频信息已实时上链", Toast.LENGTH_LONG).show();
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");//显示规则
+        String date = sDateFormat.format(new java.util.Date());
+        // TODO: HASH VALUE
+        String HashValue = "849VDD78GE391EFE0";
+        String text = "最新上链时间：" + date + "Hash Value：" + HashValue;
+        Toast t = Toast.makeText(StudentInProgressActivity.this, text, Toast.LENGTH_LONG);
+        Display display = getWindowManager().getDefaultDisplay();
+        // 获取屏幕高度
+        int height = display.getHeight();
+        // 这里给了一个1/4屏幕高度的y轴偏移量
+        t.setGravity(Gravity.TOP, 0, height / 6);
+        showMyToast(t, 59000);
     }
 
     @Override

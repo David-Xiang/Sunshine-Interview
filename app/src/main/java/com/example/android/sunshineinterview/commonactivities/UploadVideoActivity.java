@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class UploadVideoActivity extends AppCompatActivity {
     public enum ServerInfo{
         PERMISSION,
-        REJECTION,  // the side is already chosen
+        REJECTION,  // unsuccessful
         NOACCESS    // bad network connectivity
     }
 
@@ -42,7 +42,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                 TextView textview = findViewById(R.id.text_uploading);
                 textview.setVisibility(View.VISIBLE);
 
-                new UploadTask().execute("1");
+                new UploadTask().execute("1", UploadVideoActivity.this);
 
             }
         });
