@@ -118,7 +118,7 @@ public class ChooseOrderActivity extends AppCompatActivity {
             if (mInterview.isSigninSkipped())
             {
                 mInterview.setStatus(Interview.InterviewStatus.INPROGRESS);
-                Intent nextStep = new Intent(ChooseOrderActivity.this, WaitForStudentSigninActivity.class);
+                Intent nextStep = new Intent(ChooseOrderActivity.this, TeacherInProgressActivity.class);
                 startActivity(nextStep);
             }
             else

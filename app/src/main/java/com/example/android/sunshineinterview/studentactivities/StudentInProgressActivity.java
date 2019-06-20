@@ -95,13 +95,14 @@ public class StudentInProgressActivity extends AppCompatActivity {
         String date = sDateFormat.format(new java.util.Date());
         // TODO: HASH VALUE
         String HashValue = "849VDD78GE391EFE0";
-        String text = "最新上链时间：" + date + "Hash Value：" + HashValue;
+        String text = "最新上链时间：" + date + "  Hash Value：" + HashValue;
         Toast t = Toast.makeText(StudentInProgressActivity.this, text, Toast.LENGTH_LONG);
         Display display = getWindowManager().getDefaultDisplay();
         // 获取屏幕高度
         int height = display.getHeight();
         // 这里给了一个1/4屏幕高度的y轴偏移量
-        t.setGravity(Gravity.TOP, 0, height / 6);
+        t.setGravity(Gravity.TOP, 0, height / 8);
+
         showMyToast(t, 59000);
     }
 

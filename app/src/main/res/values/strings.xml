@@ -85,9 +85,9 @@
     <!--结束页面-->
     <string name="Guide_step5">本场面试已结束</string>
     <string name="Words">本场面试已结束，\n
-    面试相关信息已存入北大数链\n
+    面试相关信息已存入北大数链\n\n
     详情可访问阳光面试官方网站\n
-        129.28.159.297\n
+        http://129.28.159.207/site/index.html\n
     获取本次面试数字证书\n\n
 
     感谢你参与本次考试！</string>
