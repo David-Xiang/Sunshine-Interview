@@ -99,7 +99,7 @@ public class StudentInProgressActivity extends AppCompatActivity {
     }
 
     public void showHashResult(String HashValue){
-        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");//显示规则
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("hh:mm:ss");//显示规则
         String date = sDateFormat.format(new java.util.Date());
         String text = "最新上链时间：" + date + "  Hash Value：" + HashValue;
         Toast t = Toast.makeText(StudentInProgressActivity.this, text, Toast.LENGTH_LONG);

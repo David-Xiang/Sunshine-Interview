@@ -61,9 +61,10 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         ArrayList<Person> students = mInterview.getStudents();
         Log.d(TAG, students.size() + "");
         for (int i = 0; i < students.size(); i++) {
+            TextView interviewerName = findViewById(textViewIDs[i]);
             if (mInterview.nameList.size() > i) {
+
                 ImageView interviewerPhoto = findViewById(imageViewIDs[i]);
-                TextView interviewerName = findViewById(textViewIDs[i]);
 
                 FileInputStream fis = null;
                 try {
@@ -76,12 +77,8 @@ public class TeacherInProgressActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                interviewerName.setText(mInterview.nameList.get(i));
-            } else {
-                TextView interviewerName = findViewById(textViewIDs[i]);
-                interviewerName.setText("未签到");
             }
+            interviewerName.setText(mInterview.getStudentNames().get(i));
         }
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
