@@ -63,7 +63,6 @@ public class TeacherInProgressActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
 
-        ArrayList<String> names = new ArrayList<>();
         mRecyclerView = findViewById(R.id.recyclerView);
         mManager = new LinearLayoutManager(this);
         ((LinearLayoutManager) mManager).setOrientation(LinearLayoutManager.HORIZONTAL);

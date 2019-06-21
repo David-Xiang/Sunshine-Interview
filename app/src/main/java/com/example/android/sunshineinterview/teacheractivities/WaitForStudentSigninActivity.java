@@ -233,6 +233,8 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                 name = v.findViewById(R.id.tv_name);
                 Log.i(TAG, "name == null: " + (name == null));
                 avatar = v.findViewById(R.id.iv_avatar);
+                mTextViewArray.add(name);
+                mImageViewArray.add(avatar);
             }
         }
 
