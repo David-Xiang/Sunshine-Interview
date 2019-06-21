@@ -6,9 +6,13 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.FrameLayout;
@@ -42,9 +46,12 @@ public class TeacherInProgressActivity extends AppCompatActivity {
     private MyCamera mCamera;
     private CameraPreview mPreview;
     private MyMediaRecorder mMediaRecorder;
+    private RecyclerView mRecyclerView;
+    private RecyclerViewAdapter mAdapter;
+    private RecyclerView.LayoutManager mManager;
 
-    int[] textViewIDs = {R.id.name0, R.id.name1, R.id.name2, R.id.name3, R.id.name4};
-    int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
+    //int[] textViewIDs = {R.id.name0, R.id.name1, R.id.name2, R.id.name3, R.id.name4};
+    //int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,33 +63,14 @@ public class TeacherInProgressActivity extends AppCompatActivity {
 
         mInterview = Interview.getInstance();
 
-        // 显示已经签到的学生照片
-        Log.d(TAG, "shit");
+        ArrayList<String> names = new ArrayList<>();
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) mManager).setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(mManager);
         ArrayList<Person> students = mInterview.getStudents();
-        Log.d(TAG, students.size() + "");
-        for (int i = 0; i < students.size(); i++) {
-            if (mInterview.nameList.size() > i) {
-                ImageView interviewerPhoto = findViewById(imageViewIDs[i]);
-                TextView interviewerName = findViewById(textViewIDs[i]);
-
-                FileInputStream fis = null;
-                try {
-                    fis = new FileInputStream(mInterview.pathList.get(i));
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inJustDecodeBounds = false;
-                    Bitmap btp = BitmapFactory.decodeStream(fis, null, options);
-                    interviewerPhoto.setImageBitmap(convertBmp(btp));
-                    fis.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                interviewerName.setText(mInterview.nameList.get(i));
-            } else {
-                TextView interviewerName = findViewById(textViewIDs[i]);
-                interviewerName.setText("未签到");
-            }
-        }
+        mAdapter = new RecyclerViewAdapter(students);
+        mRecyclerView.setAdapter(mAdapter);
 
         updateInfo(R.id.school_name_text, R.string.school_name_text, mInterview.mInterviewInfo.collegeName);
         updateInfo(R.id.college_id_text, R.string.college_id_text, mInterview.mInterviewInfo.collegeId);
@@ -161,5 +149,65 @@ public class TeacherInProgressActivity extends AppCompatActivity {
         if (keyCode== KeyEvent.KEYCODE_BACK)
             return true; //不执行父类点击事件
         return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
+    }
+
+
+
+    protected class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.VH>{
+        public class VH extends RecyclerView.ViewHolder{
+            public TextView name;
+            public ImageView avatar;
+            public VH(View v) {
+                super(v);
+                name = v.findViewById(R.id.tv_name);
+                Log.i(TAG, "name == null: " + (name == null));
+                avatar = v.findViewById(R.id.iv_avatar);
+            }
+        }
+
+        private ArrayList<Person> people;
+        private final static String TAG = "RecyclerViewAdapter";
+
+        public RecyclerViewAdapter(ArrayList<Person> people){
+            this.people = people;
+        }
+
+        @Override
+        public RecyclerViewAdapter.VH onCreateViewHolder(ViewGroup viewGroup, int i) {
+            //LayoutInflater.from指定写法
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.protraits, viewGroup, false);
+            return new VH(v);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerViewAdapter.VH vh, int i) {
+            // TODO: update names and image
+            ImageView interviewerPhoto = vh.avatar;
+            TextView interviewerName = vh.name;
+            if (mInterview.nameList.size() > i) {
+
+                FileInputStream fis = null;
+                try {
+                    fis = new FileInputStream(mInterview.pathList.get(i));
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = false;
+                    Bitmap btp = BitmapFactory.decodeStream(fis, null, options);
+                    interviewerPhoto.setImageBitmap(convertBmp(btp));
+                    fis.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                interviewerName.setText(mInterview.nameList.get(i));
+            } else {
+                interviewerName.setText("未签到");
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            Log.i(TAG, "getItemCount: people.size() = " + people.size());
+            return people.size();
+        }
     }
 }

@@ -297,6 +297,19 @@
         app:layout_constraintTop_toBottomOf="@+id/tl_head"
         app:layout_constraintVertical_bias="1.0">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView2"
+            android:layout_width="381dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/end_interview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintVertical_bias="0.235" />
+
         <Chronometer
             android:id="@+id/chronometer"
             style="@style/StandardTextView"
@@ -325,150 +338,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.17000002" />
 
-        <TextView
-            android:id="@+id/name1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView"
-            android:typeface="serif"
-            app:layout_constraintEnd_toEndOf="@+id/photo1"
-            app:layout_constraintStart_toStartOf="@+id/photo1"
-            app:layout_constraintTop_toBottomOf="@+id/photo1" />
-
-        <ImageView
-            android:id="@+id/photo1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/interwee"
-            app:layout_constraintBottom_toBottomOf="@+id/photo2"
-            app:layout_constraintEnd_toStartOf="@+id/photo2"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintTop_toTopOf="@+id/photo2"
-            app:layout_constraintWidth_percent="0.15"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <ImageView
-            android:id="@+id/photo0"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/interwee"
-            app:layout_constraintBottom_toBottomOf="@+id/photo1"
-            app:layout_constraintEnd_toStartOf="@+id/photo1"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintTop_toTopOf="@+id/photo1"
-            app:layout_constraintWidth_percent="0.15"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/name0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView"
-            android:typeface="serif"
-            app:layout_constraintEnd_toEndOf="@+id/photo0"
-            app:layout_constraintStart_toStartOf="@+id/photo0"
-            app:layout_constraintTop_toBottomOf="@+id/photo0" />
-
-        <TextView
-            android:id="@+id/name2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView"
-            android:typeface="serif"
-            app:layout_constraintEnd_toEndOf="@+id/photo2"
-            app:layout_constraintStart_toStartOf="@+id/photo2"
-            app:layout_constraintTop_toBottomOf="@+id/photo2" />
-
-        <ImageView
-            android:id="@+id/photo2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/interwee"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.19"
-            app:layout_constraintWidth_percent="0.15"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/name3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView"
-            android:typeface="serif"
-            app:layout_constraintEnd_toEndOf="@+id/photo3"
-            app:layout_constraintStart_toStartOf="@+id/photo3"
-            app:layout_constraintTop_toBottomOf="@+id/photo3" />
-
-        <ImageView
-            android:id="@+id/photo3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/interwee"
-            app:layout_constraintBottom_toBottomOf="@+id/photo2"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintStart_toEndOf="@+id/photo2"
-            app:layout_constraintTop_toTopOf="@+id/photo2"
-            app:layout_constraintWidth_percent="0.15"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <ImageView
-            android:id="@+id/photo4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/interwee"
-            app:layout_constraintBottom_toBottomOf="@+id/photo3"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintStart_toEndOf="@+id/photo3"
-            app:layout_constraintTop_toTopOf="@+id/photo3"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent="0.15"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/name4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView"
-            android:typeface="serif"
-            app:layout_constraintEnd_toEndOf="@+id/photo4"
-            app:layout_constraintStart_toStartOf="@+id/photo4"
-            app:layout_constraintTop_toBottomOf="@+id/photo4" />
-
         <Button
             android:id="@+id/end_interview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
@@ -480,8 +354,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name2"
-            app:layout_constraintVertical_bias="0.26"
             app:layout_constraintWidth_percent="0.2" />
 
     </android.support.constraint.ConstraintLayout>

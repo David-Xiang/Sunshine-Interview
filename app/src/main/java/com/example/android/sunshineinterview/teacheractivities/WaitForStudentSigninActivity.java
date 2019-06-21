@@ -3,12 +3,15 @@ package com.example.android.sunshineinterview.teacheractivities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -41,11 +44,18 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     private TimeCount mTimeCount;
     private ArrayList<String> mStudentNames;
 
+
+
     private MyCamera mCamera;
     private CameraPreview mPreview;
+    private RecyclerView mRecyclerView;
+    private RecyclerViewAdapter mAdapter;
+    private RecyclerView.LayoutManager mManager;
 
-    int[] textViewIDs = {R.id.name0, R.id.name1, R.id.name2, R.id.name3, R.id.name4};
-    int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
+    private ArrayList<TextView> mTextViewArray;
+    private ArrayList<ImageView> mImageViewArray;
+    //int[] textViewIDs = {R.id.name0, R.id.name1, R.id.name2, R.id.name3, R.id.name4};
+    //int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
     // int cnt_ready = 0;
 
     @Override
@@ -79,13 +89,21 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
 
 
         mStudentNames = mInterview.getStudentNames();
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) mManager).setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(mManager);
+        mAdapter = new RecyclerViewAdapter(mStudentNames);
+        mRecyclerView.setAdapter(mAdapter);
+        mTextViewArray = new ArrayList<>();
+        mImageViewArray = new ArrayList<>();
 
-        int i = 0;
-        for(String s:mStudentNames) {
-            Log.v(TAG, s);
-            updateNames(i, s);
-            i += 1;
-        }
+//        int i = 0;
+//        for(String s:mStudentNames) {
+//            Log.v(TAG, s);
+//            updateNames(i, s);
+//            i += 1;
+//        }
                
         Button bConfirm = findViewById(R.id.manual_start);
         bConfirm.setOnClickListener(new View.OnClickListener() {
@@ -110,8 +128,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     }
 
     private void updateNames(int index, String studentName){
-        int textViewId = textViewIDs[index];
-        TextView textview = findViewById(textViewId);
+        TextView textview = mTextViewArray.get(index);
         textview.setText(studentName);
     }
 
@@ -143,7 +160,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                 // 保存每个学生的照片位置。
                 mInterview.addNameAndPath(name, url);
 
-                ImageView interviewerPhoto = findViewById(imageViewIDs[j]);
+                ImageView interviewerPhoto = mImageViewArray.get(j);
                 FileInputStream fis = null;
                 try {
                     fis = new FileInputStream(url);
@@ -156,8 +173,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                TextView interviewerName = findViewById(textViewIDs[j]);
-                interviewerName.setText(name);
+                mTextViewArray.get(j).setText(name);
 
                 break;
             }
@@ -205,5 +221,46 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
         if (keyCode== KeyEvent.KEYCODE_BACK)
             return true; //不执行父类点击事件
         return super.onKeyDown(keyCode, event); //继续执行父类其他点击事件
+    }
+
+
+    protected class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.VH>{
+        public class VH extends RecyclerView.ViewHolder{
+            public TextView name;
+            public ImageView avatar;
+            public VH(View v) {
+                super(v);
+                name = v.findViewById(R.id.tv_name);
+                Log.i(TAG, "name == null: " + (name == null));
+                avatar = v.findViewById(R.id.iv_avatar);
+            }
+        }
+
+        private ArrayList<String> names;
+        private final static String TAG = "RecyclerViewAdapter";
+
+        public RecyclerViewAdapter(ArrayList<String> names){
+            this.names = names;
+        }
+
+        @Override
+        public RecyclerViewAdapter.VH onCreateViewHolder(ViewGroup viewGroup, int i) {
+            //LayoutInflater.from指定写法
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.protraits, viewGroup, false);
+            return new VH(v);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerViewAdapter.VH vh, int i) {
+            Log.i(TAG, "getItemCount: i = " + i);
+            Log.i(TAG, "getItemCount: name = " + names.get(i));
+            vh.name.setText(names.get(i));
+        }
+
+        @Override
+        public int getItemCount() {
+            Log.i(TAG, "getItemCount: names.size() = " + names.size());
+            return names.size();
+        }
     }
 }
