@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -27,6 +28,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class StudentInProgressActivity extends AppCompatActivity {
+    public static final String TAG = "StudentInProgress";
     public enum ServerInfo{
         PERMISSION,
         REJECTION,  // the side is already chosen
@@ -37,6 +39,8 @@ public class StudentInProgressActivity extends AppCompatActivity {
 
     private MyCamera mCamera;
     private CameraPreview mPreview;
+    private Handler handler;
+    private Runnable runnable;
     private MyMediaRecorder mMediaRecorder;
 
     @Override
@@ -46,25 +50,29 @@ public class StudentInProgressActivity extends AppCompatActivity {
         setContentView(R.layout.interviewed);
 
         mInterview = Interview.getInstance();
+        mInterview.setStatus(Interview.InterviewStatus.INPROGRESS);
 
-        mTimeCount = new TimeCount(6000000, 10000){
+        runnable = new Runnable() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                if (count > 0)
-                    mInterview.queryEnd(StudentInProgressActivity.this);
-                count++;
+            public void run() {
+                Log.d(TAG, "polling handler");
+                mInterview.queryEnd(StudentInProgressActivity.this);
+                polling();
             }
         };
-        mTimeCount.start();
-
+        handler = new Handler();
+    }
+    private void polling() {
+        Log.d(TAG, "polling started!");
+        handler.postDelayed(runnable, 2000);
     }
 
 
     public void onHttpResponse(ServerInfo serverInfo){
         if (serverInfo == ServerInfo.PERMISSION){
-            mTimeCount.cancel();
             mInterview.setStatus(Interview.InterviewStatus.END);
             mMediaRecorder.stopRecord();
+            handler.removeCallbacks(runnable);
             Intent nextStep = new Intent(StudentInProgressActivity.this, StudentEndActivity.class);
             startActivity(nextStep);
         } else {
@@ -90,11 +98,9 @@ public class StudentInProgressActivity extends AppCompatActivity {
         }, cnt);
     }
 
-    public void showHashResult(){
+    public void showHashResult(String HashValue){
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss");//显示规则
         String date = sDateFormat.format(new java.util.Date());
-        // TODO: HASH VALUE
-        String HashValue = "849VDD78GE391EFE0";
         String text = "最新上链时间：" + date + "  Hash Value：" + HashValue;
         Toast t = Toast.makeText(StudentInProgressActivity.this, text, Toast.LENGTH_LONG);
         Display display = getWindowManager().getDefaultDisplay();
@@ -104,6 +110,12 @@ public class StudentInProgressActivity extends AppCompatActivity {
         t.setGravity(Gravity.TOP, 0, height / 8);
 
         showMyToast(t, 59000);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        polling();
     }
 
     @Override
@@ -137,7 +149,6 @@ public class StudentInProgressActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mTimeCount.cancel();
     }
 
     @Override
