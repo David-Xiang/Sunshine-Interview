@@ -181,11 +181,10 @@ public class TeacherInProgressActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerViewAdapter.VH vh, int i) {
-            // TODO: update names and image
-            ImageView interviewerPhoto = vh.avatar;
-            TextView interviewerName = vh.name;
-            if (mInterview.nameList.size() > i) {
+            vh.name.setText(mInterview.getStudentNames().get(i));
 
+            ImageView interviewerPhoto = vh.avatar;
+            if (mInterview.nameList.size() > i) {
                 FileInputStream fis = null;
                 try {
                     fis = new FileInputStream(mInterview.pathList.get(i));
@@ -197,10 +196,6 @@ public class TeacherInProgressActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                interviewerName.setText(mInterview.nameList.get(i));
-            } else {
-                interviewerName.setText("未签到");
             }
         }
 

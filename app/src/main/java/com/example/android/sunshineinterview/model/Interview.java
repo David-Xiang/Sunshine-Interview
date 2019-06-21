@@ -530,4 +530,9 @@ public class Interview {
     private String getOrderString(){
         return mInterviewInfo.periods.get(orderIndex).order;
     }
+
+    public void clearInfo() {
+        pathList = null;
+        nameList = null;
+    }
 }

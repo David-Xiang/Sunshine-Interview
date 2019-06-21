@@ -57,11 +57,11 @@ public class MyMediaRecorder {
         videoID = 0;
     }
 
-    public void startRecord(StudentInProgressActivity studentInProgressActivity){
+    public void startRecord(StudentInProgressActivity mStudentInProgressActivity){
         Log.d(TAG, "start recording!");
-        if (studentInProgressActivity != null)
+        if (mStudentInProgressActivity != null)
         {
-            activity = studentInProgressActivity;
+            activity = mStudentInProgressActivity;
         }
         if (setMediaRecorder()){
             MR.start();
@@ -84,11 +84,8 @@ public class MyMediaRecorder {
         // handle hash
         Log.d(TAG, Interview.getInstance().getSide().toString());
         if (Interview.getInstance().getSide().toString().equals("STUDENT")) {
-            new handleHash().execute(mediaFilePath, Interview.getInstance().getInterviewID(), videoID);
+            new handleHash().execute(mediaFilePath, Interview.getInstance().getInterviewID(), videoID, activity);
             videoID++;
-            if (activity != null){
-                activity.showHashResult();
-            }
         }
     }
 

@@ -37,6 +37,7 @@ public class TeacherEndActivity extends AppCompatActivity {
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mInterview.clearInfo();
                 Intent nextStep = new Intent(TeacherEndActivity.this, ChooseOrderActivity.class);
                 startActivity(nextStep);
             }
