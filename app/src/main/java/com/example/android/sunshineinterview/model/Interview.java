@@ -63,6 +63,14 @@ public class Interview {
         nameList.add(name);
     }
 
+    public String getPathFromName(String name) {
+        for (int i = 0; i < nameList.size(); i++) {
+            if (nameList.get(i).equals(name))
+                return pathList.get(i);
+        }
+        return "";
+    }
+
     private Interview() {
         isValidated = false;
         sideSelected = false;

@@ -183,10 +183,13 @@ public class TeacherInProgressActivity extends AppCompatActivity {
             vh.name.setText(mInterview.getStudentNames().get(i));
 
             ImageView interviewerPhoto = vh.avatar;
-            if (mInterview.nameList != null && mInterview.nameList.size() > i) {
+            if (mInterview.nameList != null && mInterview.pathList != null) {
                 FileInputStream fis = null;
+                String fileStr = mInterview.getPathFromName(mInterview.getStudentNames().get(i));
+                if (fileStr.equals(""))
+                    return;
                 try {
-                    fis = new FileInputStream(mInterview.pathList.get(i));
+                    fis = new FileInputStream(fileStr);
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
                     Bitmap btp = BitmapFactory.decodeStream(fis, null, options);

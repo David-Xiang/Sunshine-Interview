@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.example.android.sunshineinterview.model.Interview;
 import com.example.android.sunshineinterview.teacheractivities.WaitForStudentSigninActivity;
 import com.example.android.sunshineinterview.utilities.NetworkUtils;
 
@@ -19,6 +20,7 @@ public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
     private final static String TAG = "DownloadTask";
     private WaitForStudentSigninActivity mWaitForStudentSigninActivity;
     private String name;
+    private String id;
     private String localPath;
     @Override
     protected Boolean doInBackground(Object... params) {
@@ -26,6 +28,7 @@ public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
         mWaitForStudentSigninActivity = (WaitForStudentSigninActivity) params[0];
         String string = (String) params[1];//这是从execute方法中传过来的参数, 即服务器端的路径
         name = (String) params[2];
+        id = (String) params[3];
 
         Log.w(TAG, "Begin downloading!" + string);
         //String string = "https://wx1.sinaimg.cn/orj480/006u8RMBly1fxabddexv6j30qo0f0weg.jpg";
@@ -73,6 +76,8 @@ public class DownloadTask extends AsyncTask<Object, Boolean, Boolean> {
         if(!bool) {
             Log.w(TAG, "Something is wrong when downloading picture");
         }
+        Interview mInterview = Interview.getInstance();
+        mInterview.signin(id, name);
 
         mWaitForStudentSigninActivity.onStudentsUpdate(name, localPath);
     }
