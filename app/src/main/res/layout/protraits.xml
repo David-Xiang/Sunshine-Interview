@@ -9,17 +9,20 @@
 
     <ImageView
         android:id="@+id/iv_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="140dp"
+        android:layout_height="105dp"
         android:layout_weight="1"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        app:layout_constraintDimensionRatio="4:3"
         app:srcCompat="@android:color/darker_gray"
         tools:srcCompat="@drawable/interviewee" />
 
-<TextView
-    android:id="@+id/tv_name"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="TextView" />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="TextView" />
 
 </LinearLayout>

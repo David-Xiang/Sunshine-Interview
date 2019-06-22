@@ -56,7 +56,7 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
     private ArrayList<ImageView> mImageViewArray;
     //int[] textViewIDs = {R.id.name0, R.id.name1, R.id.name2, R.id.name3, R.id.name4};
     //int[] imageViewIDs = {R.id.photo0, R.id.photo1, R.id.photo2, R.id.photo3, R.id.photo4};
-    // int cnt_ready = 0;
+    private int cnt_ready = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,20 +116,6 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
             }
         });
 
-        Button bReady = findViewById(R.id.button_ready_start2);
-        bReady.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "confirm clicked");
-                Intent nextStep = new Intent(WaitForStudentSigninActivity.this, TeacherInProgressActivity.class);
-                startActivity(nextStep);
-            }
-        });
-    }
-
-    private void updateNames(int index, String studentName){
-        TextView textview = mTextViewArray.get(index);
-        textview.setText(studentName);
     }
 
     private void updateInfo(int textViewId, int originalStringId, String newString){
@@ -174,6 +160,13 @@ public class WaitForStudentSigninActivity extends AppCompatActivity {
                 }
 
                 mTextViewArray.get(j).setText(name);
+                cnt_ready += 1;
+                if (cnt_ready == mStudentNames.size())
+                {
+                    Button bConfirm = findViewById(R.id.manual_start);
+                    bConfirm.setBackgroundColor(getColor(R.color.colorAccent));
+                    bConfirm.setText("开始面试");
+                }
 
                 break;
             }

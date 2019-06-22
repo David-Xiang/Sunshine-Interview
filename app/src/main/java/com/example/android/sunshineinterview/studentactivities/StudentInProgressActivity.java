@@ -42,6 +42,8 @@ public class StudentInProgressActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private MyMediaRecorder mMediaRecorder;
+    private Toast mToast;
+    private Timer mTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +84,13 @@ public class StudentInProgressActivity extends AppCompatActivity {
     }
 
     public void showMyToast(final Toast toast, final int cnt) {
-        final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        if(mInterview.getStatus() == Interview.InterviewStatus.END)
+        {
+            toast.show();
+            return;
+        }
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 toast.show();
@@ -93,7 +100,7 @@ public class StudentInProgressActivity extends AppCompatActivity {
             @Override
             public void run() {
                 toast.cancel();
-                timer.cancel();
+                mTimer.cancel();
             }
         }, cnt);
     }
@@ -101,15 +108,15 @@ public class StudentInProgressActivity extends AppCompatActivity {
     public void showHashResult(String HashValue){
         SimpleDateFormat sDateFormat = new SimpleDateFormat("hh:mm:ss");//显示规则
         String date = sDateFormat.format(new java.util.Date());
-        String text = "最新上链时间：" + date + "  Hash Value：" + HashValue;
-        Toast t = Toast.makeText(StudentInProgressActivity.this, text, Toast.LENGTH_LONG);
+        String text = "最新上链时间：" + date + "\nHash Value：" + HashValue;
+        mToast = Toast.makeText(StudentInProgressActivity.this, text, Toast.LENGTH_LONG);
         Display display = getWindowManager().getDefaultDisplay();
         // 获取屏幕高度
         int height = display.getHeight();
         // 这里给了一个1/4屏幕高度的y轴偏移量
-        t.setGravity(Gravity.TOP, 0, height / 8);
+        mToast.setGravity(Gravity.TOP|Gravity.CENTER, 0, height / 8);
 
-        showMyToast(t, 59000);
+        showMyToast(mToast, 59000);
     }
 
     @Override
@@ -149,6 +156,7 @@ public class StudentInProgressActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(mToast != null) mToast.cancel();
     }
 
     @Override
